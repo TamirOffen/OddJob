@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apl/res-auto"
+    <item
+        android:title="Chat"
+        android:icon="@drawable/custom_chat"
+        android:id="@+id/chat"
+        />
+    <item
+        android:title="Home"
+        android:icon="@drawable/location_home"
+        android:id="@+id/home"
+
+
+        />
+    <item
+        android:title="Add Job"
+        android:icon="@drawable/baseline_work_black_18dp"
+        android:id="@+id/add_job"
+
+        />
+
+</menu>
