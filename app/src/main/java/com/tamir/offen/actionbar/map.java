@@ -350,8 +350,17 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
         }
         return NO_VALUE_BUNDLE_NUMBER;
     }
-    private void bye(){
-        String bye = "bye"
+    public void hello(){
+        String hello ="hello" ;
+        hello += " world";
     }
+    private void bye(){
+        String bye = "bye";
+    }
+    private int yee() {
+        return 5;
+    }
+
+
 
 }
