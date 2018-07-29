@@ -18,7 +18,7 @@ public class AddJob extends AppCompatActivity{
 
     // vars
     private BottomNavigationView bottomNavigationView;
-    private EditText editTextLat, editTextLng, editTextTitle;
+    private EditText editTextLat, editTextLng, editTextTitle, editTextDesc;
     private Button addMarkerBtn;
 
     @Override
@@ -33,15 +33,22 @@ public class AddJob extends AppCompatActivity{
         editTextLng = findViewById(R.id.editTextLng);
         addMarkerBtn = findViewById(R.id.addMarkerBtn);
         editTextTitle = findViewById(R.id.editTextTitle);
+        editTextDesc = findViewById(R.id.editTextDesc);
 
         addMarkerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String latStr = editTextLat.getText().toString(), lngStr = editTextLng.getText().toString(), title = editTextTitle.getText().toString();
+                final String latStr = editTextLat.getText().toString(), lngStr = editTextLng.getText().toString(),
+                        title = editTextTitle.getText().toString(), desc = editTextDesc.getText().toString();
                 final double lat, lng;
 
                 if(title.matches("")) {
                     Toast.makeText(AddJob.this, "Enter a title", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(desc.matches("")) {
+                    Toast.makeText(AddJob.this, "Enter a description", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -55,6 +62,7 @@ public class AddJob extends AppCompatActivity{
                 goToMapIntent.putExtra("latitude", lat);
                 goToMapIntent.putExtra("longitude", lng);
                 goToMapIntent.putExtra("title", title);
+                goToMapIntent.putExtra("desc", desc);
 
                 startActivity(goToMapIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

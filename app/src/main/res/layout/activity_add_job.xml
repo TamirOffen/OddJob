@@ -16,7 +16,9 @@
             android:id="@+id/editTextLng"
             android:layout_width="104dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="152dp"
             android:ems="10"
             android:hint="Longitude "
             android:inputType="numberSigned|numberDecimal"
@@ -34,8 +36,9 @@
             android:id="@+id/editTextLat"
             android:layout_width="104dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/editTextLng"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="220dp"
             android:ems="10"
             android:hint="Latitude"
             android:inputType="numberSigned|numberDecimal"
@@ -47,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="172dp"
+            android:layout_marginBottom="79dp"
             android:text="Add Marker" />
 
         <EditText
@@ -62,6 +65,17 @@
             android:inputType="textPersonName"
             android:singleLine="true"
             android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/editTextDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="186dp"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:text="desc" />
 
     </RelativeLayout>
 

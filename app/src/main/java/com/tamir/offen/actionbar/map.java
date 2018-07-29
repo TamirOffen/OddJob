@@ -52,9 +52,11 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                                 FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION,
                                 COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION,
                                 NO_VALUE_BUNDLE_STRING = "NO STRING FOUND IN BUNDLE";
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234,
+                             NO_VALUE_BUNDLE_INT = -1;
     private static final float DEFAULT_ZOOM = 17f;
     private static final double NO_VALUE_BUNDLE_NUMBER = -1f;
+    private static final boolean NO_VALUE_BUNDLE_BOOLEAN = false;
 
     // Vars
     private BottomNavigationView bottomNavigationView;
@@ -65,7 +67,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private ArrayList<Marker> markerList = new ArrayList<>();
     private Marker currentMarker;
     private TextView zoomText;
-    private String addJobTitle;
+    private String addJobTitle, addJobDesc;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,11 +82,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
         getLocationPermission();
 
-
         zoomText = findViewById(R.id.zoomText);
-
-
-        //Toast.makeText(this, "Lat: " + getBundleDoubleInfo("latitude") + " Lng: " + getBundleDoubleInfo("longitude"), Toast.LENGTH_SHORT).show();
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -203,8 +201,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
                             // add job marker
                             addJobLat = getBundleDoubleInfo("latitude"); addJobLng = getBundleDoubleInfo("longitude");
-                            addJobTitle = getBundleStringInfo("title");
-                            if(addJobLat != NO_VALUE_BUNDLE_NUMBER && addJobLng != NO_VALUE_BUNDLE_NUMBER && !addJobTitle.equals(NO_VALUE_BUNDLE_STRING)) {
+                            addJobTitle = getBundleStringInfo("title"); addJobDesc = getBundleStringInfo("desc");
+                            if(addJobLat != NO_VALUE_BUNDLE_NUMBER && addJobLng != NO_VALUE_BUNDLE_NUMBER && !addJobTitle.equals(NO_VALUE_BUNDLE_STRING)
+                                    && !addJobDesc.equals(NO_VALUE_BUNDLE_STRING)) {
                                 LatLng latLng = new LatLng(addJobLat, addJobLng);
                                 addMarker(latLng, addJobTitle);
                                 moveCamera(latLng, DEFAULT_ZOOM - 7f);
@@ -346,6 +345,26 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         }
         return NO_VALUE_BUNDLE_STRING;
     }
+    private int getBundleIntInfo(String tag) {
+        Intent intentExtras = getIntent();
+        Bundle extrasBundle = intentExtras.getExtras();
+        if(extrasBundle != null) {
+            if(extrasBundle.containsKey(tag)) {
+                return extrasBundle.getInt(tag);
+            }
+        }
+        return NO_VALUE_BUNDLE_INT;
+    }
+    private boolean getBundleBooleanInfo(String tag) {
+        Intent intentExtras = getIntent();
+        Bundle extrasBundle = intentExtras.getExtras();
+        if(extrasBundle != null) {
+            if(extrasBundle.containsKey(tag)) {
+                return extrasBundle.getBoolean(tag);
+            }
+        }
+        return NO_VALUE_BUNDLE_BOOLEAN;
+    }
 
     // OnMarkerClickListener method
     @Override
@@ -365,4 +384,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         else return "MARKER NOT FOUND";
     }
 
+    @Override
+    public String getJobDesc() {
+        if(currentMarker != null) return addJobDesc;
+        else return "MARKER NOT FOUND";
+    }
 }

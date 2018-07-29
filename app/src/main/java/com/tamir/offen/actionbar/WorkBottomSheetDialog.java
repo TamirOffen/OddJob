@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class WorkBottomSheetDialog extends BottomSheetDialogFragment {
 
-    private TextView workPreviewText;
+    private TextView workPreviewText, descPreviewText;
     private BottomSheetListener listener;
 
     @Nullable
@@ -23,12 +23,16 @@ public class WorkBottomSheetDialog extends BottomSheetDialogFragment {
         workPreviewText = view.findViewById(R.id.workPreviewText);
         workPreviewText.setText(listener.getJobTitle());
 
+        descPreviewText = view.findViewById(R.id.descTextBottomSheet);
+        descPreviewText.setText(listener.getJobDesc());
+
         return view;
     }
 
     public interface BottomSheetListener {
         // returns the clicked pin's title
         String getJobTitle();
+        String getJobDesc();
     }
 
     @Override

@@ -12,4 +12,11 @@
         android:text="Work Preview"
         android:textSize="25sp"/>
 
+    <TextView
+        android:id="@+id/descTextBottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description Text"
+        android:textAlignment="center"/>
+
 </LinearLayout>
