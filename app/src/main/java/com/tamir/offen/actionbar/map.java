@@ -1,5 +1,4 @@
 package com.tamir.offen.actionbar;
-// Created on 7/25/2018 
 
 import android.Manifest;
 import android.app.Dialog;
@@ -9,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -41,17 +41,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class map extends AppCompatActivity implements OnMapReadyCallback {
-
-    //map act
-    //1
-    //2
+public class map extends AppCompatActivity implements OnMapReadyCallback,
+                                                    GoogleMap.OnMarkerClickListener,
+                                                    WorkBottomSheetDialog.BottomSheetListener {
 
     // Constants
     private static final String TAG = "MapActivity",
                                 FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION,
-                                COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+                                COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION,
+                                NO_VALUE_BUNDLE_STRING = "NO STRING FOUND IN BUNDLE";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 17f;
     private static final double NO_VALUE_BUNDLE_NUMBER = -1f;
@@ -63,10 +63,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
     private Boolean locationPermissionsGranted = false;
     private double addJobLat, addJobLng;
     private ArrayList<Marker> markerList = new ArrayList<>();
-
-
-
+    private Marker currentMarker;
     private TextView zoomText;
+    private String addJobTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -204,9 +203,10 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
                             // add job marker
                             addJobLat = getBundleDoubleInfo("latitude"); addJobLng = getBundleDoubleInfo("longitude");
-                            if(addJobLat != NO_VALUE_BUNDLE_NUMBER && addJobLng != NO_VALUE_BUNDLE_NUMBER) {
+                            addJobTitle = getBundleStringInfo("title");
+                            if(addJobLat != NO_VALUE_BUNDLE_NUMBER && addJobLng != NO_VALUE_BUNDLE_NUMBER && !addJobTitle.equals(NO_VALUE_BUNDLE_STRING)) {
                                 LatLng latLng = new LatLng(addJobLat, addJobLng);
-                                addMarker(latLng, "Test");
+                                addMarker(latLng, addJobTitle);
                                 moveCamera(latLng, DEFAULT_ZOOM - 7f);
                             }
 
@@ -240,7 +240,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
                 return;
             }
 
-
+            // sets map to listen for marker clicks
+            mMap.setOnMarkerClickListener(this);
 
             // Google Map options
             mMap.setMyLocationEnabled(true);
@@ -250,21 +251,11 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
 
         // adding markers
-        /*
         addMarker(new LatLng(38.646122, -121.131029), "Test");
         addMarker(new LatLng(38.646663, -121.131319), "Test 2");
 
-        setMarkerVisibleByTitle(true, "Test");
+        setMarkerVisibleByTitle(false, "Test");
         setMarkerVisibleByTitle(false, "Test 2");
-
-        final Marker test1 = getMarker(new LatLng(38.646122, -121.131029), "Test 1");
-        final Marker test2 = getMarker(new LatLng(38.646663, -121.131319), "Test 2");
-        */
-
-        final Marker marker1 = mMap.addMarker(new MarkerOptions().position(new LatLng(38.646122, -121.131029)).title("Marker 1"));
-        marker1.setVisible(false);
-        final Marker marker2 = mMap.addMarker(new MarkerOptions().position(new LatLng(38.646663, -121.131319)).title("Marker 2"));
-        marker2.setVisible(false);
 
         mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
@@ -272,19 +263,13 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
                 CameraPosition cameraPosition = mMap.getCameraPosition();
                 zoomText.setText(new Float(cameraPosition.zoom).toString());
                 if(cameraPosition.zoom > 18) {
-                    marker1.setVisible(true);
-                    marker2.setVisible(true);
-                    /*
                     setMarkerVisibleByTitle(true, "Test");
                     setMarkerVisibleByTitle(true, "Test 2");
-                    */
+
                 } else {
-                    marker1.setVisible(false);
-                    marker2.setVisible(false);
-                    /*
                     setMarkerVisibleByTitle(false, "Test");
                     setMarkerVisibleByTitle(false, "Test 2");
-                    */
+
                 }
 
             }
@@ -302,15 +287,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
     // adds a marker on the Map
     private void addMarker(LatLng latLng, String name) {
         //Drawable marker = getResources().getDrawable(R.mipmap.);
-        mMap.addMarker(new MarkerOptions()
-                //.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_round))
-                .position(latLng)
-                .title(name));
-
-        markerList.add(mMap.addMarker(new MarkerOptions()
-                //.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_round))
-                .position(latLng)
-                .title(name)));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(name));
+        markerList.add(marker);
     }
 
     // creates a Marker object
@@ -326,12 +304,20 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
+    private Marker returnMarker(String title) {
+        for(int i = 0; i < markerList.size(); i++) {
+            if(markerList.get(i).getTitle().equals(title)) {
+                return markerList.get(i);
+            }
+        }
+        Toast.makeText(this, "Marker not found", Toast.LENGTH_SHORT).show();
+        return null;
+    }
+
     // sets a marker visible or not by the marker's title
     private void setMarkerVisibleByTitle(Boolean visible, String title) {
         for (int i = 0; i < markerList.size(); i++) {
-            //Toast.makeText(this, markerList.get(i).getTitle(), Toast.LENGTH_SHORT).show();
             if(markerList.get(i).getTitle().equals(title)) {
-                //Toast.makeText(this, markerList.get(i).getTitle(), Toast.LENGTH_SHORT).show();
                 markerList.get(i).setVisible(visible);
                 return;
             }
@@ -339,7 +325,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     // returns the value of the Bundle passed by an Intent
-    // returns NO_VALUE_BUNDLE_NUMBER if tag not found
+    // returns NO_VALUE_BUNDLE_*** if tag not found
     private double getBundleDoubleInfo(String tag) {
         Intent intentExtras = getIntent();
         Bundle extrasBundle = intentExtras.getExtras();
@@ -350,18 +336,33 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
         }
         return NO_VALUE_BUNDLE_NUMBER;
     }
-    public void hello(){
-        String hello ="hello" ;
-        hello += " world";
-    }
-    private void bye(){
-        String bye = "bye";
-    }
-    int testVar = 90909090;
-    private int yee() {
-        return 5;
+    private String getBundleStringInfo(String tag) {
+        Intent intentExtras = getIntent();
+        Bundle extrasBundle = intentExtras.getExtras();
+        if(extrasBundle != null) {
+            if(extrasBundle.containsKey(tag)) {
+                return extrasBundle.getString(tag);
+            }
+        }
+        return NO_VALUE_BUNDLE_STRING;
     }
 
+    // OnMarkerClickListener method
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        currentMarker = marker;
+        //Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+        WorkBottomSheetDialog workBottomSheetDialog = new WorkBottomSheetDialog();
+        workBottomSheetDialog.show(getSupportFragmentManager(), "workBottomSheetDialog");
+        return false;
+    }
 
+    // Returns the current marker chosen's title
+    // Used to get the title in WorkBottomSheetDialog class
+    @Override
+    public String getJobTitle() {
+        if(currentMarker != null) return currentMarker.getTitle();
+        else return "MARKER NOT FOUND";
+    }
 
 }
