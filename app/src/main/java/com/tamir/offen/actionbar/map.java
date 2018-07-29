@@ -45,7 +45,7 @@ import java.util.ArrayList;
 public class map extends AppCompatActivity implements OnMapReadyCallback {
 
     //map act
-    //bitch dead
+    //2
 
     // Constants
     private static final String TAG = "MapActivity",
