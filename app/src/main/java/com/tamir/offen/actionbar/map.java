@@ -357,6 +357,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback {
     private void bye(){
         String bye = "bye";
     }
+    int testVar = 90909090;
     private int yee() {
         return 5;
     }
