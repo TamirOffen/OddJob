@@ -1,4 +1,4 @@
-package com.tamir.offen.actionbar.UI;
+package com.tamir.offen.OddJob.UI;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.tamir.offen.actionbar.R;
+import com.tamir.offen.OddJob.R;
 
 import static java.lang.Thread.sleep;
 
@@ -21,7 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
         signupconfbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignUpActivity.this, com.tamir.offen.actionbar.UI.HomeMapActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, com.tamir.offen.OddJob.UI.HomeMapActivity.class);
                 startActivity(intent);
                 finish();
                 return;

@@ -1,4 +1,4 @@
-package com.tamir.offen.actionbar.UI;
+package com.tamir.offen.OddJob.UI;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,18 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tamir.offen.actionbar.R;
+import com.tamir.offen.OddJob.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AdddesFragment.OnFragmentInteractionListener} interface
+ * {@link LocFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AdddesFragment#newInstance} factory method to
+ * Use the {@link LocFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AdddesFragment extends Fragment {
+public class LocFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +31,7 @@ public class AdddesFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AdddesFragment() {
+    public LocFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +41,11 @@ public class AdddesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AdddesFragment.
+     * @return A new instance of fragment LocFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AdddesFragment newInstance(String param1, String param2) {
-        AdddesFragment fragment = new AdddesFragment();
+    public static LocFragment newInstance(String param1, String param2) {
+        LocFragment fragment = new LocFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,7 +66,7 @@ public class AdddesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_adddes, container, false);
+        return inflater.inflate(R.layout.fragment_loc, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

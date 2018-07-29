@@ -1,4 +1,4 @@
-package com.tamir.offen.actionbar.UI;
+package com.tamir.offen.OddJob.UI;
 
 import android.app.DatePickerDialog;
 import android.support.v4.app.DialogFragment;
@@ -17,7 +17,7 @@ import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.tamir.offen.actionbar.R;
+import com.tamir.offen.OddJob.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -37,13 +37,13 @@ public class HomeMapActivity extends AppCompatActivity {
 
                     switch(item.getItemId()){
                         case R.id.chat:
-                            selectedFragment = new com.tamir.offen.actionbar.UI.ChatFragment();
+                            selectedFragment = new com.tamir.offen.OddJob.UI.ChatFragment();
                             break;
                         case R.id.home:
-                            selectedFragment = new com.tamir.offen.actionbar.UI.MapFragment();
+                            selectedFragment = new com.tamir.offen.OddJob.UI.MapFragment();
                             break;
                         case R.id.add_job:
-                            selectedFragment = new com.tamir.offen.actionbar.UI.AddFragment();
+                            selectedFragment = new com.tamir.offen.OddJob.UI.AddFragment();
                             break;
                     }
 

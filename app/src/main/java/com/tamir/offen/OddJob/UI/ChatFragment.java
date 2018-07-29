@@ -1,4 +1,4 @@
-package com.tamir.offen.actionbar.UI;
+package com.tamir.offen.OddJob.UI;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tamir.offen.actionbar.R;
+import com.tamir.offen.OddJob.R;
 
 /**
  * Created by paen3 on 7/12/2018.

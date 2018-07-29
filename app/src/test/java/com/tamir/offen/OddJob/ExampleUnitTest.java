@@ -1,4 +1,4 @@
-package com.tamir.offen.actionbar;
+package com.tamir.offen.OddJob;
 
 import org.junit.Test;
 
