@@ -45,7 +45,7 @@ public class messages extends AppCompatActivity{
                         break;
 
                     case R.id.nav_add_work:
-                        intent = new Intent(messages.this, AddJob.class);
+                        intent = new Intent(messages.this, AddActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
