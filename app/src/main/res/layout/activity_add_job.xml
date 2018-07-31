@@ -74,8 +74,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="186dp"
             android:ems="10"
+            android:hint="Description "
             android:inputType="textMultiLine"
-            android:text="desc" />
+            android:textAlignment="center"/>
 
     </RelativeLayout>
 

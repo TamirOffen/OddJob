@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/loginsigngrad"
     android:layout_height="match_parent"
-    tools:context="com.example.paen3.oddjob3.SignUpActivity">
+    tools:context="com.tamir.offen.OddJob.UI.SignUpActivity">
 
     <EditText
         android:id="@+id/emailsignup"
@@ -20,7 +20,7 @@
         android:hint="Email Address"
         android:inputType="textEmailAddress"
         android:paddingLeft="55dp"
-        android:textColor="@color/blacker"
+        android:textColor="@color/black"
         android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

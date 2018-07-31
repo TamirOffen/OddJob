@@ -21,7 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
         signupconfbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignUpActivity.this, com.tamir.offen.OddJob.UI.HomeMapActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, com.tamir.offen.OddJob.UI.MainActivity.class);
                 startActivity(intent);
                 finish();
                 return;

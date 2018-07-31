@@ -68,6 +68,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private Marker currentMarker;
     private TextView zoomText;
     private String addJobTitle, addJobDesc;
+    private CameraPosition cameraPosition;
+    private float currZoomValue;
+    private LatLng currPosLatLng;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +86,20 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         getLocationPermission();
 
         zoomText = findViewById(R.id.zoomText);
+        zoomText.setText(new Float(DEFAULT_ZOOM).toString());
+        currZoomValue = DEFAULT_ZOOM;
+
+        if(currPosLatLng != null) {
+            cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
+            Toast.makeText(this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
+        } else {
+            //Toast.makeText(this, "no pos", Toast.LENGTH_SHORT).show();
+        }
+
+
+        if (savedInstanceState != null) {
+            zoomText.setText(savedInstanceState.getString("Zoom Test"));
+        }
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -110,6 +127,14 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+
+        savedInstanceState.putString("Zoom Test", "11");
     }
 
     // returns if correct Google Play Services are installed
@@ -197,6 +222,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
                             // current location marker
                             Location currentLocation = (Location)task.getResult();
+                            Toast.makeText(map.this, "here", Toast.LENGTH_SHORT).show();
+                            currPosLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
                             // add job marker
@@ -260,7 +287,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
             @Override
             public void onCameraMove() {
                 CameraPosition cameraPosition = mMap.getCameraPosition();
-                zoomText.setText(new Float(cameraPosition.zoom).toString());
+                currZoomValue = cameraPosition.zoom;
+                zoomText.setText(new Float(currZoomValue).toString());
                 if(cameraPosition.zoom > 18) {
                     setMarkerVisibleByTitle(true, "Test");
                     setMarkerVisibleByTitle(true, "Test 2");
