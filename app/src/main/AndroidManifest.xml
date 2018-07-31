@@ -24,9 +24,11 @@
         </activity>
 
         <!-- needed -->
-        <activity android:name=".messages"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".map"
+        <activity
+            android:name=".messages"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".map"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,13 +36,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddJob"
+        <activity
+            android:name=".AddJob"
             android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
+        <activity android:name=".AddActivity" />
+        <activity android:name=".TagActivity" />
+        <activity android:name=".PriceActivity" />
+        <activity android:name=".LocationPickerActivity" />
+        <activity android:name=".DateActivity"></activity>
     </application>
 
 </manifest>

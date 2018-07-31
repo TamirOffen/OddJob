@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradorangetored"
+    tools:context="com.tamir.offen.OddJob.PriceActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/rpricepro" />
+
+    <Button
+        android:id="@+id/button2price"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/forwardarrow" />
+
+    <Button
+        android:id="@+id/button3des"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/backarrow" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-40dp"
+        android:fontFamily="@font/lato"
+        android:text="How much will you pay for the OddJob?"
+        android:textColor="@color/white"
+        android:textSize="23sp" />
+
+    <ImageView
+        android:id="@+id/textView4"
+        android:layout_width="100dp"
+        android:layout_height="250dp"
+        android:layout_alignTop="@+id/imageView11"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="72dp"
+        app:srcCompat="@drawable/shadowthree" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-15dp"
+        app:srcCompat="@drawable/fadingline" />
+
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toStartOf="@+id/editText"
+        android:layout_marginEnd="10dp"
+        android:textSize="60dp"
+        android:textColor="@color/white"
+        android:text="$" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="180dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/whitesimline"
+        android:ems="10"
+        android:fontFamily="monospace"
+        android:hint="00.00"
+        android:textColor="@color/white"
+        android:textSize="60dp"
+        android:inputType="numberDecimal" />
+
+
+</RelativeLayout>

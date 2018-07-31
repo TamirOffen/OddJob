@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/gradorangetored"
+    android:layout_height="match_parent"
+    tools:context="com.tamir.offen.OddJob.TagActivity">
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/rtagpro" />
+
+    <Button
+        android:id="@+id/button2price"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/forwardarrow" />
+
+    <Button
+        android:id="@+id/button3des"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/backarrow" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-40dp"
+        android:fontFamily="@font/lato"
+        android:text="Pick a category for your OddJob"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/textView4"
+        android:layout_width="100dp"
+        android:layout_height="250dp"
+        android:layout_alignTop="@+id/imageView11"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="72dp"
+        app:srcCompat="@drawable/shadowtwo" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-15dp"
+        app:srcCompat="@drawable/fadingline" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="30dp"
+        android:id="@+id/tagchooser">
+
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:background="@drawable/whitesimline"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lato"
+            android:buttonTint="@color/white"
+            android:text="Technology"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:background="@drawable/whitesimline"
+            android:buttonTint="@color/white"
+            android:text="Transportation"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lato"
+            android:buttonTint="@color/white"
+            android:background="@drawable/whitesimline"
+            android:text="Home / Yard"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lato"
+            android:buttonTint="@color/white"
+            android:background="@drawable/whitesimline"
+            android:text="Child / Pet Care"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton5"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:textColor="@color/white"
+            android:buttonTint="@color/white"
+            android:fontFamily="@font/lato"
+            android:background="@drawable/whitesimline"
+            android:text="Education"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton6"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:fontFamily="@font/lato"
+            android:background="@drawable/whitesimline"
+            android:buttonTint="@color/white"
+            android:text="Other"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+
+    </RadioGroup>
+
+
+
+
+</RelativeLayout>

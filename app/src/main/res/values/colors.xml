@@ -3,8 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF39B29A</color>
-    <color name="blacker">#000000</color>
-    <color name="white">#ffffff</color>
+    <color name="White">#FFF</color>
+    <color name="Black">#000</color>
     <color name="companyColor">#00ffe4</color>
     <color name="companyLight">#7effca</color>
     <color name="companyDark">#00a1be</color>
@@ -14,5 +14,8 @@
     <color name="gradgreen">#44F5B4</color>
     <color name="colorWhite">#ffff</color>
     <color name="colorGrey">#c3c3c3</color>
+    <color name="TransparentGrey">#7F000000</color>
+    <color name="TransparentWhite">#7fffffff</color>
+    <color name="orange">#ffcd75</color>
 
 </resources>
