@@ -62,12 +62,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintVertical_bias="0.100000024" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="26dp"
         android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
@@ -86,8 +86,8 @@
 
     <ImageView
         android:id="@+id/textView4"
-        android:layout_width="110dp"
-        android:layout_height="150dp"
+        android:layout_width="140dp"
+        android:layout_height="175dp"
         android:layout_alignTop="@+id/imageView11"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
@@ -96,10 +96,9 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView11"
-        app:layout_constraintVertical_bias="0.06999999"
+        app:layout_constraintVertical_bias="0.006"
         app:srcCompat="@drawable/shadowone" />
 
     <EditText
@@ -131,7 +130,7 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="384dp"
-        android:layout_height="68dp"
+        android:layout_height="72dp"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
