@@ -5,13 +5,16 @@
     <item
         android:id="@+id/nav_messages"
         android:icon="@drawable/ic_message"
+        android:iconTint="@color/navitemcolors"
         android:title="Messages" />
     <item
         android:id="@+id/nav_map"
+        android:iconTint="@color/navitemcolors"
         android:icon="@drawable/ic_map"
         android:title="Map" />
     <item
         android:id="@+id/nav_add_work"
+        android:iconTint="@color/navitemcolors"
         android:icon="@drawable/ic_add_location"
         android:title="Add Work" />
 </menu>

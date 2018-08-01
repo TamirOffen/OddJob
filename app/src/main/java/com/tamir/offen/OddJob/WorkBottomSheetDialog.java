@@ -1,6 +1,8 @@
 package com.tamir.offen.OddJob;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,14 +22,17 @@ public class WorkBottomSheetDialog extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bottom_sheet_layout, container, false);
 
+
         workPreviewText = view.findViewById(R.id.workPreviewText);
         workPreviewText.setText(listener.getJobTitle());
 
-        descPreviewText = view.findViewById(R.id.descTextBottomSheet);
-        descPreviewText.setText(listener.getJobDesc());
+        //descPreviewText = view.findViewById(R.id.wor);
+        //descPreviewText.setText(listener.getJobDesc());
 
         return view;
     }
+
+
 
     public interface BottomSheetListener {
         // returns the clicked pin's title

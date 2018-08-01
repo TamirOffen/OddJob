@@ -119,7 +119,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                     case R.id.nav_map:
                         break;
                     case R.id.nav_add_work:
-                        intent = new Intent(map.this, AddJob.class);
+                        intent = new Intent(map.this, DateActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;

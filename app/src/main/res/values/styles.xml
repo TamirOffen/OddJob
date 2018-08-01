@@ -17,4 +17,37 @@
         <!--<item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>-->
     <!--</style>-->
 
+    <style name="AppTheme1" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_dialog</item>
+    </style>
+
+        <!-- set the rounded drawable as background to your bottom sheet -->
+        <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+            <item name="android:background">@drawable/rounded_dialog</item>
+        </style>
+
+        <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+            <item name="android:windowIsFloating">false</item>
+            <item name="bottomSheetStyle">@style/BottomSheet</item>
+        </style>
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+    </style>
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+
+
 </resources>

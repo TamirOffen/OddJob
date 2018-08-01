@@ -51,7 +51,8 @@
         <activity android:name=".TagActivity" />
         <activity android:name=".PriceActivity" />
         <activity android:name=".LocationPickerActivity" />
-        <activity android:name=".DateActivity"></activity>
+        <activity android:name=".DateActivity" />
+        <activity android:name=".ChattingActivity"></activity>
     </application>
 
 </manifest>

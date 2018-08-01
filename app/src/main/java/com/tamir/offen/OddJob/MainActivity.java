@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_add_work:
-                        intent = new Intent(MainActivity.this, AddJob.class);
+                        intent = new Intent(MainActivity.this, DateActivity.class);
                         startActivity(intent);
                         break;
 

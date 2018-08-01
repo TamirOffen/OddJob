@@ -6,6 +6,7 @@
     android:background="@drawable/gradorangetored"
     android:layout_height="match_parent"
     tools:context="com.tamir.offen.OddJob.TagActivity">
+
     <ImageView
         android:id="@+id/imageView11"
         android:layout_width="wrap_content"
@@ -74,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.32999998" />
+        app:layout_constraintVertical_bias="0.26999998" />
 
     <ImageView
         android:id="@+id/textView4"
@@ -89,22 +90,40 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView11"
-        app:layout_constraintVertical_bias="0.006"
+        app:layout_constraintTop_toTopOf="@+id/imageView11"
+        app:layout_constraintVertical_bias="0.18"
         app:srcCompat="@drawable/shadowtwo" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="10dp"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.00999999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/fadingline" />
+
+    <ImageView
+        android:id="@+id/imageViewPhoto"
+        android:layout_width="63dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tagchooser"
+        app:layout_constraintVertical_bias="0.681"
+        app:srcCompat="@drawable/ic_add_location" />
 
     <RadioGroup
         android:id="@+id/tagchooser"
@@ -118,9 +137,10 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="0.089999974">
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.0">
 
 
         <RadioButton
@@ -191,8 +211,6 @@
 
 
     </RadioGroup>
-
-
 
 
 </android.support.constraint.ConstraintLayout>

@@ -17,5 +17,6 @@
     <color name="TransparentGrey">#7F000000</color>
     <color name="TransparentWhite">#7fffffff</color>
     <color name="orange">#ffcd75</color>
+    <color name="pink">#feb993</color>
 
 </resources>

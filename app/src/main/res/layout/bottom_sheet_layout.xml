@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    style="@style/Widget.Design.BottomSheet.Modal"
     android:padding="16dp">
 
     <TextView
@@ -10,13 +11,70 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Work Preview"
-        android:textSize="25sp"/>
+        android:textColor="@color/black"
+        android:fontFamily="@font/lato"
+        android:textSize="45sp"/>
 
-    <TextView
-        android:id="@+id/descTextBottomSheet"
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/dollasign"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:textColor="@color/legit"
+            android:layout_alignStart="@+id/pricePreview"
+            android:layout_marginStart="-20dp"
+            android:text="$"/>
+        <TextView
+            android:id="@+id/pricePreview"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:textColor="@color/legit"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="120dp"
+            android:text="00.00"/>
+        <!--<TextView-->
+            android:id="@+id/endDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:paddingBottom="5dp"
+            android:layout_alignParentBottom="true"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="100dp"
+            android:fontFamily="@font/lato"
+            android:text="Ends:"/>
+     <!--//   <TextView-->
+            android:id="@+id/EndDatePreview"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="5dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="18dp"
+            android:fontFamily="@font/lato_thin"
+            android:textColor="@color/Black"
+            android:layout_marginEnd="0dp"
+            android:layout_alignParentEnd="true"
+            android:text="MM/DD/YY"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/moreDetails"
+        android:fontFamily="@font/lato"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description Text"
-        android:textAlignment="center"/>
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:background="@color/legit"
+        android:text="More Details" />
+
 
 </LinearLayout>
