@@ -13,6 +13,10 @@
 
     <application
         android:allowBackup="true"
+
+        android:hardwareAccelerated="false"
+        android:largeHeap="true"
+
         android:icon="@mipmap/ojfinal1"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -47,11 +51,16 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".AddActivity" />
-        <activity android:name=".TagActivity" />
-        <activity android:name=".PriceActivity" />
-        <activity android:name=".LocationPickerActivity" />
-        <activity android:name=".DateActivity" />
+        <activity android:name=".AddActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TagActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PriceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LocationPickerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DateActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ChattingActivity"></activity>
     </application>
 

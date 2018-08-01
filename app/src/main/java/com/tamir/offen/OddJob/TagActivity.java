@@ -1,16 +1,28 @@
 package com.tamir.offen.OddJob;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.*;
 import android.content.*;
 
 public class TagActivity extends AppCompatActivity {
 
+    private Button btnToPrice, btnBackTitle;
+
     private RadioGroup tagchooser;
     private ImageView imageViewPhoto;
-    private Integer []photos = {R.drawable.rtech, R.drawable.rtrans, R.drawable.rhome, R.drawable.rcare, R.drawable.redu, R.drawable.rother};
+    private Integer[] photos = {R.drawable.rtech, R.drawable.rtrans, R.drawable.rhome, R.drawable.rcare, R.drawable.redu, R.drawable.rother};
 
+    private BottomNavigationView bottomNavigationView;
+
+    private String title, desc;
 
 
 
@@ -18,16 +30,101 @@ public class TagActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag);
-        this.imageViewPhoto = (ImageView) findViewById(R.id.imageViewPhoto);
-        this.tagchooser = (RadioGroup) findViewById(R.id.tagchooser);
+
+        title = getBundleStringInfo("title");
+        desc = getBundleStringInfo("desc");
+
+        btnToPrice = findViewById(R.id.btnToPrice);
+        btnBackTitle = findViewById(R.id.btnBackTitle);
+        bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
+
+        btnBackTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TagActivity.this, AddActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+        this.imageViewPhoto = findViewById(R.id.imageViewPhoto);
+        this.tagchooser = findViewById(R.id.tagchooser);
         this.tagchooser.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                RadioButton RadioButton = (RadioButton) tagchooser.findViewById(i);
-                int index = radioGroup.indexOfChild(RadioButton);
+                final RadioButton radioButton = tagchooser.findViewById(i);
+                int index = radioGroup.indexOfChild(radioButton);
                 imageViewPhoto.setImageResource(photos[index]);
+
+                btnToPrice.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String tag = radioButton.getText().toString();
+
+                        // add a way to display a toast if next is clicked and there isn't a tag checked
+                        if (tag.matches("")) {
+                            Toast.makeText(TagActivity.this, "Select a Tag", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        Intent intent = new Intent(TagActivity.this, PriceActivity.class);
+
+                        intent.putExtra("tag", tag);
+                        intent.putExtra("title", title);
+                        intent.putExtra("desc", desc);
+
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                });
 
             }
         });
+
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                Intent intent;
+
+                switch(item.getItemId()) {
+                    case R.id.nav_messages:
+                        intent = new Intent(TagActivity.this, messages.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        break;
+
+                    case R.id.nav_map:
+                        intent = new Intent(TagActivity.this, map.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        break;
+
+                    case R.id.nav_add_work:
+                        //intent = new Intent(AddJob.this, AddJob.class);
+                        //startActivity(intent);
+                        break;
+
+                }
+
+                return false;
+            }
+        });
     }
+
+    private String getBundleStringInfo(String tag) {
+        Intent intentExtras = getIntent();
+        Bundle extrasBundle = intentExtras.getExtras();
+        if(extrasBundle != null) {
+            if(extrasBundle.containsKey(tag)) {
+                return extrasBundle.getString(tag);
+            }
+        }
+        return "TAG NOT FOUND";
+    }
+
+
 }

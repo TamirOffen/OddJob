@@ -21,6 +21,12 @@ public class AddActivity extends AppCompatActivity {
     private Button btnDesc;
     private BottomNavigationView bottomNavigationView;
 
+    public String test;
+
+    public AddActivity() {
+        // bullshit doesn't work
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +36,8 @@ public class AddActivity extends AppCompatActivity {
         editTextDesc = findViewById(R.id.editTextDesc);
         btnDesc = findViewById(R.id.btnDesc);
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
+
+        test = editTextTitle.getText().toString();
 
         btnDesc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,21 +54,22 @@ public class AddActivity extends AppCompatActivity {
                     return;
                 }
 
-                Intent goToMapIntent = new Intent(AddActivity.this, map.class);
-                goToMapIntent.putExtra("latitude", 10);
-                goToMapIntent.putExtra("longitude", 10);
-                goToMapIntent.putExtra("title", title);
-                goToMapIntent.putExtra("desc", desc);
+                //Intent goToMapIntent = new Intent(AddActivity.this, map.class);
+                Intent goToTagIntent = new Intent(AddActivity.this, TagActivity.class);
 
-                startActivity(goToMapIntent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                goToTagIntent.putExtra("title", title);
+                goToTagIntent.putExtra("desc", desc);
+
+                startActivity(goToTagIntent);
+                //startActivity(addJobHandlerIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(2);
-
         menuItem.setChecked(true);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

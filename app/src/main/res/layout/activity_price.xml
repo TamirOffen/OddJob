@@ -23,7 +23,7 @@
         app:srcCompat="@drawable/rpricepro" />
 
     <Button
-        android:id="@+id/button2price"
+        android:id="@+id/btnToLoc"
         android:layout_width="47dp"
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
@@ -41,7 +41,7 @@
         app:layout_constraintVertical_bias="0.95" />
 
     <Button
-        android:id="@+id/button3des"
+        android:id="@+id/btnBackTag"
         android:layout_width="47dp"
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
@@ -62,7 +62,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView4"
+        android:layout_below="@+id/imageOf3"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -75,11 +75,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/imageOf3"
         app:layout_constraintVertical_bias="0.32999998" />
 
     <ImageView
-        android:id="@+id/textView4"
+        android:id="@+id/imageOf3"
         android:layout_width="140dp"
         android:layout_height="175dp"
         android:layout_alignTop="@+id/imageView11"
@@ -111,27 +111,27 @@
 
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/imageOfDollar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText"
+        android:layout_alignBottom="@+id/editTextPrice"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_toStartOf="@+id/editText"
+        android:layout_toStartOf="@+id/editTextPrice"
         android:text="$"
         android:textColor="@color/white"
         android:textSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editText"
+        app:layout_constraintEnd_toStartOf="@+id/editTextPrice"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/imageOf3"
         app:layout_constraintVertical_bias="0.19" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextPrice"
         android:layout_width="177dp"
         android:layout_height="71dp"
         android:layout_below="@+id/textView3"
@@ -150,8 +150,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/imageOf3"
         app:layout_constraintVertical_bias="0.23000002" />
+
+    <RelativeLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_alignParentBottom="true">
+
+        <android.support.design.widget.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/bottomNavView_Bar"
+            android:background="@drawable/white_grey_border_top"
+            app:menu="@menu/nav_items"></android.support.design.widget.BottomNavigationView>
+
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -145,5 +145,22 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/fadingline" />
 
+    <RelativeLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_alignParentBottom="true">
+
+        <android.support.design.widget.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/bottomNavView_Bar"
+            android:background="@drawable/white_grey_border_top"
+            app:menu="@menu/nav_items"></android.support.design.widget.BottomNavigationView>
+
+    </RelativeLayout>
+
 
 </android.support.constraint.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.tamir.offen.OddJob;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.DialogFragment;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -27,7 +29,7 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
     private DatePickerDialog.OnDateSetListener mDateSetListener1;
     private TextView mTimePicker;
     private TextView mTimePicker1;
-
+    private Button btnBackLoc;
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
@@ -36,16 +38,16 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
 
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date);
+
         mTimePicker = (TextView) findViewById(R.id.inputstarttime);
         mTimePicker1 = (TextView) findViewById(R.id.inputendtime);
         mDisplayDate = (TextView) findViewById(R.id.StartDateSelect);
         mDisplayDate1 = (TextView) findViewById(R.id.EndDateSelect);
+        btnBackLoc = findViewById(R.id.btnBackLoc);
 
         mTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +64,14 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
             }
         });
 
-
+        btnBackLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DateActivity.this, LocationPickerActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
 
         mDisplayDate1.setOnClickListener(new View.OnClickListener(){
             @Override

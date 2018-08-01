@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class WorkBottomSheetDialog extends BottomSheetDialogFragment {
 
-    private TextView workPreviewText, descPreviewText;
+    private TextView workPreviewText, priceText;
     private BottomSheetListener listener;
 
     @Nullable
@@ -25,6 +25,9 @@ public class WorkBottomSheetDialog extends BottomSheetDialogFragment {
 
         workPreviewText = view.findViewById(R.id.workPreviewText);
         workPreviewText.setText(listener.getJobTitle());
+
+        priceText = view.findViewById(R.id.pricePreview);
+        priceText.setText(listener.getJobPrice());
 
         //descPreviewText = view.findViewById(R.id.wor);
         //descPreviewText.setText(listener.getJobDesc());
@@ -38,6 +41,7 @@ public class WorkBottomSheetDialog extends BottomSheetDialogFragment {
         // returns the clicked pin's title
         String getJobTitle();
         String getJobDesc();
+        String getJobPrice();
     }
 
     @Override

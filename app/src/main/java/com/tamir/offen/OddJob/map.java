@@ -71,6 +71,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private CameraPosition cameraPosition;
     private float currZoomValue;
     private LatLng currPosLatLng;
+    private String jobPrice;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -246,13 +247,14 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
                             // add job marker
-                            addJobLat = getBundleDoubleInfo("latitude"); addJobLng = getBundleDoubleInfo("longitude");
+
+                            addJobLat = 38.645139; addJobLng = -121.164702;
                             addJobTitle = getBundleStringInfo("title"); addJobDesc = getBundleStringInfo("desc");
-                            if(addJobLat != NO_VALUE_BUNDLE_NUMBER && addJobLng != NO_VALUE_BUNDLE_NUMBER && !addJobTitle.equals(NO_VALUE_BUNDLE_STRING)
-                                    && !addJobDesc.equals(NO_VALUE_BUNDLE_STRING)) {
+                            jobPrice = getBundleStringInfo("price");
+                            if (!addJobTitle.equals("NO STRING FOUND IN BUNDLE")) {
                                 LatLng latLng = new LatLng(addJobLat, addJobLng);
                                 addMarker(latLng, addJobTitle);
-                                moveCamera(latLng, DEFAULT_ZOOM - 7f);
+                                moveCamera(latLng, DEFAULT_ZOOM - 0f);
                             }
 
                         } else {
@@ -434,6 +436,12 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     @Override
     public String getJobDesc() {
         if(currentMarker != null) return addJobDesc;
+        else return "MARKER NOT FOUND";
+    }
+
+    @Override
+    public String getJobPrice() {
+        if(currentMarker != null) return jobPrice;
         else return "MARKER NOT FOUND";
     }
 }
