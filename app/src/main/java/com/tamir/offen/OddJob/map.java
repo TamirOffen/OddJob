@@ -77,6 +77,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+
         // checks if the correct Google Play Services are installed
         if (!isServicesOk()) {
             Intent intent = new Intent(map.this, MainActivity.class);
@@ -93,12 +95,15 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
             Toast.makeText(this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
         } else {
-            //Toast.makeText(this, "no pos", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
         }
 
 
         if (savedInstanceState != null) {
-            zoomText.setText(savedInstanceState.getString("Zoom Test"));
+            Toast.makeText(this, "dfsdf", Toast.LENGTH_SHORT).show();
+            zoomText.setText(savedInstanceState.getString("Zoom"));
+            float zoom = savedInstanceState.getFloat("zoom");
+            Toast.makeText(this, new Float(zoom).toString(), Toast.LENGTH_SHORT).show();
         }
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
@@ -119,7 +124,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                     case R.id.nav_map:
                         break;
                     case R.id.nav_add_work:
-                        intent = new Intent(map.this, DateActivity.class);
+                        intent = new Intent(map.this, AddActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
@@ -127,15 +132,27 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                 return false;
             }
         });
+        //Toast.makeText(this, "end of onCreate", Toast.LENGTH_SHORT).show();
     }
 
+
+    /*
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
+        CameraPosition lastCurrentCameraLocation = mMap.getCameraPosition();
+        LatLng lastCurrentCameraLocationLatLng = lastCurrentCameraLocation.target;
+        double lat = lastCurrentCameraLocationLatLng.latitude, lng = lastCurrentCameraLocationLatLng.longitude;
+        float lastCurrentCameraLocationZoom = lastCurrentCameraLocation.zoom;
 
-        savedInstanceState.putString("Zoom Test", "11");
+        savedInstanceState.putDouble("lat", lat);
+        savedInstanceState.putDouble("lng", lng);
+        savedInstanceState.putFloat("zoom", lastCurrentCameraLocationZoom);
+        Toast.makeText(this, new Float(lastCurrentCameraLocationZoom).toString(), Toast.LENGTH_SHORT).show();
+
     }
+    */ //onSave...
 
     // returns if correct Google Play Services are installed
     public boolean isServicesOk() {
@@ -222,8 +239,10 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
                             // current location marker
                             Location currentLocation = (Location)task.getResult();
-                            Toast.makeText(map.this, "here", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(map.this, "currPosLng", Toast.LENGTH_SHORT).show();
                             currPosLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                            cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
+                            //Toast.makeText(map.this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
                             // add job marker
