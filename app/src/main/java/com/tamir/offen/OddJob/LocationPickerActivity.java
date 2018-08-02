@@ -88,6 +88,7 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_picker);
 
+
         btnBackPrice = findViewById(R.id.btnBackPrice);
         btnToTime = findViewById(R.id.btnToTime);
         btnAddPin = findViewById(R.id.btnAddPin);
@@ -106,6 +107,9 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         ImageView progressbar =(ImageView) findViewById(R.id.progressbar);
         progressbar.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.rlocpro, 0, 100));
+        options.inScaled = false;
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
+
 
 
         setCustomAddressTextEditable(false);

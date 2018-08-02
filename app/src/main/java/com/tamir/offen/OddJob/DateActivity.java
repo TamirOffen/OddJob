@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.lang.annotation.Inherited;
+import java.sql.Time;
 import java.util.Calendar;
 
 public class DateActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
@@ -31,14 +33,23 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
     private DatePickerDialog.OnDateSetListener mDateSetListener1;
     private TextView mTimePicker;
     private TextView mTimePicker1;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener1;
     private Button btnBackLoc;
-
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+    String callback = "";
 
 
     @Override
-    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-        TextView textView = (TextView)findViewById(R.id.inputstarttime);
-        textView.setText(hourOfDay +":" +minute);
+    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+        if(callback.equalsIgnoreCase("for_start")){
+            TextView textView = (TextView) findViewById(R.id.inputstarttime);
+            textView.setText(i + ":" + i1);
+        }
+        if(callback.equalsIgnoreCase("for_end")){
+            TextView textView1 = (TextView) findViewById(R.id.inputendtime);
+            textView1.setText(i+":"+i1);
+        }
+        callback="";
 
     }
 
@@ -47,6 +58,30 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date);
 
+
+
+        mTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback="for_start";
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(),"time picker");
+
+            }
+        });
+
+        mTimePicker1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback = "for_end";
+                DialogFragment timePicker1 = new TimePicker1Fragment();
+                timePicker1.show(getSupportFragmentManager(),"time picker1");
+
+            }
+
+        });
+
+
         mTimePicker = (TextView) findViewById(R.id.inputstarttime);
         mTimePicker1 = (TextView) findViewById(R.id.inputendtime);
         mDisplayDate = (TextView) findViewById(R.id.StartDateSelect);
@@ -54,25 +89,17 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         btnBackLoc = findViewById(R.id.btnBackLoc);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
+        options.inScaled = false;
         BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+        String imageType = options.outMimeType;
         ImageView timepro = (ImageView) findViewById(R.id.progressbar);
         timepro.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 100, 100));
+                decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 150 , 150));
+        Bitmap source = BitmapFactory.decodeResource(getResources(), R.drawable.timepro, options);
 
-        mTimePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment timePicker = new TimePickerFragment();
-                timePicker.show(getSupportFragmentManager(),"time picker");
-            }
-        });
-        mTimePicker1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment timePicker1 = new TimePicker1Fragment();
-                timePicker1.show(getSupportFragmentManager(),"time picker");
-            }
-        });
+
 
         btnBackLoc.setOnClickListener(new View.OnClickListener() {
             @Override
