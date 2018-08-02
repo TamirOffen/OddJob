@@ -17,7 +17,7 @@ public class PriceActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private Button btnToLoc, btnBackTag;
     private EditText editTextPrice;
-    private String title, desc, tag;
+    private AddJobHandler addJobHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,7 @@ public class PriceActivity extends AppCompatActivity {
         btnToLoc = findViewById(R.id.btnToLoc);
         editTextPrice = findViewById(R.id.editTextPrice);
 
-        title = getBundleStringInfo("title");
-        desc = getBundleStringInfo("desc");
-        tag = getBundleStringInfo("tag");
+        addJobHandler = new AddJobHandler();
 
         btnToLoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,11 +41,9 @@ public class PriceActivity extends AppCompatActivity {
                     return;
                 }
 
+                addJobHandler.setPrice(price);
+
                 Intent intent = new Intent(PriceActivity.this, LocationPickerActivity.class);
-                intent.putExtra("price", price);
-                intent.putExtra("tag", tag);
-                intent.putExtra("title", title);
-                intent.putExtra("desc", desc);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -95,15 +91,4 @@ public class PriceActivity extends AppCompatActivity {
         });
     }
 
-
-    private String getBundleStringInfo(String tag) {
-        Intent intentExtras = getIntent();
-        Bundle extrasBundle = intentExtras.getExtras();
-        if(extrasBundle != null) {
-            if(extrasBundle.containsKey(tag)) {
-                return extrasBundle.getString(tag);
-            }
-        }
-        return "TAG NOT FOUND";
-    }
 }

@@ -18,14 +18,10 @@ public class AddActivity extends AppCompatActivity {
     // vars
     private EditText editTextTitle;
     private EditText editTextDesc;
-    private Button btnDesc;
+    private Button btnToTag;
     private BottomNavigationView bottomNavigationView;
 
-    public String test;
-
-    public AddActivity() {
-        // bullshit doesn't work
-    }
+    private AddJobHandler addJobHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +30,12 @@ public class AddActivity extends AppCompatActivity {
 
         editTextTitle = findViewById(R.id.editTextTitle);
         editTextDesc = findViewById(R.id.editTextDesc);
-        btnDesc = findViewById(R.id.btnDesc);
+        btnToTag = findViewById(R.id.btnDesc);
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
 
-        test = editTextTitle.getText().toString();
+        addJobHandler= new AddJobHandler();
 
-        btnDesc.setOnClickListener(new View.OnClickListener() {
+        btnToTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String title = editTextTitle.getText().toString(), desc = editTextDesc.getText().toString();
@@ -54,11 +50,14 @@ public class AddActivity extends AppCompatActivity {
                     return;
                 }
 
+                addJobHandler.setTitle(editTextTitle.getText().toString());
+                addJobHandler.setDesc(editTextDesc.getText().toString());
+
                 //Intent goToMapIntent = new Intent(AddActivity.this, map.class);
                 Intent goToTagIntent = new Intent(AddActivity.this, TagActivity.class);
 
-                goToTagIntent.putExtra("title", title);
-                goToTagIntent.putExtra("desc", desc);
+                //goToTagIntent.putExtra("title", title);
+                //goToTagIntent.putExtra("desc", desc);
 
                 startActivity(goToTagIntent);
                 //startActivity(addJobHandlerIntent);

@@ -258,16 +258,5 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btnAddPin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Add Pin"
-        app:layout_constraintEnd_toStartOf="@+id/progressbar"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/progressbar"
-        app:layout_constraintTop_toTopOf="@+id/progressbar" />
-
 
 </android.support.constraint.ConstraintLayout>

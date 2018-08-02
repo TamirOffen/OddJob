@@ -22,8 +22,7 @@ public class TagActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
-    private String title, desc;
-
+    private AddJobHandler addJobHandler;
 
 
     @Override
@@ -31,12 +30,11 @@ public class TagActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag);
 
-        title = getBundleStringInfo("title");
-        desc = getBundleStringInfo("desc");
-
         btnToPrice = findViewById(R.id.btnToPrice);
         btnBackTitle = findViewById(R.id.btnBackTitle);
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
+
+        addJobHandler = new AddJobHandler();
 
         btnBackTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,11 +64,13 @@ public class TagActivity extends AppCompatActivity {
                             return;
                         }
 
+                        addJobHandler.setTag(tag);
+
                         Intent intent = new Intent(TagActivity.this, PriceActivity.class);
 
-                        intent.putExtra("tag", tag);
-                        intent.putExtra("title", title);
-                        intent.putExtra("desc", desc);
+//                        intent.putExtra("tag", tag);
+//                        intent.putExtra("title", title);
+//                        intent.putExtra("desc", desc);
 
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -113,17 +113,6 @@ public class TagActivity extends AppCompatActivity {
                 return false;
             }
         });
-    }
-
-    private String getBundleStringInfo(String tag) {
-        Intent intentExtras = getIntent();
-        Bundle extrasBundle = intentExtras.getExtras();
-        if(extrasBundle != null) {
-            if(extrasBundle.containsKey(tag)) {
-                return extrasBundle.getString(tag);
-            }
-        }
-        return "TAG NOT FOUND";
     }
 
 
