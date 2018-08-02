@@ -20,6 +20,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class LocationPickerActivity extends AppCompatActivity implements ComponentCallbacks2 {
     public void onTrimMemory(int level) {
 
@@ -80,8 +82,8 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
     private Button btnToTime, btnBackPrice, btnAddPin;
     private RadioGroup locRadioGroup;
     private BottomNavigationView bottomNavigationView;
-    private String title, desc, tag, price, location;
     private EditText streetAddressEditText, cityEditText, zipEditText, stateEditText;
+    private AddJobHandler addJobHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,6 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
 
         btnBackPrice = findViewById(R.id.btnBackPrice);
         btnToTime = findViewById(R.id.btnToTime);
-        btnAddPin = findViewById(R.id.btnAddPin);
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         locRadioGroup = findViewById(R.id.radioGroup);
         streetAddressEditText = findViewById(R.id.streetAddressEditText);
@@ -111,13 +112,10 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
 
 
+        addJobHandler = new AddJobHandler();
+
 
         setCustomAddressTextEditable(false);
-
-        title = getBundleStringInfo("title");
-        desc = getBundleStringInfo("desc");
-        tag = getBundleStringInfo("tag");
-        price = getBundleStringInfo("price");
 
         //Toast.makeText(this, title+ " " + desc+" "+tag+" "+price, Toast.LENGTH_SHORT).show();
 
@@ -136,6 +134,8 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                 final RadioButton radioButton = locRadioGroup.findViewById(i);
                 int index = radioGroup.indexOfChild(radioButton);
 
+                final LatLng testLatLng = new LatLng(38.645139, -121.164702); //Intel
+
                 final String currRadioBtn = radioButton.getText().toString();
                 if(currRadioBtn.equals("Custom Location")) {
                     setCustomAddressTextEditable(true);
@@ -148,8 +148,7 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                 btnToTime.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //Toast.makeText(LocationPickerActivity.this, "NOT ACTIVE, CLICK ON ADD PIN", Toast.LENGTH_SHORT).show();
-
+                        addJobHandler.setLocation(testLatLng);
                         Intent intent = new Intent(LocationPickerActivity.this, DateActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -157,18 +156,7 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                     }
                 });
 
-                btnAddPin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(LocationPickerActivity.this, map.class);
-                        intent.putExtra("location", currRadioBtn);
-                        intent.putExtra("price", price);
-                        intent.putExtra("tag", tag);
-                        intent.putExtra("title", title);
-                        intent.putExtra("desc", desc);
-                        startActivity(intent);
-                    }
-                });
+
             }
         });
 

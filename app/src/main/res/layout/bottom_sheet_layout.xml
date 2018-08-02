@@ -29,16 +29,17 @@
             android:layout_alignStart="@+id/pricePreview"
             android:layout_marginStart="-20dp"
             android:text="$"/>
+
         <TextView
             android:id="@+id/pricePreview"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:textAlignment="center"
-            android:textSize="30dp"
-            android:textColor="@color/legit"
             android:layout_alignParentStart="true"
             android:layout_marginStart="120dp"
-            android:text="00.00"/>
+            android:text="00.00"
+            android:textAlignment="center"
+            android:textColor="@color/legit"
+            android:textSize="30dp" />
         <!--<TextView-->
             android:id="@+id/endDate"
             android:layout_width="wrap_content"

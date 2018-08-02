@@ -260,15 +260,15 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="250dp"
+        android:id="@+id/btnAddJob"
+        android:layout_width="129dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/White"
-        android:text="Button"
+        android:text="Add Job"
         android:textColor="#ff7950"
         app:layout_constraintBottom_toTopOf="@+id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"

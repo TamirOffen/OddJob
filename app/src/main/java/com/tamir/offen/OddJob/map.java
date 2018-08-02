@@ -72,6 +72,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private float currZoomValue;
     private LatLng currPosLatLng;
     private String jobPrice;
+    private AddJobHandler addJobHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,6 +107,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
             float zoom = savedInstanceState.getFloat("zoom");
             Toast.makeText(this, new Float(zoom).toString(), Toast.LENGTH_SHORT).show();
         }
+
+        addJobHandler = new AddJobHandler();
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -247,11 +250,10 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
                             // add job marker
-
                             addJobLat = 38.645139; addJobLng = -121.164702;
-                            addJobTitle = getBundleStringInfo("title"); addJobDesc = getBundleStringInfo("desc");
-                            jobPrice = getBundleStringInfo("price");
-                            if (!addJobTitle.equals("NO STRING FOUND IN BUNDLE")) {
+                            addJobTitle = addJobHandler.getTitle(); addJobDesc = addJobHandler.getDesc();
+                            jobPrice = addJobHandler.getPrice();
+                            if (getBundleStringInfo("add marker").equals("add marker")) {
                                 LatLng latLng = new LatLng(addJobLat, addJobLng);
                                 addMarker(latLng, addJobTitle);
                                 moveCamera(latLng, DEFAULT_ZOOM - 0f);

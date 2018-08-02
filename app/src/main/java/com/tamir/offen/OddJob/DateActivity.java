@@ -8,20 +8,24 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-import java.lang.annotation.Inherited;
-import java.sql.Time;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
@@ -33,23 +37,17 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
     private DatePickerDialog.OnDateSetListener mDateSetListener1;
     private TextView mTimePicker;
     private TextView mTimePicker1;
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener1;
-    private Button btnBackLoc;
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-    String callback = "";
+    private Button btnBackLoc, btnAddJob;
+    private BottomNavigationView bottomNavigationView;
+
+    private AddJobHandler addJobHandler;
+
 
 
     @Override
-    public void onTimeSet(TimePicker timePicker, int i, int i1) {
-        if(callback.equalsIgnoreCase("for_start")){
-            TextView textView = (TextView) findViewById(R.id.inputstarttime);
-            textView.setText(i + ":" + i1);
-        }
-        if(callback.equalsIgnoreCase("for_end")){
-            TextView textView1 = (TextView) findViewById(R.id.inputendtime);
-            textView1.setText(i+":"+i1);
-        }
-        callback="";
+    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+        TextView textView = (TextView)findViewById(R.id.inputstarttime);
+        textView.setText(hourOfDay + ":" + minute);
 
     }
 
@@ -58,48 +56,37 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date);
 
+        mTimePicker = findViewById(R.id.inputstarttime);
+        mTimePicker1 = findViewById(R.id.inputendtime);
+        mDisplayDate = findViewById(R.id.StartDateSelect);
+        mDisplayDate1 = findViewById(R.id.EndDateSelect);
+        btnBackLoc = findViewById(R.id.btnBackLoc);
+        btnAddJob = findViewById(R.id.btnAddJob);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
+        ImageView timepro = findViewById(R.id.progressbar);
+        timepro.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 100, 100));
 
+        bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
+
+        addJobHandler = new AddJobHandler();
 
         mTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callback="for_start";
                 DialogFragment timePicker = new TimePickerFragment();
                 timePicker.show(getSupportFragmentManager(),"time picker");
-
             }
         });
-
         mTimePicker1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callback = "for_end";
                 DialogFragment timePicker1 = new TimePicker1Fragment();
-                timePicker1.show(getSupportFragmentManager(),"time picker1");
-
+                timePicker1.show(getSupportFragmentManager(),"time picker");
             }
-
         });
-
-
-        mTimePicker = (TextView) findViewById(R.id.inputstarttime);
-        mTimePicker1 = (TextView) findViewById(R.id.inputendtime);
-        mDisplayDate = (TextView) findViewById(R.id.StartDateSelect);
-        mDisplayDate1 = (TextView) findViewById(R.id.EndDateSelect);
-        btnBackLoc = findViewById(R.id.btnBackLoc);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        options.inScaled = false;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-        String imageType = options.outMimeType;
-        ImageView timepro = (ImageView) findViewById(R.id.progressbar);
-        timepro.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 150 , 150));
-        Bitmap source = BitmapFactory.decodeResource(getResources(), R.drawable.timepro, options);
-
-
 
         btnBackLoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +154,75 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                 mDisplayDate.setText(date);
             }
         };
+
+        btnAddJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(mDisplayDate.getText().toString().matches("")) {
+                    Toast.makeText(DateActivity.this, "Fill out a starting date", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(mDisplayDate1.getText().toString().matches("")) {
+                    Toast.makeText(DateActivity.this, "Fill out an ending date", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(mTimePicker.getText().toString().matches("")) {
+                    Toast.makeText(DateActivity.this, "Fill out a starting time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                /*
+                if(mTimePicker1.getText().toString().matches("")) {
+                    Toast.makeText(DateActivity.this, "Fill out an ending time", Toast.LENGTH_SHORT).show();
+                    return;
+                } */
+
+                addJobHandler.setDate(0, mDisplayDate.getText().toString());
+                addJobHandler.setDate(1, mDisplayDate1.getText().toString());
+                addJobHandler.settime(0, mTimePicker.getText().toString());
+                addJobHandler.settime(1, mTimePicker1.getText().toString());
+
+                Intent intent = new Intent(DateActivity.this, map.class);
+                intent.putExtra("add marker", "add marker");
+                startActivity(intent);
+
+            }
+        });
+
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                Intent intent;
+
+                switch(item.getItemId()) {
+                    case R.id.nav_messages:
+                        intent = new Intent(DateActivity.this, messages.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        break;
+
+                    case R.id.nav_map:
+                        intent = new Intent(DateActivity.this, map.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        break;
+
+                    case R.id.nav_add_work:
+                        //intent = new Intent(AddJob.this, AddJob.class);
+                        //startActivity(intent);
+                        break;
+
+                }
+
+                return false;
+            }
+        });
 
     }
 
