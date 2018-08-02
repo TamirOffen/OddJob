@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginBottom="8dp"
@@ -64,7 +64,7 @@
         android:id="@+id/imageOf3"
         android:layout_width="140dp"
         android:layout_height="175dp"
-        android:layout_alignTop="@+id/imageView11"
+        android:layout_alignTop="@+id/progressbar"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -251,11 +251,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
+            app:itemIconTint="@color/navitemcolors"
+            app:itemTextColor="@color/navitemcolors"
             android:id="@+id/bottomNavView_Bar"
             android:background="@drawable/white_grey_border_top"
             app:menu="@menu/nav_items"></android.support.design.widget.BottomNavigationView>
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/White"
+        android:text="Button"
+        android:textColor="#ff7950"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.882"
+        app:layout_constraintStart_toStartOf="parent"
+        android:shadowRadius="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageOf3"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </android.support.constraint.ConstraintLayout>

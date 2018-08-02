@@ -3,6 +3,9 @@ package com.tamir.offen.OddJob;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.DialogFragment;
@@ -12,10 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -30,6 +32,8 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
     private TextView mTimePicker;
     private TextView mTimePicker1;
     private Button btnBackLoc;
+
+
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
@@ -48,6 +52,12 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         mDisplayDate = (TextView) findViewById(R.id.StartDateSelect);
         mDisplayDate1 = (TextView) findViewById(R.id.EndDateSelect);
         btnBackLoc = findViewById(R.id.btnBackLoc);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
+        ImageView timepro = (ImageView) findViewById(R.id.progressbar);
+        timepro.setImageBitmap(
+                decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 100, 100));
 
         mTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,5 +141,43 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
             }
         };
 
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
     }
 }
