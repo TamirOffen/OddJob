@@ -42,12 +42,21 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
 
     private AddJobHandler addJobHandler;
 
+    String callback = "";
+
 
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-        TextView textView = (TextView)findViewById(R.id.inputstarttime);
-        textView.setText(hourOfDay + ":" + minute);
+
+        if(callback.equalsIgnoreCase("start_time")){
+            TextView textView = (TextView)findViewById(R.id.inputstarttime);
+            textView.setText(hourOfDay + ":" + minute);
+        }
+        else if (callback.equalsIgnoreCase("end_time")){
+            TextView textView1 = (TextView)findViewById(R.id.inputendtime);
+            textView1.setText(hourOfDay + ":" + minute);
+        }
 
     }
 
@@ -66,6 +75,7 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
         ImageView timepro = findViewById(R.id.progressbar);
+        options.inScaled = false;
         timepro.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 100, 100));
 
@@ -76,6 +86,7 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         mTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 DialogFragment timePicker = new TimePickerFragment();
                 timePicker.show(getSupportFragmentManager(),"time picker");
             }
