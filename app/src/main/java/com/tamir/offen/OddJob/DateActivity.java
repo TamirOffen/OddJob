@@ -1,10 +1,9 @@
 package com.tamir.offen.OddJob;
 
+import android.app.ActivityManager;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,7 +24,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class DateActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
@@ -65,6 +63,12 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date);
 
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        activityManager.getMemoryInfo(mi);
+        double availableMegs = mi.availMem / 0x100000L;
+        double percentAvail = mi.availMem / (double)mi.totalMem * 100.0;
+
         mTimePicker = findViewById(R.id.inputstarttime);
         mTimePicker1 = findViewById(R.id.inputendtime);
         mDisplayDate = findViewById(R.id.StartDateSelect);
@@ -73,11 +77,11 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         btnAddJob = findViewById(R.id.btnAddJob);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
-        ImageView timepro = findViewById(R.id.progressbar);
-        options.inScaled = false;
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar1, options);
+        ImageView timepro = findViewById(R.id.progressbar1);
+        options.inScaled = true;
         timepro.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 100, 100));
+                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 100, 100));
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
 
@@ -86,7 +90,7 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         mTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                callback = "start_time";
                 DialogFragment timePicker = new TimePickerFragment();
                 timePicker.show(getSupportFragmentManager(),"time picker");
             }
@@ -94,6 +98,7 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         mTimePicker1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                callback = "end_time";
                 DialogFragment timePicker1 = new TimePicker1Fragment();
                 timePicker1.show(getSupportFragmentManager(),"time picker");
             }
@@ -107,6 +112,7 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
+
 
         mDisplayDate1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -237,41 +243,4 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
 
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
 }

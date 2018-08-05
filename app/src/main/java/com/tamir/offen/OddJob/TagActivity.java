@@ -1,6 +1,7 @@
 package com.tamir.offen.OddJob;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.*;
-import android.content.*;
 
 public class TagActivity extends AppCompatActivity {
 
@@ -29,6 +29,17 @@ public class TagActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tag);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar1, options);
+        BitmapFactory.decodeResource(getResources(),R.id.imageOf3,options);
+        ImageView timepro = findViewById(R.id.progressbar1);
+        ImageView numberpro = findViewById(R.id.imageOf3);
+        options.inScaled = false;
+        timepro.setImageBitmap(
+                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rtagpro, 100, 100));
+        numberpro.setImageBitmap(
+                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.shadowtwo, 100, 100));
 
         btnToPrice = findViewById(R.id.btnToPrice);
         btnBackTitle = findViewById(R.id.btnBackTitle);

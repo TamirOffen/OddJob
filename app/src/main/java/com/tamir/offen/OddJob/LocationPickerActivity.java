@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -101,15 +99,15 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         stateEditText = findViewById(R.id.stateEditText);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar1, options);
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
         String imageType = options.outMimeType;
-        ImageView progressbar =(ImageView) findViewById(R.id.progressbar);
+        ImageView progressbar =(ImageView) findViewById(R.id.progressbar1);
         progressbar.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.rlocpro, 0, 100));
         options.inScaled = false;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar, options);
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar1, options);
 
 
         addJobHandler = new AddJobHandler();
