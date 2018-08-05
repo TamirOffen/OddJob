@@ -77,8 +77,8 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         btnAddJob = findViewById(R.id.btnAddJob);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar1, options);
-        ImageView timepro = findViewById(R.id.progressbar1);
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar4, options);
+        ImageView timepro = findViewById(R.id.progressbar4);
         options.inScaled = true;
         timepro.setImageBitmap(
                 BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 100, 100));

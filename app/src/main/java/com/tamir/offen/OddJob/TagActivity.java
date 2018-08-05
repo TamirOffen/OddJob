@@ -31,9 +31,9 @@ public class TagActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tag);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar1, options);
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar4, options);
         BitmapFactory.decodeResource(getResources(),R.id.imageOf3,options);
-        ImageView timepro = findViewById(R.id.progressbar1);
+        ImageView timepro = findViewById(R.id.progressbar4);
         ImageView numberpro = findViewById(R.id.imageOf3);
         options.inScaled = false;
         timepro.setImageBitmap(

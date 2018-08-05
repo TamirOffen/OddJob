@@ -30,9 +30,9 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar1, options);
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar4, options);
         BitmapFactory.decodeResource(getResources(),R.id.imageOf1,options);
-        ImageView timepro = findViewById(R.id.progressbar1);
+        ImageView timepro = findViewById(R.id.progressbar4);
         ImageView numberpro = findViewById(R.id.imageOf1);
         options.inScaled = false;
         timepro.setImageBitmap(

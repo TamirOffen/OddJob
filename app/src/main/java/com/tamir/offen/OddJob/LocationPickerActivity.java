@@ -1,15 +1,12 @@
 package com.tamir.offen.OddJob;
 
-import android.Manifest;
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,15 +17,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.Task;
 
-public class LocationPickerActivity extends AppCompatActivity implements ComponentCallbacks2, OnMapReadyCallback {
+public class LocationPickerActivity extends AppCompatActivity implements ComponentCallbacks2 {
     public void onTrimMemory(int level) {
 
         // Determine which lifecycle or system event was raised.
@@ -75,15 +70,15 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar1, options);
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar4, options);
         int imageHeight = options.outHeight;
         int imageWidth = options.outWidth;
         String imageType = options.outMimeType;
-        ImageView progressbar = (ImageView) findViewById(R.id.progressbar);
+        ImageView progressbar = (ImageView) findViewById(R.id.progressbar4);
         progressbar.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.rlocpro, 0, 100));
         options.inScaled = false;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar1, options);
+        BitmapFactory.decodeResource(getResources(), R.id.progressbar4, options);
 
         addJobHandler = new AddJobHandler();
 
@@ -115,6 +110,8 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                     setCustomAddressTextEditable(false);
                     map mMap = new map();
                     LatLng curLoc = mMap.getCurrPosLatLng();
+                    //Toast.makeText(LocationPickerActivity.this, mMap.getTest(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LocationPickerActivity.this, "" + curLoc.latitude, Toast.LENGTH_SHORT).show();
                     addJobHandler.setLocation(curLoc);
                 }
 
@@ -225,19 +222,4 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         }
     }
 
-
-    private void getDeviceLocation() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        final Task location = fusedLocationProviderClient.getLastLocation();
-
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-    }
 }

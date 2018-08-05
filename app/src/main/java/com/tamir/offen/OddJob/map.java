@@ -108,7 +108,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
 
         if (savedInstanceState != null) {
-            Toast.makeText(this, "dfsdf", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "saved instance state", Toast.LENGTH_SHORT).show();
             zoomText.setText(savedInstanceState.getString("Zoom"));
             float zoom = savedInstanceState.getFloat("zoom");
             Toast.makeText(this, new Float(zoom).toString(), Toast.LENGTH_SHORT).show();
@@ -249,8 +249,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
                             // current location marker
                             Location currentLocation = (Location)task.getResult();
-                            //Toast.makeText(map.this, "currPosLng", Toast.LENGTH_SHORT).show();
                             currPosLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                            addJobHandler.setLocation(currPosLatLng);
                             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
                             //Toast.makeText(map.this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
@@ -260,8 +260,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             addJobTitle = addJobHandler.getTitle(); addJobDesc = addJobHandler.getDesc();
                             jobPrice = addJobHandler.getPrice();
                             if (getBundleStringInfo("add marker").equals("add marker")) {
-                                LatLng latLng = new LatLng(addJobLat, addJobLng);
-                                //addMarker(addJobHandler.getLocation(), addJobTitle);
+                                LatLng latLng = addJobHandler.getLocation();
+                                Toast.makeText(map.this, "Lat" + latLng.latitude + " lng" + latLng.longitude, Toast.LENGTH_SHORT).show();
+                                addMarker(latLng, addJobTitle);
                                 moveCamera(latLng, DEFAULT_ZOOM - 0f);
                             }
 
@@ -455,5 +456,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
     public LatLng getCurrPosLatLng() {
         return currPosLatLng;
+    }
+
+    public String getTest() {
+        return test;
     }
 }
