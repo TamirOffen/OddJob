@@ -1,94 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    android:orientation="vertical"
     tools:context="com.tamir.offen.OddJob.BottomSheetActivity">
 
     <Button
         android:id="@+id/back_to_map"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/uparrow" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/uparrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/workPreviewText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="63dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/lato"
         android:text="Work Preview"
         android:textColor="@color/black"
-        android:textSize="45sp" />
-
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/dollasign"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_alignStart="@+id/pricePreview"
-            android:layout_marginStart="-20dp"
-            android:text="$"
-            android:textAlignment="center"
-            android:textColor="@color/legit"
-            android:textSize="30dp" />
-
-        <TextView
-            android:id="@+id/pricePreview"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:text="00.00"
-            android:textAlignment="center"
-            android:textColor="@color/legit"
-            android:textSize="30dp" />
-        <!--<TextView-->
-        android:id="@+id/endDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:paddingBottom="5dp"
-        android:layout_alignParentBottom="true"
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="100dp"
-        android:fontFamily="@font/lato"
-        android:text="Ends:"/>
-        <!--//   <TextView-->
-        android:id="@+id/EndDatePreview"
-        android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="5dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="18dp"
-        android:fontFamily="@font/lato_thin"
-        android:textColor="@color/Black"
-        android:layout_marginEnd="0dp"
-        android:layout_alignParentEnd="true"
-        android:text="MM/DD/YY"/>
-    </RelativeLayout>
+        android:textSize="45sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.034" />
 
     <ImageView
+        android:id="@+id/imageView6"
         android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_height="153dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.266"
         app:srcCompat="@drawable/home" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="300dp"
         android:layout_height="70dp"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/start_title"
@@ -154,58 +132,86 @@
 
     </RelativeLayout>
 
+
+    <Button
+        android:id="@+id/messagebtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#ff8e8e"
+        android:fontFamily="@font/lato_thin"
+        android:text="Message"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/accept_job_btn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/accept_job_btn"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:background="#ffb593"
+        android:fontFamily="@font/lato_thin"
+        android:text="Accept OddJob"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ScrollView
         android:layout_width="300dp"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_gravity="center_horizontal"
-        android:scrollbars="vertical">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintVertical_bias="0.288">
 
         <TextView
-            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:fontFamily="@font/lato"
             android:inputType="textMultiLine"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 
     </ScrollView>
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
 
-        <Button
-            android:id="@+id/messagebtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#ff8e8e"
-            android:fontFamily="@font/lato_thin"
-            android:text="Message"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toStartOf="@+id/accept_job_btn"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
+    <TextView
+        android:id="@+id/pricePreview"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lato_thin"
+        android:text="00.00"
+        android:textAlignment="center"
+        android:textColor="@color/legit"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.922" />
 
-        <Button
-            android:id="@+id/accept_job_btn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="8dp"
-            android:background="#ffb593"
-            android:fontFamily="@font/lato_thin"
-            android:text="Accept OddJob"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-    </android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/dollasign"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:fontFamily="@font/lato_thin"
+        android:text="$"
+        android:textColor="@color/legit"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/pricePreview"
+        app:layout_constraintEnd_toStartOf="@id/pricePreview" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
