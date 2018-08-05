@@ -172,7 +172,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/streetAddressEditText"
+        app:layout_constraintTop_toBottomOf="@+id/customLocationEditText"
         app:layout_constraintVertical_bias="0.26" />
 
     <EditText
@@ -194,7 +194,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.332"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/streetAddressEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/customLocationEditText" />
 
     <EditText
         android:id="@+id/zipEditText"
@@ -215,10 +215,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.677"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/streetAddressEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/customLocationEditText" />
 
     <EditText
-        android:id="@+id/streetAddressEditText"
+        android:id="@+id/customLocationEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cityEditText"

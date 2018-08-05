@@ -184,16 +184,17 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                     Toast.makeText(DateActivity.this, "Fill out an ending date", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                /*
                 if(mTimePicker.getText().toString().matches("")) {
                     Toast.makeText(DateActivity.this, "Fill out a starting time", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                /*
                 if(mTimePicker1.getText().toString().matches("")) {
                     Toast.makeText(DateActivity.this, "Fill out an ending time", Toast.LENGTH_SHORT).show();
                     return;
-                } */
+                }
+                */
 
                 addJobHandler.setDate(0, mDisplayDate.getText().toString());
                 addJobHandler.setDate(1, mDisplayDate1.getText().toString());

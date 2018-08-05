@@ -70,9 +70,15 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private String addJobTitle, addJobDesc;
     private CameraPosition cameraPosition;
     private float currZoomValue;
-    private LatLng currPosLatLng;
+    private static LatLng currPosLatLng;
     private String jobPrice;
     private AddJobHandler addJobHandler;
+
+    private static String test = "0";
+
+    public map() {
+
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -182,7 +188,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
     // checks for location permission from user
     // if not clicked, then an ActivityCompat asks for permission
-    private void getLocationPermission(){
+    private void getLocationPermission() {
         Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -250,12 +256,12 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
                             // add job marker
-                            addJobLat = 38.645139; addJobLng = -121.164702;
+                            //addJobLat = 38.645139; addJobLng = -121.164702;
                             addJobTitle = addJobHandler.getTitle(); addJobDesc = addJobHandler.getDesc();
                             jobPrice = addJobHandler.getPrice();
                             if (getBundleStringInfo("add marker").equals("add marker")) {
                                 LatLng latLng = new LatLng(addJobLat, addJobLng);
-                                addMarker(latLng, addJobTitle);
+                                //addMarker(addJobHandler.getLocation(), addJobTitle);
                                 moveCamera(latLng, DEFAULT_ZOOM - 0f);
                             }
 
@@ -445,5 +451,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     public String getJobPrice() {
         if(currentMarker != null) return jobPrice;
         else return "MARKER NOT FOUND";
+    }
+
+    public LatLng getCurrPosLatLng() {
+        return currPosLatLng;
     }
 }

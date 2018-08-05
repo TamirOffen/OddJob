@@ -1,20 +1,24 @@
 package com.tamir.offen.OddJob;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class WorkBottomSheetDialog extends BottomSheetDialogFragment {
 
     private TextView workPreviewText, priceText;
+    private Button btnMoreDetails;
     private BottomSheetListener listener;
 
     @Nullable
@@ -28,6 +32,15 @@ public class WorkBottomSheetDialog extends BottomSheetDialogFragment {
 
         priceText = view.findViewById(R.id.pricePreview);
         priceText.setText(listener.getJobPrice());
+
+        btnMoreDetails = view.findViewById(R.id.btnMoreDetails);
+        btnMoreDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BottomSheetActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //descPreviewText = view.findViewById(R.id.wor);
         //descPreviewText.setText(listener.getJobDesc());

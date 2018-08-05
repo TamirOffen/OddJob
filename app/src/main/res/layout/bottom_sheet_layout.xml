@@ -69,14 +69,14 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/moreDetails"
-        android:fontFamily="@font/lato"
+        android:id="@+id/btnMoreDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:textColor="@color/white"
         android:background="@color/legit"
-        android:text="More Details" />
+        android:fontFamily="@font/lato"
+        android:text="More Details"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
 
 </LinearLayout>

@@ -187,6 +187,7 @@
             android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@+id/accept_job_btn"
             app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="0dp" />
 
