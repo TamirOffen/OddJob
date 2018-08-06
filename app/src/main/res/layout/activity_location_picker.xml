@@ -150,75 +150,8 @@
 
     </RadioGroup>
 
-    <EditText
-        android:id="@+id/stateEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/whitesimline"
-        android:ems="10"
-        android:fontFamily="@font/lato"
-        android:gravity="bottom"
-        android:inputType="textPostalAddress"
-        android:paddingBottom="5dp"
-        android:text="State"
-        android:textColor="@color/TransparentWhite"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customLocationEditText"
-        app:layout_constraintVertical_bias="0.26" />
-
-    <EditText
-        android:id="@+id/cityEditText"
-        android:layout_width="91dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@id/stateEditText"
-        android:layout_below="@id/stateEditText"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/whitesimline"
-        android:ems="10"
-        android:fontFamily="@font/lato"
-        android:inputType="textPersonName"
-        android:text="City"
-        android:textColor="@color/TransparentWhite"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.332"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customLocationEditText" />
-
-    <EditText
-        android:id="@+id/zipEditText"
-        android:layout_width="86dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/stateEditText"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_toEndOf="@id/cityEditText"
-        android:background="@drawable/whitesimline"
-        android:ems="10"
-        android:fontFamily="@font/lato"
-        android:inputType="number"
-        android:text="ZIP"
-        android:textColor="@color/TransparentWhite"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.677"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customLocationEditText" />
-
-    <EditText
-        android:id="@+id/customLocationEditText"
+    <AutoCompleteTextView
+        android:id="@+id/customLocationSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cityEditText"
@@ -230,14 +163,16 @@
         android:ems="10"
         android:fontFamily="@font/lato"
         android:gravity="bottom"
+        android:hint='Search'
         android:inputType="textPostalAddress"
         android:paddingBottom="5dp"
-        android:text="Street Address"
         android:textColor="@color/TransparentWhite"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+
 
     <RelativeLayout
         android:id="@+id/bottomBar"

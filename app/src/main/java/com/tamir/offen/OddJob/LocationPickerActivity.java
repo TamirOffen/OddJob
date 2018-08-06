@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,11 +22,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
-public class LocationPickerActivity extends AppCompatActivity implements ComponentCallbacks2 {
+import java.io.IOException;
+import java.util.List;
+
+public class LocationPickerActivity extends AppCompatActivity implements ComponentCallbacks2, GoogleApiClient.OnConnectionFailedListener{
     public void onTrimMemory(int level) {
 
         // Determine which lifecycle or system event was raised.
@@ -47,10 +57,17 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         }
     }
 
+    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
+
     private Button btnToTime, btnBackPrice;
     private RadioGroup locRadioGroup;
     private BottomNavigationView bottomNavigationView;
     private EditText streetAddressEditText, cityEditText, zipEditText, stateEditText;
+
+    private AutoCompleteTextView customLocationSearch;
+    private PlaceAutocompleteAdapter placeAutocompleteAdapter;
+    private GoogleApiClient googleApiClient;
+
     private AddJobHandler addJobHandler;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -63,10 +80,13 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         btnToTime = findViewById(R.id.btnToTime);
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         locRadioGroup = findViewById(R.id.radioGroup);
-        streetAddressEditText = findViewById(R.id.customLocationEditText);
         cityEditText = findViewById(R.id.cityEditText);
-        zipEditText = findViewById(R.id.zipEditText);
-        stateEditText = findViewById(R.id.stateEditText);
+
+
+        customLocationSearch = findViewById(R.id.customLocationSearch);
+        googleApiClient = new GoogleApiClient.Builder(this).addApi(Places.GEO_DATA_API).addApi(Places.PLACE_DETECTION_API).enableAutoManage(this, this).build();
+        placeAutocompleteAdapter = new PlaceAutocompleteAdapter(this, Places.getGeoDataClient(this, null), LAT_LNG_BOUNDS, null);
+        customLocationSearch.setAdapter(placeAutocompleteAdapter);
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -99,26 +119,35 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                 final RadioButton radioButton = locRadioGroup.findViewById(i);
                 int index = radioGroup.indexOfChild(radioButton);
 
-                final LatLng testLatLng = new LatLng(38.645139, -121.164702); //Intel
-
                 final String currRadioBtn = radioButton.getText().toString();
-                if (currRadioBtn.equals("Custom Location")) {
-                    setCustomAddressTextEditable(true);
-
-                }
                 if (currRadioBtn.equals("Current Location")) {
                     setCustomAddressTextEditable(false);
-                    map mMap = new map();
-                    LatLng curLoc = mMap.getCurrPosLatLng();
-                    //Toast.makeText(LocationPickerActivity.this, mMap.getTest(), Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(LocationPickerActivity.this, "" + curLoc.latitude, Toast.LENGTH_SHORT).show();
-                    addJobHandler.setLocation(curLoc);
+                }
+                if (currRadioBtn.equals("Custom Location")) {
+                    setCustomAddressTextEditable(true);
                 }
 
                 btnToTime.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        addJobHandler.setLocation(testLatLng);
+                        LatLng addJobLocation = new LatLng(38.645139, -121.164702); //Folsom Intel
+                        if (currRadioBtn.equals("Current Location")) {
+                            map mMap = new map();
+                            addJobLocation = mMap.getCurrPosLatLng();
+                        }
+                        if (currRadioBtn.equals("Custom Location")) {
+                            if(customLocationSearch.getText().toString().matches("")) {
+                                Toast.makeText(LocationPickerActivity.this, "Fill out a location", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            String customLocation = customLocationSearch.getText().toString();
+                            try {
+                                addJobLocation = getLatLngGeocoder(customLocation);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        addJobHandler.setLocation(addJobLocation);
                         Intent intent = new Intent(LocationPickerActivity.this, DateActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -202,24 +231,24 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
 
     private void setCustomAddressTextEditable(boolean editable) {
         if (!editable) {
-            streetAddressEditText.setAlpha(0.5f);
-            cityEditText.setAlpha(0.5f);
-            zipEditText.setAlpha(0.5f);
-            stateEditText.setAlpha(0.5f);
-            streetAddressEditText.setFocusable(editable);
-            cityEditText.setFocusable(editable);
-            zipEditText.setFocusable(editable);
-            stateEditText.setFocusable(editable);
+            customLocationSearch.setAlpha(0.5f);
+            customLocationSearch.setFocusable(editable);
         } else {
-            streetAddressEditText.setAlpha(1f);
-            cityEditText.setAlpha(1f);
-            zipEditText.setAlpha(1f);
-            stateEditText.setAlpha(1f);
-            streetAddressEditText.setFocusableInTouchMode(editable);
-            cityEditText.setFocusableInTouchMode(editable);
-            zipEditText.setFocusableInTouchMode(editable);
-            stateEditText.setFocusableInTouchMode(editable);
+            customLocationSearch.setAlpha(1f);
+            customLocationSearch.setFocusableInTouchMode(editable);
         }
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    public LatLng getLatLngGeocoder(String location) throws IOException {
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> list = geocoder.getFromLocationName(location, 1);
+        Address address = list.get(0);
+        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+        return latLng;
+    }
 }

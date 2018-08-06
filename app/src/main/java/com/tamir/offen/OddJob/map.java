@@ -32,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -250,7 +251,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             // current location marker
                             Location currentLocation = (Location)task.getResult();
                             currPosLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                            addJobHandler.setLocation(currPosLatLng);
+                            //addJobHandler.setLocation(currPosLatLng);
                             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
                             //Toast.makeText(map.this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
@@ -262,7 +263,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             if (getBundleStringInfo("add marker").equals("add marker")) {
                                 LatLng latLng = addJobHandler.getLocation();
                                 Toast.makeText(map.this, "Lat" + latLng.latitude + " lng" + latLng.longitude, Toast.LENGTH_SHORT).show();
-                                addMarker(latLng, addJobTitle);
+                                addMarker(latLng, addJobTitle, addJobHandler.getTag());
                                 moveCamera(latLng, DEFAULT_ZOOM - 0f);
                             }
 
@@ -307,8 +308,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
 
         // adding markers
-        addMarker(new LatLng(38.646122, -121.131029), "Test");
-        addMarker(new LatLng(38.646663, -121.131319), "Test 2");
+        addMarker(new LatLng(38.646122, -121.131029), "Test", "Other");
+        addMarker(new LatLng(38.646663, -121.131319), "Test 2", "Transportation");
 
         setMarkerVisibleByTitle(false, "Test");
         setMarkerVisibleByTitle(false, "Test 2");
@@ -342,9 +343,15 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     }
 
     // adds a marker on the Map
-    private void addMarker(LatLng latLng, String name) {
-        //Drawable marker = getResources().getDrawable(R.mipmap.);
-        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(name));
+    private void addMarker(LatLng latLng, String name, String type) {
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_drop_black_24dp);
+        if(type.equals("Technology")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rtech);
+        if(type.equals("Transportation")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rtrans);
+        if(type.equals("Home / Yard")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rhome);
+        if(type.equals("Child / Pet Care")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rcare);
+        if(type.equals("Education")) icon = BitmapDescriptorFactory.fromResource(R.drawable.redu);
+        if(type.equals("Other")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rother);
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(name).icon(icon));
         markerList.add(marker);
     }
 
