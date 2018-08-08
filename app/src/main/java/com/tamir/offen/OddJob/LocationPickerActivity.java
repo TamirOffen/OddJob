@@ -80,7 +80,6 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         btnToTime = findViewById(R.id.btnToTime);
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         locRadioGroup = findViewById(R.id.radioGroup);
-        cityEditText = findViewById(R.id.cityEditText);
 
 
         customLocationSearch = findViewById(R.id.customLocationSearch);
