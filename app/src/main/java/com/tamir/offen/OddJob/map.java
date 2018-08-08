@@ -32,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -39,9 +40,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class map extends AppCompatActivity implements OnMapReadyCallback,
                                                     GoogleMap.OnMarkerClickListener,
@@ -74,7 +82,11 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private String jobPrice;
     private AddJobHandler addJobHandler;
 
-    private static String test = "0";
+    // Database - Jobs:
+    public List<AddJobHandler> jobs = new ArrayList<>();
+    public FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public DatabaseReference databaseReference = database.getReference("Jobs");
+
 
     public map() {
 
@@ -84,8 +96,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
-        //Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
         // checks if the correct Google Play Services are installed
         if (!isServicesOk()) {
@@ -101,7 +111,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
         if(currPosLatLng != null) {
             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
-            Toast.makeText(this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
         } else {
            // Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
         }
@@ -111,10 +121,12 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
             Toast.makeText(this, "saved instance state", Toast.LENGTH_SHORT).show();
             zoomText.setText(savedInstanceState.getString("Zoom"));
             float zoom = savedInstanceState.getFloat("zoom");
-            Toast.makeText(this, new Float(zoom).toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, new Float(zoom).toString(), Toast.LENGTH_SHORT).show();
         }
 
         addJobHandler = new AddJobHandler();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Jobs");
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -145,6 +157,32 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         //Toast.makeText(this, "end of onCreate", Toast.LENGTH_SHORT).show();
     }
 
+    /*
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                jobs.clear();
+
+                for(DataSnapshot jobsSnapshot : dataSnapshot.getChildren()) {
+                    AddJobHandler job = jobsSnapshot.getValue(AddJobHandler.class);
+
+                    jobs.add(job);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    */
 
     /*
     @Override
@@ -250,7 +288,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             // current location marker
                             Location currentLocation = (Location)task.getResult();
                             currPosLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                            addJobHandler.setLocation(currPosLatLng);
+                            //addJobHandler.setLocation(currPosLatLng);
                             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
                             //Toast.makeText(map.this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
@@ -261,8 +299,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             jobPrice = addJobHandler.getPrice();
                             if (getBundleStringInfo("add marker").equals("add marker")) {
                                 LatLng latLng = addJobHandler.getLocation();
-                                Toast.makeText(map.this, "Lat" + latLng.latitude + " lng" + latLng.longitude, Toast.LENGTH_SHORT).show();
-                                addMarker(latLng, addJobTitle);
+                                //Toast.makeText(map.this, "Lat" + latLng.latitude + " lng" + latLng.longitude, Toast.LENGTH_SHORT).show();
+                                addMarker(latLng, addJobTitle, addJobHandler.getTag());
                                 moveCamera(latLng, DEFAULT_ZOOM - 0f);
                             }
 
@@ -307,8 +345,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
 
         // adding markers
-        addMarker(new LatLng(38.646122, -121.131029), "Test");
-        addMarker(new LatLng(38.646663, -121.131319), "Test 2");
+        addMarker(new LatLng(38.646122, -121.131029), "Test", "Other");
+        addMarker(new LatLng(38.646663, -121.131319), "Test 2", "Transportation");
 
         setMarkerVisibleByTitle(false, "Test");
         setMarkerVisibleByTitle(false, "Test 2");
@@ -332,6 +370,34 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
             }
         });
 
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
@@ -342,9 +408,15 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     }
 
     // adds a marker on the Map
-    private void addMarker(LatLng latLng, String name) {
-        //Drawable marker = getResources().getDrawable(R.mipmap.);
-        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(name));
+    private void addMarker(LatLng latLng, String name, String type) {
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_drop_black_24dp);
+        if(type.equals("Technology")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rtech);
+        if(type.equals("Transportation")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rtrans);
+        if(type.equals("Home / Yard")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rhome);
+        if(type.equals("Child / Pet Care")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rcare);
+        if(type.equals("Education")) icon = BitmapDescriptorFactory.fromResource(R.drawable.redu);
+        if(type.equals("Other")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rother);
+        Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(name).icon(icon));
         markerList.add(marker);
     }
 
@@ -458,7 +530,4 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         return currPosLatLng;
     }
 
-    public String getTest() {
-        return test;
-    }
 }
