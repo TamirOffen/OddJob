@@ -3,8 +3,8 @@
 
 Started: June 30, 2018
 
-Expected Prototype release date: August 3, 2018
+Expected Prototype release date: TBD
 
-    Tamir Offen: CEO
-    Phaniraj Aenugula: CTO
-    D'Andre Brown: CMO
+    Tamir Offen: Lead Programmer 
+    Phaniraj Aenugula: Lead UX Designer 
+    D'Andre Brown: TBD
