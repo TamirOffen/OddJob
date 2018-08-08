@@ -10,10 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddJobHandler{
 
-    private static String title, desc, tag, price, lat, lng;
-    private static String[] dates = new String[2], times = new String[2];
+    private static String title, desc, tag, price;
+    private static List<String> dates = new ArrayList<>(), times = new ArrayList<>();
     private static LatLng location;
 
     public AddJobHandler() {
@@ -60,19 +63,21 @@ public class AddJobHandler{
         return location;
     }
 
-    public void setDate(int index, String newDate) {
-        dates[index] = newDate;
+    public void setDate(String startDate, String endDate) {
+        dates.clear();
+        dates.add(startDate); dates.add(endDate);
     }
 
-    public String getDate(int index) {
-        return dates[index];
+    public List<String> getDates() {
+        return dates;
     }
 
-    public void settime(int index, String newTime) {
-        times[index] = newTime;
+    public void setTime(String startTime, String endTime) {
+        times.clear();
+        times.add(startTime); times.add(endTime);
     }
 
-    public String gettime(int index) {
-        return times[index];
+    public List<String> gettime() {
+        return times;
     }
 }

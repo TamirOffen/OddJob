@@ -23,6 +23,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.Calendar;
 
 public class DateActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
@@ -39,10 +42,10 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
     private BottomNavigationView bottomNavigationView;
 
     private AddJobHandler addJobHandler;
+    private map mMap = new map();
+    //private DatabaseReference databaseReference = mMap.databaseReference;
 
     String callback = "";
-
-
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
@@ -184,8 +187,6 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                     Toast.makeText(DateActivity.this, "Fill out an ending date", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                /*
                 if(mTimePicker.getText().toString().matches("")) {
                     Toast.makeText(DateActivity.this, "Fill out a starting time", Toast.LENGTH_SHORT).show();
                     return;
@@ -194,12 +195,12 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                     Toast.makeText(DateActivity.this, "Fill out an ending time", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                */
 
-                addJobHandler.setDate(0, mDisplayDate.getText().toString());
-                addJobHandler.setDate(1, mDisplayDate1.getText().toString());
-                addJobHandler.settime(0, mTimePicker.getText().toString());
-                addJobHandler.settime(1, mTimePicker1.getText().toString());
+
+                addJobHandler.setDate(mDisplayDate.getText().toString(), mDisplayDate1.getText().toString());
+                addJobHandler.setTime(mTimePicker.getText().toString(), mTimePicker1.getText().toString());
+
+                addJob();
 
                 Intent intent = new Intent(DateActivity.this, map.class);
                 intent.putExtra("add marker", "add marker");
@@ -232,8 +233,6 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                         break;
 
                     case R.id.nav_add_work:
-                        //intent = new Intent(AddJob.this, AddJob.class);
-                        //startActivity(intent);
                         break;
 
                 }
@@ -242,6 +241,35 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
             }
         });
 
+    }
+
+    public void addJob() {
+        AddJobHandler job = new AddJobHandler();
+
+        DatabaseReference newJob = mMap.databaseReference.push();
+        newJob.setValue(job);
+
+        //newJob.setValue(job.getDates());
+
+        /*
+        AddJobHandler job = new AddJobHandler();
+
+        String title = job.getTitle();
+        String desc = job.getDesc();
+        String tag = job.getTag();
+        LatLng loc = job.getLocation();
+        String price = job.getPrice();
+        String startDate = job.getDate(0), endDate = job.getDate(1);
+        String startTime = job.gettime(0), endTime = job.gettime(1);
+
+        //Toast.makeText(this, "Title: " + title + " Desc: " + desc + " Tag: " + tag + " Price: " + price + " Date: " + startDate + endDate + " Time: " + startTime + endTime, Toast.LENGTH_LONG).show();
+
+        String id = mMap.databaseReference.push().getKey();
+        
+        mMap.databaseReference.child(id).setValue(job);
+
+        Toast.makeText(DateActivity.this, "Job Added to Database", Toast.LENGTH_SHORT).show();
+        */
     }
 
 }

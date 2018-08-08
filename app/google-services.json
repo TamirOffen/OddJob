@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "109670777021",
+    "firebase_url": "https://oddjob-afaff.firebaseio.com",
+    "project_id": "oddjob-afaff",
+    "storage_bucket": "oddjob-afaff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109670777021:android:a267f48dac021ae7",
+        "android_client_info": {
+          "package_name": "com.tamir.offen.OddJob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "109670777021-3ibts7rivm3dd7c3f0l0oog4ibpur5f0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tamir.offen.OddJob",
+            "certificate_hash": "615ad1de0f388910c88007028e25e0b2df97ac9e"
+          }
+        },
+        {
+          "client_id": "109670777021-2onkl4kot8mcfhjninq12e57jcv7vbcu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Go6AUXrCzbt7ZhogywovAGpkHdHygt8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109670777021-2onkl4kot8mcfhjninq12e57jcv7vbcu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
