@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginsigngrad"
+    android:background="@drawable/gradorangetored"
     tools:context="com.tamir.offen.OddJob.UI.LoginActivity">
 
     <EditText
@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button2login" />
 
     <EditText
         android:id="@+id/PassEnter2"
@@ -87,11 +87,11 @@
         app:srcCompat="@drawable/nani3" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button2login"
         android:layout_width="107dp"
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/imageView"
-        android:layout_marginBottom="292dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="88dp"
         android:layout_marginTop="8dp"
         android:layout_toEndOf="@+id/imageView2"
@@ -102,26 +102,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.826" />
+        app:layout_constraintVertical_bias="0.35000002" />
 
     <Button
         android:id="@+id/login2signup"
         android:layout_width="106dp"
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/imageView"
-        android:layout_marginBottom="292dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="88dp"
         android:layout_marginTop="8dp"
-        android:layout_toEndOf="@+id/button2"
+        android:layout_toEndOf="@+id/button2login"
         android:background="@drawable/graysimline"
         android:text="Sign Up"
         android:textColor="@color/sub_btn_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/button2login"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.826" />
+        app:layout_constraintVertical_bias="0.35000002" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -153,9 +153,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/greeninbar"
+        android:background="@color/white"
         android:text="SIGN IN"
-        android:textColor="@color/white"
+        android:textColor="@color/pink"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
