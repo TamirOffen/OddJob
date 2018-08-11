@@ -18,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,7 +56,8 @@ import java.util.List;
 
 public class map extends AppCompatActivity implements OnMapReadyCallback,
                                                     GoogleMap.OnMarkerClickListener,
-                                                    WorkBottomSheetDialog.BottomSheetListener {
+                                                    WorkBottomSheetDialog.BottomSheetListener,
+                                                    View.OnClickListener{
 
     // Constants
     private static final String TAG = "MapActivity",
@@ -81,12 +85,13 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private static LatLng currPosLatLng;
     private String jobPrice;
     private AddJobHandler addJobHandler;
+    private Button btnSignOut;
 
-    // Database - Jobs:
+    // Database:
     public List<AddJobHandler> jobs = new ArrayList<>();
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference databaseReference = database.getReference("Jobs");
-
+    private FirebaseAuth firebaseAuth;
 
     public map() {
 
@@ -109,6 +114,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         zoomText.setText(new Float(DEFAULT_ZOOM).toString());
         currZoomValue = DEFAULT_ZOOM;
 
+        btnSignOut = findViewById(R.id.btnSignOut);
+        btnSignOut.setOnClickListener(this);
+
         if(currPosLatLng != null) {
             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
             //Toast.makeText(this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
@@ -127,6 +135,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         addJobHandler = new AddJobHandler();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Jobs");
+        firebaseAuth = FirebaseAuth.getInstance();
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -530,4 +539,14 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         return currPosLatLng;
     }
 
+    @Override
+    public void onClick(View view) {
+        if(view == btnSignOut) {
+            firebaseAuth.signOut();
+            finish();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+    }
 }
