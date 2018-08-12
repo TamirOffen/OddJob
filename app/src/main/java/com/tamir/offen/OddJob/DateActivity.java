@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -78,13 +79,12 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         mDisplayDate1 = findViewById(R.id.EndDateSelect);
         btnBackLoc = findViewById(R.id.btnBackLoc);
         btnAddJob = findViewById(R.id.btnAddJob);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar4, options);
         ImageView timepro = findViewById(R.id.progressbar4);
-        options.inScaled = true;
         timepro.setImageBitmap(
-                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 100, 100));
+                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 400, 200));
+        ImageView numberpro = findViewById(R.id.imageOf5);
+        numberpro.setImageBitmap(
+                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.shadowfive,100, 100));
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
 

@@ -62,7 +62,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageOf3"
+        android:layout_below="@+id/imageOf5"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -75,11 +75,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageOf3"
+        app:layout_constraintTop_toTopOf="@+id/imageOf5"
         app:layout_constraintVertical_bias="0.32999998" />
 
     <ImageView
-        android:id="@+id/imageOf3"
+        android:id="@+id/imageOf5"
         android:layout_width="140dp"
         android:layout_height="175dp"
         android:layout_alignTop="@+id/progressbar4"
@@ -127,7 +127,7 @@
         app:layout_constraintEnd_toStartOf="@+id/editTextPrice"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageOf3"
+        app:layout_constraintTop_toBottomOf="@+id/imageOf5"
         app:layout_constraintVertical_bias="0.19" />
 
     <EditText
@@ -150,7 +150,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageOf3"
+        app:layout_constraintTop_toBottomOf="@+id/imageOf5"
         app:layout_constraintVertical_bias="0.23000002" />
 
     <RelativeLayout
