@@ -129,10 +129,14 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                 btnToTime.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        LatLng addJobLocation = new LatLng(38.645139, -121.164702); //Folsom Intel
+                        com.tamir.offen.OddJob.LatLng addJobLoc = new com.tamir.offen.OddJob.LatLng(38.645139, -121.164702);
+                        //LatLng addJobLocation = new LatLng(38.645139, -121.164702); //Folsom Intel
                         if (currRadioBtn.equals("Current Location")) {
                             map mMap = new map();
-                            addJobLocation = mMap.getCurrPosLatLng();
+                            //addJobLocation = mMap.getCurrPosLatLng();
+                            double lat = mMap.getCurrPosLatLng().latitude;
+                            double lng = mMap.getCurrPosLatLng().longitude;
+                            addJobLoc = new com.tamir.offen.OddJob.LatLng(lat, lng);
                         }
                         if (currRadioBtn.equals("Custom Location")) {
                             if(customLocationSearch.getText().toString().matches("")) {
@@ -141,12 +145,16 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                             }
                             String customLocation = customLocationSearch.getText().toString();
                             try {
-                                addJobLocation = getLatLngGeocoder(customLocation);
+                                //addJobLocation = getLatLngGeocoder(customLocation);
+                                double lat = getLatLngGeocoder(customLocation).latitude;
+                                double lng = getLatLngGeocoder(customLocation).longitude;
+                                addJobLoc = new com.tamir.offen.OddJob.LatLng(lat, lng);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
-                        addJobHandler.setLocation(addJobLocation);
+                        //addJobHandler.setLocation(addJobLocation);
+                        addJobHandler.setLocation(addJobLoc);
                         Intent intent = new Intent(LocationPickerActivity.this, DateActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

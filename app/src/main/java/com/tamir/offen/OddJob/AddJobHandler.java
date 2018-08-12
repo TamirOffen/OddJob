@@ -13,11 +13,13 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class AddJobHandler{
 
     private static String title, desc, tag, price;
     private static List<String> dates = new ArrayList<>(), times = new ArrayList<>();
-    private static LatLng location;
+    //private static LatLng location;
+    private static com.tamir.offen.OddJob.LatLng location;
 
     public AddJobHandler() {
 
@@ -55,11 +57,17 @@ public class AddJobHandler{
         return price;
     }
 
-    public void setLocation(LatLng newLoc) {
+//    public void setLocation(LatLng newLoc) {
+//        double newLat = newLoc.latitude;
+//        double newLng = newLoc.longitude;
+//        location = new com.tamir.offen.OddJob.LatLng(newLat, newLng);
+//    }
+
+    public void setLocation(com.tamir.offen.OddJob.LatLng newLoc) {
         location = newLoc;
     }
 
-    public LatLng getLocation() {
+    public com.tamir.offen.OddJob.LatLng getLocation() {
         return location;
     }
 
@@ -80,4 +88,11 @@ public class AddJobHandler{
     public List<String> gettime() {
         return times;
     }
+
+    @Override
+    public String toString() {
+        return "Title: " + title;
+    }
 }
+
+

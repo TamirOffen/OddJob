@@ -88,10 +88,15 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private Button btnSignOut;
 
     // Database:
-    public List<AddJobHandler> jobs = new ArrayList<>();
+    DatabaseReference databaseJobs;
+    List<AddJobHandler> jobs;
+
+
+
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference databaseReference = database.getReference("Jobs");
     private FirebaseAuth firebaseAuth;
+
 
     public map() {
 
@@ -119,9 +124,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
         if(currPosLatLng != null) {
             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
-            //Toast.makeText(this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
-        } else {
-           // Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -134,8 +136,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
         addJobHandler = new AddJobHandler();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Jobs");
-        firebaseAuth = FirebaseAuth.getInstance();
+        databaseJobs = FirebaseDatabase.getInstance().getReference("Jobs");
+        jobs = new ArrayList<>();
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -163,7 +165,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                 return false;
             }
         });
-        //Toast.makeText(this, "end of onCreate", Toast.LENGTH_SHORT).show();
+
     }
 
     /*
@@ -211,6 +213,38 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     }
     */ //onSave...
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        databaseJobs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                jobs.clear();
+
+                for(DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
+                    AddJobHandler newJob = jobSnapshot.getValue(AddJobHandler.class);
+                    String title = newJob.getTitle();
+                    double lat = newJob.getLocation().getLatitude();
+                    double lng = newJob.getLocation().getLongitude();
+                    LatLng location = new LatLng(lat, lng);
+                    String tag = newJob.getTag();
+                    addMarker(location, title, tag);
+                    //Toast.makeText(map.this, newJob.toString(), Toast.LENGTH_SHORT).show();
+                    jobs.add(newJob);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
     // returns if correct Google Play Services are installed
     public boolean isServicesOk() {
         Log.d(TAG, "isServicesOk: checking google services version");
@@ -232,6 +266,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
         return false;
     }
+
 
     // checks for location permission from user
     // if not clicked, then an ActivityCompat asks for permission
@@ -307,7 +342,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             addJobTitle = addJobHandler.getTitle(); addJobDesc = addJobHandler.getDesc();
                             jobPrice = addJobHandler.getPrice();
                             if (getBundleStringInfo("add marker").equals("add marker")) {
-                                LatLng latLng = addJobHandler.getLocation();
+                                LatLng latLng = new LatLng(addJobHandler.getLocation().getLatitude(), addJobHandler.getLocation().getLongitude());
+                                //LatLng latLng = addJobHandler.getLocation();
                                 //Toast.makeText(map.this, "Lat" + latLng.latitude + " lng" + latLng.longitude, Toast.LENGTH_SHORT).show();
                                 addMarker(latLng, addJobTitle, addJobHandler.getTag());
                                 moveCamera(latLng, DEFAULT_ZOOM - 0f);
@@ -354,6 +390,14 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
 
         // adding markers
+        for(int i = 0; i < jobs.size(); i++) {
+            String title = jobs.get(i).getTitle();
+            double lat = jobs.get(i).getLocation().getLatitude();
+            double lng = jobs.get(i).getLocation().getLongitude();
+            LatLng location = new LatLng(lat, lng);
+            String tag = jobs.get(i).getTag();
+            addMarker(location, title, tag);
+        }
         addMarker(new LatLng(38.646122, -121.131029), "Test", "Other");
         addMarker(new LatLng(38.646663, -121.131319), "Test 2", "Transportation");
 
@@ -378,35 +422,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
             }
         });
-
-        databaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
 
     }
 
