@@ -44,7 +44,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageOf3"
+        android:layout_below="@+id/imageOf5"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -57,11 +57,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageOf3"
+        app:layout_constraintTop_toTopOf="@+id/imageOf5"
         app:layout_constraintVertical_bias="0.253"  />
 
     <ImageView
-        android:id="@+id/imageOf3"
+        android:id="@+id/imageOf5"
         android:layout_width="140dp"
         android:layout_height="175dp"
         android:layout_alignTop="@+id/progressbar4"
@@ -115,7 +115,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageOf3"
+        app:layout_constraintTop_toBottomOf="@+id/imageOf5"
         app:layout_constraintVertical_bias="0.07999998" />
 
     <TextView
@@ -138,7 +138,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageOf3"
+        app:layout_constraintTop_toBottomOf="@+id/imageOf5"
         app:layout_constraintVertical_bias="0.079" />
 
     <TextView
@@ -154,6 +154,7 @@
         android:background="@drawable/whitesimline"
         android:fontFamily="@font/lato"
         android:gravity="center_horizontal"
+        android:textColor="@color/white"
         android:hint="Date"
         android:ems="10"
         android:textColorHint="@color/TransparentWhite"
@@ -177,6 +178,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/whitesimline"
         android:ems="10"
+        android:textColor="@color/white"
         android:fontFamily="lato"
         android:gravity="center_horizontal"
         android:hint="Date"
@@ -209,6 +211,7 @@
         android:textColorHint="@color/TransparentWhite"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
@@ -233,6 +236,7 @@
         android:inputType="time"
         android:textColorHint="@color/TransparentWhite"
         android:textSize="18dp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
@@ -274,7 +278,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.882"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageOf3"
+        app:layout_constraintTop_toBottomOf="@+id/imageOf5"
         app:layout_constraintVertical_bias="1.0" />
 
 

@@ -1,6 +1,7 @@
 package com.tamir.offen.OddJob;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -28,15 +29,10 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar4, options);
-        BitmapFactory.decodeResource(getResources(),R.id.imageOf1,options);
         ImageView timepro = findViewById(R.id.progressbar4);
         ImageView numberpro = findViewById(R.id.imageOf1);
-        options.inScaled = false;
         timepro.setImageBitmap(
-                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rdespro, 100, 100));
+                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rdespro, 400, 200));
         numberpro.setImageBitmap(
                 BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.shadowone, 100, 100));
 

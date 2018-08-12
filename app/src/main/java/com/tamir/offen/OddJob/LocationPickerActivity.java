@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -86,18 +85,13 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         googleApiClient = new GoogleApiClient.Builder(this).addApi(Places.GEO_DATA_API).addApi(Places.PLACE_DETECTION_API).enableAutoManage(this, this).build();
         placeAutocompleteAdapter = new PlaceAutocompleteAdapter(this, Places.getGeoDataClient(this, null), LAT_LNG_BOUNDS, null);
         customLocationSearch.setAdapter(placeAutocompleteAdapter);
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar4, options);
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-        String imageType = options.outMimeType;
         ImageView progressbar = (ImageView) findViewById(R.id.progressbar4);
         progressbar.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.rlocpro, 0, 100));
-        options.inScaled = false;
-        BitmapFactory.decodeResource(getResources(), R.id.progressbar4, options);
+                decodeSampledBitmapFromResource(getResources(), R.drawable.rlocpro, 400, 200));
+        ImageView numberpro = (ImageView) findViewById(R.id.imageOf5);
+        numberpro.setImageBitmap(BitmapOptimizer.decodeSampledBitmapFromResource(getResources(),R.drawable.shadowfour,100,100));
+
+
 
         addJobHandler = new AddJobHandler();
 

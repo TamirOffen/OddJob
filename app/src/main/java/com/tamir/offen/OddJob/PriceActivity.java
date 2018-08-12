@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class PriceActivity extends AppCompatActivity {
@@ -28,6 +29,12 @@ public class PriceActivity extends AppCompatActivity {
         btnBackTag = findViewById(R.id.btnBackTag);
         btnToLoc = findViewById(R.id.btnToLoc);
         editTextPrice = findViewById(R.id.editTextPrice);
+        ImageView timepro = findViewById(R.id.progressbar4);
+        ImageView number = findViewById(R.id.imageOf5);
+        number.setImageBitmap(
+                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.shadowthree,400, 200));
+        timepro.setImageBitmap(
+                BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rpricepro, 100, 100));
 
         addJobHandler = new AddJobHandler();
 
