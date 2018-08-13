@@ -57,13 +57,14 @@ import java.util.List;
 public class map extends AppCompatActivity implements OnMapReadyCallback,
                                                     GoogleMap.OnMarkerClickListener,
                                                     WorkBottomSheetDialog.BottomSheetListener,
+                                                    //BottomSheetActivity.JobScreenListener,
                                                     View.OnClickListener{
 
     // Constants
     private static final String TAG = "MapActivity",
                                 FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION,
                                 COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION,
-                                NO_VALUE_BUNDLE_STRING = "NO STRING FOUND IN BUNDLE";
+                                NO_VALUE_BUNDLE_STRING = "STRING NOT FOUND IN BUNDLE";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234,
                              NO_VALUE_BUNDLE_INT = -1;
     private static final float DEFAULT_ZOOM = 17f;
@@ -90,9 +91,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     // Database:
     DatabaseReference databaseJobs;
     List<AddJobHandler> jobs;
-
-
-
+    List<String> jobIDs;
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference databaseReference = database.getReference("Jobs");
     private FirebaseAuth firebaseAuth;
@@ -138,6 +137,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
         databaseJobs = FirebaseDatabase.getInstance().getReference("Jobs");
         jobs = new ArrayList<>();
+        jobIDs = new ArrayList<>();
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -168,51 +168,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
     }
 
-    /*
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                jobs.clear();
-
-                for(DataSnapshot jobsSnapshot : dataSnapshot.getChildren()) {
-                    AddJobHandler job = jobsSnapshot.getValue(AddJobHandler.class);
-
-                    jobs.add(job);
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-    */
-
-    /*
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-        CameraPosition lastCurrentCameraLocation = mMap.getCameraPosition();
-        LatLng lastCurrentCameraLocationLatLng = lastCurrentCameraLocation.target;
-        double lat = lastCurrentCameraLocationLatLng.latitude, lng = lastCurrentCameraLocationLatLng.longitude;
-        float lastCurrentCameraLocationZoom = lastCurrentCameraLocation.zoom;
-
-        savedInstanceState.putDouble("lat", lat);
-        savedInstanceState.putDouble("lng", lng);
-        savedInstanceState.putFloat("zoom", lastCurrentCameraLocationZoom);
-        Toast.makeText(this, new Float(lastCurrentCameraLocationZoom).toString(), Toast.LENGTH_SHORT).show();
-
-    }
-    */ //onSave...
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -220,18 +175,21 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         databaseJobs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                jobs.clear();
-
+                jobs.clear(); jobIDs.clear();
                 for(DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
                     AddJobHandler newJob = jobSnapshot.getValue(AddJobHandler.class);
-                    String title = newJob.getTitle();
-                    double lat = newJob.getLocation().getLatitude();
-                    double lng = newJob.getLocation().getLongitude();
-                    LatLng location = new LatLng(lat, lng);
-                    String tag = newJob.getTag();
-                    addMarker(location, title, tag);
-                    //Toast.makeText(map.this, newJob.toString(), Toast.LENGTH_SHORT).show();
+                    jobIDs.add(jobSnapshot.getKey());
                     jobs.add(newJob);
+                    //newJob.setID(jobSnapshot.getKey());
+                }
+
+                for(int i = 0; i < jobs.size(); i++) {
+                    double newJobLat = jobs.get(i).getLocation().getLatitude();
+                    double newJobLng = jobs.get(i).getLocation().getLongitude();
+                    LatLng newJobLocation = new LatLng(newJobLat, newJobLng);
+                    String title = jobs.get(i).getTitle();
+                    String tag = jobs.get(i).getTag();
+                    addMarker(newJobLocation, title, tag);
                 }
 
             }
@@ -332,22 +290,19 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             // current location marker
                             Location currentLocation = (Location)task.getResult();
                             currPosLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                            //addJobHandler.setLocation(currPosLatLng);
                             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
-                            //Toast.makeText(map.this, new Float(cameraPosition.zoom).toString(), Toast.LENGTH_SHORT).show();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
                             // add job marker
-                            //addJobLat = 38.645139; addJobLng = -121.164702;
                             addJobTitle = addJobHandler.getTitle(); addJobDesc = addJobHandler.getDesc();
                             jobPrice = addJobHandler.getPrice();
+                            /*
                             if (getBundleStringInfo("add marker").equals("add marker")) {
                                 LatLng latLng = new LatLng(addJobHandler.getLocation().getLatitude(), addJobHandler.getLocation().getLongitude());
-                                //LatLng latLng = addJobHandler.getLocation();
-                                //Toast.makeText(map.this, "Lat" + latLng.latitude + " lng" + latLng.longitude, Toast.LENGTH_SHORT).show();
                                 addMarker(latLng, addJobTitle, addJobHandler.getTag());
                                 moveCamera(latLng, DEFAULT_ZOOM - 0f);
                             }
+                            */
 
                         } else {
                             Toast.makeText(map.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
@@ -525,6 +480,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     public boolean onMarkerClick(Marker marker) {
         currentMarker = marker;
         //Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+        for(int i = 0; i < jobIDs.size(); i++) {
+            Toast.makeText(this, jobs.get(i).getTitle(), Toast.LENGTH_SHORT).show();
+        }
         WorkBottomSheetDialog workBottomSheetDialog = new WorkBottomSheetDialog();
         workBottomSheetDialog.show(getSupportFragmentManager(), "workBottomSheetDialog");
         return false;
@@ -564,4 +522,5 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
             startActivity(intent);
         }
     }
+
 }

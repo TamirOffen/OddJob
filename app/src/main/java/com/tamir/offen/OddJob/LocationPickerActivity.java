@@ -67,8 +67,11 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
     private PlaceAutocompleteAdapter placeAutocompleteAdapter;
     private GoogleApiClient googleApiClient;
 
-    private AddJobHandler addJobHandler;
+    //private AddJobHandler addJobHandler;
     private FusedLocationProviderClient fusedLocationProviderClient;
+
+    private AddActivity addActivity = new AddActivity();
+    private AddJobHandler newJob = addActivity.newJob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +94,6 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
         ImageView numberpro = (ImageView) findViewById(R.id.imageOf5);
         numberpro.setImageBitmap(BitmapOptimizer.decodeSampledBitmapFromResource(getResources(),R.drawable.shadowfour,100,100));
 
-
-
-        addJobHandler = new AddJobHandler();
 
         setCustomAddressTextEditable(false);
 
@@ -148,7 +148,7 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                             }
                         }
                         //addJobHandler.setLocation(addJobLocation);
-                        addJobHandler.setLocation(addJobLoc);
+                        newJob.setLocation(addJobLoc);
                         Intent intent = new Intent(LocationPickerActivity.this, DateActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -16,10 +16,11 @@ import java.util.List;
 
 public class AddJobHandler{
 
-    private static String title, desc, tag, price;
-    private static List<String> dates = new ArrayList<>(), times = new ArrayList<>();
-    //private static LatLng location;
-    private static com.tamir.offen.OddJob.LatLng location;
+
+    private String title, desc, tag, price, ID;
+    private List<String> dates = new ArrayList<>(), times = new ArrayList<>();
+    private com.tamir.offen.OddJob.LatLng location;
+
 
     public AddJobHandler() {
 
@@ -57,12 +58,6 @@ public class AddJobHandler{
         return price;
     }
 
-//    public void setLocation(LatLng newLoc) {
-//        double newLat = newLoc.latitude;
-//        double newLng = newLoc.longitude;
-//        location = new com.tamir.offen.OddJob.LatLng(newLat, newLng);
-//    }
-
     public void setLocation(com.tamir.offen.OddJob.LatLng newLoc) {
         location = newLoc;
     }
@@ -87,6 +82,14 @@ public class AddJobHandler{
 
     public List<String> gettime() {
         return times;
+    }
+
+    public void setID(String newID) {
+        ID = newID;
+    }
+
+    public String getID(){
+        return ID;
     }
 
     @Override

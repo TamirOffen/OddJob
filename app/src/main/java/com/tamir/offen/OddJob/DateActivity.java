@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
+import java.util.Random;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 
@@ -42,8 +42,10 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
     private Button btnBackLoc, btnAddJob;
     private BottomNavigationView bottomNavigationView;
 
-    private AddJobHandler addJobHandler;
+    //private AddJobHandler addJobHandler;
     private map mMap = new map();
+    private AddActivity addActivity = new AddActivity();
+    private AddJobHandler newJob = addActivity.newJob;
     //private DatabaseReference databaseReference = mMap.databaseReference;
 
     String callback = "";
@@ -87,8 +89,6 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                 BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.shadowfive,100, 100));
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
-
-        addJobHandler = new AddJobHandler();
 
         mTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,8 +197,9 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                 }
 
 
-                addJobHandler.setDate(mDisplayDate.getText().toString(), mDisplayDate1.getText().toString());
-                addJobHandler.setTime(mTimePicker.getText().toString(), mTimePicker1.getText().toString());
+                newJob.setDate(mDisplayDate.getText().toString(), mDisplayDate1.getText().toString());
+                newJob.setTime(mTimePicker.getText().toString(), mTimePicker1.getText().toString());
+                newJob.setID(generateID(3,2));
 
                 addJob();
 
@@ -244,12 +245,8 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
     }
 
     public void addJob() {
-        AddJobHandler job = new AddJobHandler();
-
-        DatabaseReference newJob = mMap.databaseReference.push();
-        newJob.setValue(job);
-
-        //newJob.setValue(job.getDates());
+        DatabaseReference newJobReference = mMap.databaseReference.push();
+        newJobReference.setValue(newJob);
 
         /*
         AddJobHandler job = new AddJobHandler();
@@ -270,6 +267,22 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
 
         Toast.makeText(DateActivity.this, "Job Added to Database", Toast.LENGTH_SHORT).show();
         */
+    }
+
+    private String generateID(int intBound, int letterBound) {
+        String[] letters = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+        String id = "";
+        Random rand = new Random();
+        for(int i = 0; i < intBound; i++) {
+            int randNum = rand.nextInt(10);
+            id += randNum;
+        }
+        for(int i = 0; i < letterBound; i++) {
+            int num = rand.nextInt(26);
+            String randLetter = letters[num];
+            id += randLetter;
+        }
+        return id;
     }
 
 }

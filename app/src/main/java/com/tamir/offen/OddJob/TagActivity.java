@@ -21,7 +21,10 @@ public class TagActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
-    private AddJobHandler addJobHandler;
+    //private AddJobHandler addJobHandler;
+
+    private AddActivity addActivity = new AddActivity();
+    private AddJobHandler newJob = addActivity.newJob;
 
 
     @Override
@@ -38,8 +41,6 @@ public class TagActivity extends AppCompatActivity {
         btnToPrice = findViewById(R.id.btnToPrice);
         btnBackTitle = findViewById(R.id.btnBackTitle);
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
-
-        addJobHandler = new AddJobHandler();
 
         btnBackTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,13 +70,9 @@ public class TagActivity extends AppCompatActivity {
                             return;
                         }
 
-                        addJobHandler.setTag(tag);
+                        newJob.setTag(tag);
 
                         Intent intent = new Intent(TagActivity.this, PriceActivity.class);
-
-//                        intent.putExtra("tag", tag);
-//                        intent.putExtra("title", title);
-//                        intent.putExtra("desc", desc);
 
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

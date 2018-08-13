@@ -18,7 +18,10 @@ public class PriceActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private Button btnToLoc, btnBackTag;
     private EditText editTextPrice;
-    private AddJobHandler addJobHandler;
+    //private AddJobHandler addJobHandler;
+
+    AddActivity addActivity = new AddActivity();
+    private AddJobHandler newJob = addActivity.newJob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class PriceActivity extends AppCompatActivity {
         timepro.setImageBitmap(
                 BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rpricepro, 100, 100));
 
-        addJobHandler = new AddJobHandler();
+//        addJobHandler = new AddJobHandler();
 
         btnToLoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,8 +51,9 @@ public class PriceActivity extends AppCompatActivity {
                     return;
                 }
 
-                addJobHandler.setPrice(price);
+//                addJobHandler.setPrice(price);
 
+                newJob.setPrice(price);
                 Intent intent = new Intent(PriceActivity.this, LocationPickerActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

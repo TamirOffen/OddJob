@@ -23,7 +23,7 @@ public class AddActivity extends AppCompatActivity {
     private Button btnToTag;
     private BottomNavigationView bottomNavigationView;
 
-    private AddJobHandler addJobHandler;
+    public static AddJobHandler newJob = new AddJobHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +41,6 @@ public class AddActivity extends AppCompatActivity {
         btnToTag = findViewById(R.id.btnDesc);
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
 
-        addJobHandler= new AddJobHandler();
-
         btnToTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,17 +56,13 @@ public class AddActivity extends AppCompatActivity {
                     return;
                 }
 
-                addJobHandler.setTitle(editTextTitle.getText().toString());
-                addJobHandler.setDesc(editTextDesc.getText().toString());
+                newJob.setTitle(editTextTitle.getText().toString());
+                newJob.setDesc(editTextDesc.getText().toString());
 
                 //Intent goToMapIntent = new Intent(AddActivity.this, map.class);
                 Intent goToTagIntent = new Intent(AddActivity.this, TagActivity.class);
 
-                //goToTagIntent.putExtra("title", title);
-                //goToTagIntent.putExtra("desc", desc);
-
                 startActivity(goToTagIntent);
-                //startActivity(addJobHandlerIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
@@ -108,7 +102,6 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-
-
+    public AddActivity() { }
 
 }
