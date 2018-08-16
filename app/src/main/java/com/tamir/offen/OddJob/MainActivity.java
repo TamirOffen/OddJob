@@ -5,8 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
+
+import com.tamir.offen.OddJob.Add_Job.DateActivity;
+import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.messages;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,14 +1,4 @@
-package com.tamir.offen.OddJob;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-
-import com.google.android.gms.maps.model.LatLng;
+package com.tamir.offen.OddJob.Add_Job;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +9,7 @@ public class AddJobHandler{
 
     private String title, desc, tag, price, ID;
     private List<String> dates = new ArrayList<>(), times = new ArrayList<>();
-    private com.tamir.offen.OddJob.LatLng location;
+    private com.tamir.offen.OddJob.Add_Job.LatLng location;
 
 
     public AddJobHandler() {
@@ -58,11 +48,11 @@ public class AddJobHandler{
         return price;
     }
 
-    public void setLocation(com.tamir.offen.OddJob.LatLng newLoc) {
+    public void setLocation(com.tamir.offen.OddJob.Add_Job.LatLng newLoc) {
         location = newLoc;
     }
 
-    public com.tamir.offen.OddJob.LatLng getLocation() {
+    public com.tamir.offen.OddJob.Add_Job.LatLng getLocation() {
         return location;
     }
 

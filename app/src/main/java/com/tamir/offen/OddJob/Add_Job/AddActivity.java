@@ -1,8 +1,6 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.Add_Job;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.tamir.offen.OddJob.BitmapOptimizer;
+import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.messages;
+import com.tamir.offen.OddJob.R;
 
 public class AddActivity extends AppCompatActivity {
 

@@ -1,11 +1,9 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.Add_Job;
 
 import android.app.ActivityManager;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -24,8 +22,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import java.util.Random;
-import com.google.android.gms.maps.model.LatLng;
+
 import com.google.firebase.database.DatabaseReference;
+import com.tamir.offen.OddJob.BitmapOptimizer;
+import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.messages;
+import com.tamir.offen.OddJob.R;
 
 import java.util.Calendar;
 
@@ -200,7 +202,6 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                 newJob.setDate(mDisplayDate.getText().toString(), mDisplayDate1.getText().toString());
                 newJob.setTime(mTimePicker.getText().toString(), mTimePicker1.getText().toString());
                 newJob.setID(generateID(3,2));
-
                 addJob();
 
                 Intent intent = new Intent(DateActivity.this, map.class);

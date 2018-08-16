@@ -1,4 +1,4 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.Add_Job;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -12,7 +12,7 @@ import java.util.Calendar;
  * Created by paen3 on 7/31/2018.
  */
 
-public class TimePicker1Fragment extends DialogFragment {
+public class TimePickerFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

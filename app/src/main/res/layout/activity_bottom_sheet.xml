@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tamir.offen.OddJob.BottomSheetActivity">
+    tools:context="com.tamir.offen.OddJob.Add_Job.BottomSheetActivity">
 
     <Button
-        android:id="@+id/back_to_map"
+        android:id="@+id/btnBackToMap"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/workPreviewText"
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="63dp"
         android:layout_gravity="center_horizontal"
@@ -38,7 +38,7 @@
         app:layout_constraintVertical_bias="0.034" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imageViewIcon"
         android:layout_width="150dp"
         android:layout_height="153dp"
         android:layout_gravity="center_horizontal"
@@ -65,7 +65,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewIcon"
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
@@ -91,7 +91,7 @@
             android:textSize="18dp" />
 
         <TextView
-            android:id="@+id/start_date_display"
+            android:id="@+id/textViewStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/start_title"
@@ -101,7 +101,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/end_date_display"
+            android:id="@+id/textViewEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/end_title"
@@ -111,21 +111,21 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/start_time_display"
+            android:id="@+id/textViewStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/start_title"
-            android:layout_below="@+id/start_date_display"
+            android:layout_below="@+id/textViewStartDate"
             android:fontFamily="@font/lato"
             android:text="12:00"
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/end_time_display"
+            android:id="@+id/textViewEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/end_title"
-            android:layout_below="@+id/end_date_display"
+            android:layout_below="@+id/textViewEndDate"
             android:fontFamily="@font/lato"
             android:text="12:00"
             android:textColor="@color/black" />
@@ -134,7 +134,7 @@
 
 
     <Button
-        android:id="@+id/messagebtn"
+        android:id="@+id/btnMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#ff8e8e"
@@ -143,12 +143,12 @@
         android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/accept_job_btn"
+        app:layout_constraintEnd_toStartOf="@+id/btnAcceptJob"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/accept_job_btn"
+        android:id="@+id/btnAcceptJob"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
@@ -174,17 +174,20 @@
         app:layout_constraintVertical_bias="0.288">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/textViewDesc"
+            android:layout_width="290dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato"
             android:inputType="textMultiLine"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            tools:layout_editor_absoluteX="58dp"
+            tools:layout_editor_absoluteY="349dp" />
 
     </ScrollView>
 
 
     <TextView
-        android:id="@+id/pricePreview"
+        android:id="@+id/textViewPrice"
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
@@ -196,7 +199,7 @@
         android:textAlignment="center"
         android:textColor="@color/legit"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -211,7 +214,7 @@
         android:text="$"
         android:textColor="@color/legit"
         android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="@id/pricePreview"
-        app:layout_constraintEnd_toStartOf="@id/pricePreview" />
+        app:layout_constraintBottom_toBottomOf="@id/textViewPrice"
+        app:layout_constraintEnd_toStartOf="@id/textViewPrice" />
 
 </android.support.constraint.ConstraintLayout>

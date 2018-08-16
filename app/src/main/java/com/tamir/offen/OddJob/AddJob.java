@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.messages;
+
 public class AddJob extends AppCompatActivity{
 
     // vars

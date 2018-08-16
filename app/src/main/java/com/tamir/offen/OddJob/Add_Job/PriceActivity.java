@@ -1,4 +1,4 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.Add_Job;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,6 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.tamir.offen.OddJob.BitmapOptimizer;
+import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.messages;
+import com.tamir.offen.OddJob.R;
 
 public class PriceActivity extends AppCompatActivity {
 
@@ -39,7 +44,7 @@ public class PriceActivity extends AppCompatActivity {
         timepro.setImageBitmap(
                 BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rpricepro, 100, 100));
 
-//        addJobHandler = new AddJobHandler();
+//        addJobHandler = new AddJobHandler();33
 
         btnToLoc.setOnClickListener(new View.OnClickListener() {
             @Override

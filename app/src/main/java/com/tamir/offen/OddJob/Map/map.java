@@ -1,14 +1,11 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.Map;
 
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -25,10 +22,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApi;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,21 +37,25 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tamir.offen.OddJob.Add_Job.AddActivity;
+import com.tamir.offen.OddJob.Add_Job.AddJobHandler;
+import com.tamir.offen.OddJob.User_Registration.LoginActivity;
+import com.tamir.offen.OddJob.MainActivity;
+import com.tamir.offen.OddJob.Messaging.messages;
+import com.tamir.offen.OddJob.R;
+import com.tamir.offen.OddJob.Add_Job.WorkBottomSheetDialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class map extends AppCompatActivity implements OnMapReadyCallback,
                                                     GoogleMap.OnMarkerClickListener,
-                                                    WorkBottomSheetDialog.BottomSheetListener,
-                                                    //BottomSheetActivity.JobScreenListener,
+        WorkBottomSheetDialog.BottomSheetListener,
                                                     View.OnClickListener{
 
     // Constants
@@ -95,6 +93,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference databaseReference = database.getReference("Jobs");
     private FirebaseAuth firebaseAuth;
+    public static AddJobHandler curJob;
 
 
     public map() {
@@ -135,9 +134,12 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
         addJobHandler = new AddJobHandler();
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         databaseJobs = FirebaseDatabase.getInstance().getReference("Jobs");
         jobs = new ArrayList<>();
         jobIDs = new ArrayList<>();
+
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -172,34 +174,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     protected void onStart() {
         super.onStart();
 
-        databaseJobs.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                jobs.clear(); jobIDs.clear();
-                for(DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
-                    AddJobHandler newJob = jobSnapshot.getValue(AddJobHandler.class);
-                    jobIDs.add(jobSnapshot.getKey());
-                    jobs.add(newJob);
-                    //newJob.setID(jobSnapshot.getKey());
-                }
-
-                for(int i = 0; i < jobs.size(); i++) {
-                    double newJobLat = jobs.get(i).getLocation().getLatitude();
-                    double newJobLng = jobs.get(i).getLocation().getLongitude();
-                    LatLng newJobLocation = new LatLng(newJobLat, newJobLng);
-                    String title = jobs.get(i).getTitle();
-                    String tag = jobs.get(i).getTag();
-                    addMarker(newJobLocation, title, tag);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        initJobs();
     }
 
 
@@ -345,14 +320,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
 
         // adding markers
-        for(int i = 0; i < jobs.size(); i++) {
-            String title = jobs.get(i).getTitle();
-            double lat = jobs.get(i).getLocation().getLatitude();
-            double lng = jobs.get(i).getLocation().getLongitude();
-            LatLng location = new LatLng(lat, lng);
-            String tag = jobs.get(i).getTag();
-            addMarker(location, title, tag);
-        }
         addMarker(new LatLng(38.646122, -121.131029), "Test", "Other");
         addMarker(new LatLng(38.646663, -121.131319), "Test 2", "Transportation");
 
@@ -366,10 +333,16 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                 currZoomValue = cameraPosition.zoom;
                 zoomText.setText(new Float(currZoomValue).toString());
                 if(cameraPosition.zoom > 18) {
+//                    for(int i = 0; i < markerList.size(); i++) {
+//                        setMarkerVisibleByTitle(true, jobs.get(i).getTitle());
+//                    }
                     setMarkerVisibleByTitle(true, "Test");
                     setMarkerVisibleByTitle(true, "Test 2");
 
                 } else {
+//                    for(int i = 0; i < markerList.size(); i++) {
+//                        setMarkerVisibleByTitle(false, jobs.get(i).getTitle());
+//                    }
                     setMarkerVisibleByTitle(false, "Test");
                     setMarkerVisibleByTitle(false, "Test 2");
 
@@ -377,6 +350,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
             }
         });
+
+
 
     }
 
@@ -397,6 +372,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         if(type.equals("Other")) icon = BitmapDescriptorFactory.fromResource(R.drawable.rother);
         Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(name).icon(icon));
         markerList.add(marker);
+        //Toast.makeText(this, markerList.toString(), Toast.LENGTH_SHORT).show();
     }
 
     // creates a Marker object
@@ -480,9 +456,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     public boolean onMarkerClick(Marker marker) {
         currentMarker = marker;
         //Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
-        for(int i = 0; i < jobIDs.size(); i++) {
-            Toast.makeText(this, jobs.get(i).getTitle(), Toast.LENGTH_SHORT).show();
-        }
+        curJob = getCurJob();
+        Toast.makeText(this, curJob.gettime().toString(), Toast.LENGTH_SHORT).show();
         WorkBottomSheetDialog workBottomSheetDialog = new WorkBottomSheetDialog();
         workBottomSheetDialog.show(getSupportFragmentManager(), "workBottomSheetDialog");
         return false;
@@ -492,19 +467,13 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     // Used to get the title in WorkBottomSheetDialog class
     @Override
     public String getJobTitle() {
-        if(currentMarker != null) return currentMarker.getTitle();
-        else return "MARKER NOT FOUND";
-    }
-
-    @Override
-    public String getJobDesc() {
-        if(currentMarker != null) return addJobDesc;
+        if(currentMarker != null) return curJob.getTitle();
         else return "MARKER NOT FOUND";
     }
 
     @Override
     public String getJobPrice() {
-        if(currentMarker != null) return jobPrice;
+        if(currentMarker != null) return curJob.getPrice();
         else return "MARKER NOT FOUND";
     }
 
@@ -522,5 +491,50 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
             startActivity(intent);
         }
     }
+
+    // initializes a list of jobs from the database and adds them to the map
+    private void initJobs() {
+        databaseJobs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                jobs.clear(); jobIDs.clear();
+                for(DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
+                    AddJobHandler newJob = jobSnapshot.getValue(AddJobHandler.class);
+                    jobIDs.add(jobSnapshot.getKey());
+                    jobs.add(newJob);
+                    //newJob.setID(jobSnapshot.getKey());
+                }
+
+                for(int i = 0; i < jobs.size(); i++) {
+                    double newJobLat = jobs.get(i).getLocation().getLatitude(), newJobLng = jobs.get(i).getLocation().getLongitude();
+                    LatLng newJobLocation = new LatLng(newJobLat, newJobLng);
+                    String title = jobs.get(i).getTitle();
+                    String tag = jobs.get(i).getTag();
+                    addMarker(newJobLocation, title, tag);
+                    //Toast.makeText(map.this, jobs.get(i).getDates().toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    // searches the jobs arraylist by title, should make this more accurate...
+    // returns the job linked to the pin clicked
+    private AddJobHandler getCurJob() {
+        List<AddJobHandler> potentialCurJobs = new ArrayList<>();
+        for(int i = 0; i < jobs.size(); i++){
+            if(currentMarker.getTitle().equals(jobs.get(i).getTitle())) {
+                potentialCurJobs.add(jobs.get(i));
+            }
+        }
+        if(potentialCurJobs.size() > 1) Toast.makeText(this, "More than one marker found(by title). Update getCurJob()!", Toast.LENGTH_LONG).show();
+        return potentialCurJobs.get(0);
+    }
+
 
 }

@@ -1,4 +1,4 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.Add_Job;
 
 public class LatLng {
 

@@ -1,4 +1,4 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.Add_Job;
 
 import android.content.ComponentCallbacks2;
 import android.content.Intent;
@@ -28,6 +28,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.tamir.offen.OddJob.BitmapOptimizer;
+import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.messages;
+import com.tamir.offen.OddJob.R;
 
 import java.io.IOException;
 import java.util.List;
@@ -123,14 +127,14 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                 btnToTime.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        com.tamir.offen.OddJob.LatLng addJobLoc = new com.tamir.offen.OddJob.LatLng(38.645139, -121.164702);
+                        com.tamir.offen.OddJob.Add_Job.LatLng addJobLoc = new com.tamir.offen.OddJob.Add_Job.LatLng(38.645139, -121.164702);
                         //LatLng addJobLocation = new LatLng(38.645139, -121.164702); //Folsom Intel
                         if (currRadioBtn.equals("Current Location")) {
                             map mMap = new map();
                             //addJobLocation = mMap.getCurrPosLatLng();
                             double lat = mMap.getCurrPosLatLng().latitude;
                             double lng = mMap.getCurrPosLatLng().longitude;
-                            addJobLoc = new com.tamir.offen.OddJob.LatLng(lat, lng);
+                            addJobLoc = new com.tamir.offen.OddJob.Add_Job.LatLng(lat, lng);
                         }
                         if (currRadioBtn.equals("Custom Location")) {
                             if(customLocationSearch.getText().toString().matches("")) {
@@ -142,7 +146,7 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                                 //addJobLocation = getLatLngGeocoder(customLocation);
                                 double lat = getLatLngGeocoder(customLocation).latitude;
                                 double lng = getLatLngGeocoder(customLocation).longitude;
-                                addJobLoc = new com.tamir.offen.OddJob.LatLng(lat, lng);
+                                addJobLoc = new com.tamir.offen.OddJob.Add_Job.LatLng(lat, lng);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

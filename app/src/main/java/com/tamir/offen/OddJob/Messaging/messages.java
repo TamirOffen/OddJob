@@ -1,4 +1,4 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.Messaging;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.tamir.offen.OddJob.Add_Job.AddActivity;
+import com.tamir.offen.OddJob.R;
+import com.tamir.offen.OddJob.Map.map;
 
 public class messages extends AppCompatActivity{
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/gradorangetored"
     android:layout_height="match_parent"
-    tools:context="com.tamir.offen.OddJob.TagActivity">
+    tools:context="com.tamir.offen.OddJob.Add_Job.TagActivity">
 
     <ImageView
         android:id="@+id/progressbar4"

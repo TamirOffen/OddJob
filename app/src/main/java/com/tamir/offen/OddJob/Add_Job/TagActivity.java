@@ -1,4 +1,4 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.Add_Job;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,6 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.*;
+
+import com.tamir.offen.OddJob.BitmapOptimizer;
+import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.messages;
+import com.tamir.offen.OddJob.R;
 
 public class TagActivity extends AppCompatActivity {
 

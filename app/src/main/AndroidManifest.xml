@@ -22,17 +22,16 @@
 
         <!-- needed -->
         <activity
-            android:name=".messages"
+            android:name=".Messaging.messages"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".map"
+            android:name=".Map.map"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".AddJob"
@@ -46,35 +45,32 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".AddActivity"
+            android:name=".Add_Job.AddActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TagActivity"
+            android:name=".Add_Job.TagActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PriceActivity"
+            android:name=".Add_Job.PriceActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LocationPickerActivity"
+            android:name=".Add_Job.LocationPickerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DateActivity"
+            android:name=".Add_Job.DateActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ChattingActivity" />
-        <activity android:name=".BottomSheetActivity"></activity>
+        <activity android:name=".Add_Job.BottomSheetActivity" />
+        <activity android:name=".User_Registration.LoginActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-        <activity android:name=".LoginActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".SignUpActivity">
-
-        </activity>
-
+        <activity android:name=".User_Registration.SignUpActivity"></activity>
     </application>
 
 </manifest>
