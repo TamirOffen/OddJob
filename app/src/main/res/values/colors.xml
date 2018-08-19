@@ -18,5 +18,6 @@
     <color name="TransparentWhite">#7fffffff</color>
     <color name="orange">#ffcd75</color>
     <color name="pink">#feb993</color>
+    <color name="intensepink">#FF8375</color>
 
 </resources>

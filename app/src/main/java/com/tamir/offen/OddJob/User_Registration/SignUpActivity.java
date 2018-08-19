@@ -1,4 +1,4 @@
-package com.tamir.offen.OddJob.User_Registration;
+package com.tamir.offen.OddJob;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,7 +15,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.tamir.offen.OddJob.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.tamir.offen.OddJob.User_Registration.LoginActivity;
+import com.tamir.offen.OddJob.User_Registration.User;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -23,6 +26,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private EditText editTextName, editTextEmail, editTextPassword, editTextConfirmPassword;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+    DatabaseReference databaseUsers;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfrimPassword);
+        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
 
         progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -55,11 +60,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    public void addUser(String name, String email){
+
+    }
+
     private void registerUser() {
-        String name = editTextName.getText().toString().trim();
-        String email = editTextEmail.getText().toString().trim();
+        final String name = editTextName.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String confirmPassword = editTextConfirmPassword.getText().toString().trim();
+
+
 
         if(name.matches("") || email.matches("") || password.matches("") || confirmPassword.matches("")) {
             Toast.makeText(this, "Please fill out every part", Toast.LENGTH_SHORT).show();
@@ -74,12 +85,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         progressDialog.setMessage("Registering User...");
         progressDialog.show();
 
+
+
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             Toast.makeText(SignUpActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            String id = firebaseAuth.getUid();
+                            User user = new User(id,name,email);
+                            databaseUsers.child(id).setValue(user);
                         } else {
                             Toast.makeText(SignUpActivity.this, "Could not register. Please try agian", Toast.LENGTH_SHORT).show();
                         }

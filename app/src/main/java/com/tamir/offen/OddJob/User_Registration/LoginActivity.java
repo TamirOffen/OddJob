@@ -17,6 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tamir.offen.OddJob.Map.map;
 import com.tamir.offen.OddJob.R;
+import com.tamir.offen.OddJob.SignUpActivity;
+import com.tamir.offen.OddJob.User_Registration.*;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 

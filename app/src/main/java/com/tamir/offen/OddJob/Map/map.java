@@ -51,6 +51,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tamir.offen.OddJob.Add_Job.AddActivity;
 import com.tamir.offen.OddJob.Add_Job.AddJobHandler;
+import com.tamir.offen.OddJob.Messaging.ChatSelectionActivity;
 import com.tamir.offen.OddJob.User_Registration.LoginActivity;
 import com.tamir.offen.OddJob.MainActivity;
 import com.tamir.offen.OddJob.Messaging.messages;
@@ -167,7 +168,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                 Intent intent;
                 switch (item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(map.this, messages.class);
+                        intent = new Intent(map.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;
