@@ -94,7 +94,7 @@ public class TagActivity extends AppCompatActivity {
 
                 switch(item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(TagActivity.this, messages.class);
+                        intent = new Intent(TagActivity.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;

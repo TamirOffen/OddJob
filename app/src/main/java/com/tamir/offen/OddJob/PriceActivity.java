@@ -79,7 +79,7 @@ public class PriceActivity extends AppCompatActivity {
                 Intent intent;
                 switch(item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(PriceActivity.this, messages.class);
+                        intent = new Intent(PriceActivity.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat_name"
+        android:textColor="#fd8d67"
+        android:textSize="30sp"
+        android:fontFamily="@font/lato"
+        android:text="Full Name"
+        android:paddingLeft="20dp"
+        />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat_email"
+        android:textColor="#fd8d67"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingLeft="20dp"
+        android:fontFamily="@font/lato_thin"
+        android:text="abcd@wxyz.com"
+        android:layout_marginBottom="5dp"
+        />
+
+</LinearLayout>

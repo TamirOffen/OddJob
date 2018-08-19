@@ -1,5 +1,6 @@
 package com.tamir.offen.OddJob;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 
 public class AddActivity extends AppCompatActivity {
@@ -79,7 +81,7 @@ public class AddActivity extends AppCompatActivity {
 
                 switch(item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(AddActivity.this, messages.class);
+                        intent = new Intent(AddActivity.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;

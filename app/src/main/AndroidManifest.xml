@@ -25,14 +25,13 @@
             android:name=".messages"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".map"
+            android:name=".SignUpActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".AddJob"
@@ -61,20 +60,18 @@
             android:name=".DateActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ChattingActivity" />
-        <activity android:name=".BottomSheetActivity"></activity>
-
-
+        <activity android:name=".BottomSheetActivity" />
         <activity android:name=".LoginActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".SignUpActivity">
-
-        </activity>
-
+        <activity android:name=".map"></activity> 
+        <activity android:name=".ChatSelectionActivity"></activity>
     </application>
 
 </manifest>

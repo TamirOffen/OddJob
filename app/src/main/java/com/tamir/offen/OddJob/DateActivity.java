@@ -222,7 +222,7 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
 
                 switch(item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(DateActivity.this, messages.class);
+                        intent = new Intent(DateActivity.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;

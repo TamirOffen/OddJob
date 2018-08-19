@@ -83,7 +83,7 @@ public class AddJob extends AppCompatActivity{
 
                 switch(item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(AddJob.this, messages.class);
+                        intent = new Intent(AddJob.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;

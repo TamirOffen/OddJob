@@ -94,7 +94,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     List<String> jobIDs;
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference databaseReference = database.getReference("Jobs");
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;;
 
 
     public map() {
@@ -150,7 +150,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                 Intent intent;
                 switch (item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(map.this, messages.class);
+                        intent = new Intent(map.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;
