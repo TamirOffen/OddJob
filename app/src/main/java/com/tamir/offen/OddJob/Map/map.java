@@ -9,16 +9,23 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -49,13 +56,15 @@ import com.tamir.offen.OddJob.MainActivity;
 import com.tamir.offen.OddJob.Messaging.messages;
 import com.tamir.offen.OddJob.R;
 import com.tamir.offen.OddJob.Add_Job.WorkBottomSheetDialog;
+import com.tamir.offen.OddJob.Navigation_Drawer.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class map extends AppCompatActivity implements OnMapReadyCallback,
                                                     GoogleMap.OnMarkerClickListener,
-        WorkBottomSheetDialog.BottomSheetListener,
+                                                    NavigationView.OnNavigationItemSelectedListener,
+                                                    WorkBottomSheetDialog.BottomSheetListener,
                                                     View.OnClickListener{
 
     // Constants
@@ -94,6 +103,13 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     public DatabaseReference databaseReference = database.getReference("Jobs");
     private FirebaseAuth firebaseAuth;
     public static AddJobHandler curJob;
+
+    // Navigation Drawer
+    private ImageView btnHamburger;
+    private DrawerLayout drawerLayout;
+    private View navViewHeader;
+    private NavigationView navigationView;
+    private android.support.v7.widget.Toolbar toolbar;
 
 
     public map() {
@@ -140,7 +156,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         jobs = new ArrayList<>();
         jobIDs = new ArrayList<>();
 
-
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(1);
@@ -168,11 +183,28 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
             }
         });
 
+        // Navigation Drawer
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        btnHamburger = findViewById(R.id.imageViewHamburger);
+        btnHamburger.setOnClickListener(this);
+        btnHamburger.bringToFront();
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(this);
+        navViewHeader = navigationView.getHeaderView(0);
+        TextView nav_email = navViewHeader.findViewById(R.id.nav_email);
+        nav_email.setText(firebaseAuth.getCurrentUser().getEmail());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        Menu navMenu = navigationView.getMenu();
+        MenuItem navMenuItem = navMenu.getItem(0);
+        navMenuItem.setChecked(true);
 
         initJobs();
     }
@@ -463,6 +495,56 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         return false;
     }
 
+    // Navigation Drawer
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_current_jobs:
+                drawerLayout.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(map.this, currentJobsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                break;
+            case R.id.nav_profile:
+                drawerLayout.closeDrawer(GravityCompat.START);
+                Intent intent1 = new Intent(map.this, profileActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent1);
+                break;
+            case R.id.nav_settings:
+                drawerLayout.closeDrawer(GravityCompat.START);
+                Intent intent2 = new Intent(map.this, settingsActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent2);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnSignOut) {
+            firebaseAuth.signOut();
+            finish();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+
+        if(view == btnHamburger) {
+            drawerLayout.openDrawer(Gravity.LEFT);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     // Returns the current marker chosen's title
     // Used to get the title in WorkBottomSheetDialog class
     @Override
@@ -481,16 +563,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         return currPosLatLng;
     }
 
-    @Override
-    public void onClick(View view) {
-        if(view == btnSignOut) {
-            firebaseAuth.signOut();
-            finish();
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);
-        }
-    }
 
     // initializes a list of jobs from the database and adds them to the map
     private void initJobs() {
@@ -535,6 +607,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         if(potentialCurJobs.size() > 1) Toast.makeText(this, "More than one marker found(by title). Update getCurJob()!", Toast.LENGTH_LONG).show();
         return potentialCurJobs.get(0);
     }
+
 
 
 }

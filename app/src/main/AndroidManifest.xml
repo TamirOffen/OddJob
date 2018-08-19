@@ -27,11 +27,11 @@
         <activity
             android:name=".Map.map"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".AddJob"
@@ -62,15 +62,17 @@
         <activity android:name=".ChattingActivity" />
         <activity android:name=".Add_Job.BottomSheetActivity" />
         <activity android:name=".User_Registration.LoginActivity">
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
-        <activity android:name=".User_Registration.SignUpActivity"></activity>
+        <activity android:name=".User_Registration.SignUpActivity" />
+        <activity android:name=".Navigation_Drawer.currentJobsActivity" />
+        <activity android:name=".Navigation_Drawer.profileActivity" />
+        <activity android:name=".Navigation_Drawer.settingsActivity"></activity>
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@ import java.util.List;
 public class AddJobHandler{
 
 
-    private String title, desc, tag, price, ID;
+    private String title, desc, tag, price, ID, sender;
     private List<String> dates = new ArrayList<>(), times = new ArrayList<>();
     private com.tamir.offen.OddJob.Add_Job.LatLng location;
 
@@ -80,6 +80,14 @@ public class AddJobHandler{
 
     public String getID(){
         return ID;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String newSender) {
+        sender = newSender;
     }
 
     @Override

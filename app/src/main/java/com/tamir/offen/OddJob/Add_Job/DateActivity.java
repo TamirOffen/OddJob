@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import java.util.Random;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.tamir.offen.OddJob.BitmapOptimizer;
 import com.tamir.offen.OddJob.Map.map;
@@ -44,11 +45,10 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
     private Button btnBackLoc, btnAddJob;
     private BottomNavigationView bottomNavigationView;
 
-    //private AddJobHandler addJobHandler;
     private map mMap = new map();
     private AddActivity addActivity = new AddActivity();
     private AddJobHandler newJob = addActivity.newJob;
-    //private DatabaseReference databaseReference = mMap.databaseReference;
+    private FirebaseAuth firebaseAuth;
 
     String callback = "";
 
@@ -83,6 +83,8 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
         mDisplayDate1 = findViewById(R.id.EndDateSelect);
         btnBackLoc = findViewById(R.id.btnBackLoc);
         btnAddJob = findViewById(R.id.btnAddJob);
+        firebaseAuth = FirebaseAuth.getInstance();
+
         ImageView timepro = findViewById(R.id.progressbar4);
         timepro.setImageBitmap(
                 BitmapOptimizer.decodeSampledBitmapFromResource(getResources(), R.drawable.rtimepro, 400, 200));
@@ -202,6 +204,11 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                 newJob.setDate(mDisplayDate.getText().toString(), mDisplayDate1.getText().toString());
                 newJob.setTime(mTimePicker.getText().toString(), mTimePicker1.getText().toString());
                 newJob.setID(generateID(3,2));
+                if(firebaseAuth.getCurrentUser() != null) newJob.setSender(firebaseAuth.getCurrentUser().getEmail());
+                else {
+                    Toast.makeText(DateActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 addJob();
 
                 Intent intent = new Intent(DateActivity.this, map.class);
