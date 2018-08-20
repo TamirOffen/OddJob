@@ -2,10 +2,6 @@ package com.tamir.offen.OddJob.User_Registration;
 
 import java.io.Serializable;
 
-/**
- * Created by paen3 on 8/15/2018.
- */
-
 public class User implements Serializable{
     String id;
     String name;

@@ -1,4 +1,4 @@
-package com.tamir.offen.OddJob;
+package com.tamir.offen.OddJob.User_Registration;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,8 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tamir.offen.OddJob.User_Registration.LoginActivity;
-import com.tamir.offen.OddJob.User_Registration.User;
+import com.tamir.offen.OddJob.R;
+import com.tamir.offen.OddJob.User_Registration.*;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -53,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if(view == btnLogin) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
 
         if(view == btnSignUp) {

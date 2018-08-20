@@ -58,6 +58,7 @@ import com.tamir.offen.OddJob.Messaging.messages;
 import com.tamir.offen.OddJob.R;
 import com.tamir.offen.OddJob.Add_Job.WorkBottomSheetDialog;
 import com.tamir.offen.OddJob.Navigation_Drawer.*;
+import com.tamir.offen.OddJob.User_Registration.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,10 +99,12 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
     // Database:
     DatabaseReference databaseJobs;
-    List<AddJobHandler> jobs;
+    public static List<AddJobHandler> jobs;
     List<String> jobIDs;
+    List<User> users;
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference databaseReference = database.getReference("Jobs");
+    private DatabaseReference databaseUsers = database.getReference("users");
     private FirebaseAuth firebaseAuth;
     public static AddJobHandler curJob;
 
@@ -156,6 +159,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         databaseJobs = FirebaseDatabase.getInstance().getReference("Jobs");
         jobs = new ArrayList<>();
         jobIDs = new ArrayList<>();
+        users = new ArrayList<>();
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -197,6 +201,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         navViewHeader = navigationView.getHeaderView(0);
         TextView nav_email = navViewHeader.findViewById(R.id.nav_email);
         nav_email.setText(firebaseAuth.getCurrentUser().getEmail());
+        Toast.makeText(this, getUsernameFromDatabase(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -608,6 +613,31 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         if(potentialCurJobs.size() > 1) Toast.makeText(this, "More than one marker found(by title). Update getCurJob()!", Toast.LENGTH_LONG).show();
         return potentialCurJobs.get(0);
     }
+
+    // returns the name linked to the email in the Firebase database
+    private String getUsernameFromDatabase() {
+        databaseUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
+                    users.add(user);
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        for(int i = 0; i < users.size(); i++) {
+            if(users.get(i).getEmail().equals(firebaseAuth.getCurrentUser().getEmail())) {
+                return users.get(i).getName();
+            }
+        }
+        return "NAME/USER NOT FOUND!";
+    }
+
 
 
 

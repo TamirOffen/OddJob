@@ -19,9 +19,13 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.tamir.offen.OddJob.Add_Job.AddActivity;
+import com.tamir.offen.OddJob.Add_Job.AddJobHandler;
 import com.tamir.offen.OddJob.Map.map;
 import com.tamir.offen.OddJob.Messaging.messages;
 import com.tamir.offen.OddJob.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class currentJobsActivity extends AppCompatActivity implements View.OnClickListener,
         BottomNavigationView.OnNavigationItemSelectedListener,
@@ -34,6 +38,9 @@ public class currentJobsActivity extends AppCompatActivity implements View.OnCli
     private ImageView btnHamburger;
     private View navViewHeader;
     private FirebaseAuth firebaseAuth;
+    private map mMap = new map();
+    private List<AddJobHandler> jobs = mMap.jobs;
+    private List<AddJobHandler> userJobs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,8 @@ public class currentJobsActivity extends AppCompatActivity implements View.OnCli
         toolbar = findViewById(R.id.toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        userJobs = new ArrayList<>();
 
         Menu menuBottomNavBar = bottomNavigationView.getMenu();
         MenuItem menuItemBottomNavBar = menuBottomNavBar.getItem(1);
@@ -66,6 +75,9 @@ public class currentJobsActivity extends AppCompatActivity implements View.OnCli
         navViewHeader = navigationView.getHeaderView(0);
         TextView nav_email = navViewHeader.findViewById(R.id.nav_email);
         nav_email.setText(firebaseAuth.getCurrentUser().getEmail());
+
+        updateUserJobs();
+        Toast.makeText(currentJobsActivity.this, userJobs.toString(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -117,6 +129,15 @@ public class currentJobsActivity extends AppCompatActivity implements View.OnCli
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    private void updateUserJobs() {
+        for(int i = 0; i < jobs.size(); i++) {
+            String jobSender = jobs.get(i).getSender();
+            if(jobSender.equals(firebaseAuth.getCurrentUser().getEmail())) {
+                userJobs.add(jobs.get(i));
+            }
         }
     }
 }

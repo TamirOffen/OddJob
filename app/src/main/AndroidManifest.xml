@@ -59,7 +59,7 @@
         <activity
             android:name=".Add_Job.DateActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ChattingActivity" />
+        <activity android:name=".Messaging.ChattingActivity" />
         <activity android:name=".Add_Job.BottomSheetActivity" />
         <activity android:name=".User_Registration.LoginActivity">
              <intent-filter>
@@ -72,7 +72,8 @@
         <activity android:name=".User_Registration.SignUpActivity" />
         <activity android:name=".Navigation_Drawer.currentJobsActivity" />
         <activity android:name=".Navigation_Drawer.profileActivity" />
-        <activity android:name=".Navigation_Drawer.settingsActivity"></activity>
+        <activity android:name=".Navigation_Drawer.settingsActivity"/>
+        <activity android:name=".Messaging.ChatSelectionActivity"/>
     </application>
 
 </manifest>
