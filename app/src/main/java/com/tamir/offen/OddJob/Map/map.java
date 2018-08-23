@@ -101,7 +101,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     DatabaseReference databaseJobs;
     public static List<AddJobHandler> jobs;
     List<String> jobIDs;
-    List<User> users;
+    private List<User> users;
+    public static String currentUserName;
+    private TextView textViewUsername;
     public FirebaseDatabase database = FirebaseDatabase.getInstance();
     public DatabaseReference databaseReference = database.getReference("Jobs");
     private DatabaseReference databaseUsers = database.getReference("users");
@@ -201,7 +203,8 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         navViewHeader = navigationView.getHeaderView(0);
         TextView nav_email = navViewHeader.findViewById(R.id.nav_email);
         nav_email.setText(firebaseAuth.getCurrentUser().getEmail());
-        Toast.makeText(this, getUsernameFromDatabase(), Toast.LENGTH_SHORT).show();
+        textViewUsername = navViewHeader.findViewById(R.id.nav_username);
+        updateUsernameFromDatabase();
     }
 
     @Override
@@ -580,7 +583,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                     AddJobHandler newJob = jobSnapshot.getValue(AddJobHandler.class);
                     jobIDs.add(jobSnapshot.getKey());
                     jobs.add(newJob);
-                    //newJob.setID(jobSnapshot.getKey());
                 }
 
                 for(int i = 0; i < jobs.size(); i++) {
@@ -589,7 +591,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                     String title = jobs.get(i).getTitle();
                     String tag = jobs.get(i).getTag();
                     addMarker(newJobLocation, title, tag);
-                    //Toast.makeText(map.this, jobs.get(i).getDates().toString(), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -601,7 +602,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         });
     }
 
-    // searches the jobs arraylist by title, should make this more accurate...
+    // searches the jobs ArrayList by title, should make this more accurate...
     // returns the job linked to the pin clicked
     private AddJobHandler getCurJob() {
         List<AddJobHandler> potentialCurJobs = new ArrayList<>();
@@ -615,27 +616,24 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     }
 
     // returns the name linked to the email in the Firebase database
-    private String getUsernameFromDatabase() {
+    private void updateUsernameFromDatabase() {
         databaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                     User user = userSnapshot.getValue(User.class);
-                    users.add(user);
+                    if(user.getEmail().equals(firebaseAuth.getCurrentUser().getEmail())) {
+                        currentUserName = user.getName();
+                        textViewUsername.setText(currentUserName);
+                        return;
+                    }
                 }
-
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-        for(int i = 0; i < users.size(); i++) {
-            if(users.get(i).getEmail().equals(firebaseAuth.getCurrentUser().getEmail())) {
-                return users.get(i).getName();
-            }
-        }
-        return "NAME/USER NOT FOUND!";
     }
 
 

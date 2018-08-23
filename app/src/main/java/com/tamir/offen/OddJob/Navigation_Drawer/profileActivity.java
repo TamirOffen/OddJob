@@ -33,6 +33,8 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
     private ImageView btnHamburger;
     private View navViewHeader;
     private FirebaseAuth firebaseAuth;
+    private map mMap = new map();
+    private String username = mMap.currentUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,9 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
 
         navViewHeader = navigationView.getHeaderView(0);
         TextView nav_email = navViewHeader.findViewById(R.id.nav_email);
+        TextView nav_username = navViewHeader.findViewById(R.id.nav_username);
         nav_email.setText(firebaseAuth.getCurrentUser().getEmail());
+        nav_username.setText(username);
 
     }
 

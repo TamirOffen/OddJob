@@ -13,7 +13,9 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +26,14 @@ import com.tamir.offen.OddJob.Map.map;
 import com.tamir.offen.OddJob.Messaging.messages;
 import com.tamir.offen.OddJob.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class currentJobsActivity extends AppCompatActivity implements View.OnClickListener,
         BottomNavigationView.OnNavigationItemSelectedListener,
-        NavigationView.OnNavigationItemSelectedListener {
+        NavigationView.OnNavigationItemSelectedListener{
 
     private BottomNavigationView bottomNavigationView;
     private NavigationView navigationView;
@@ -39,8 +43,11 @@ public class currentJobsActivity extends AppCompatActivity implements View.OnCli
     private View navViewHeader;
     private FirebaseAuth firebaseAuth;
     private map mMap = new map();
+    private String username = mMap.currentUserName;
     private List<AddJobHandler> jobs = mMap.jobs;
     private List<AddJobHandler> userJobs;
+    private ListView listViewCurrentJobs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,7 @@ public class currentJobsActivity extends AppCompatActivity implements View.OnCli
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
+        listViewCurrentJobs = findViewById(R.id.listViewCurrentJobs);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -74,10 +82,22 @@ public class currentJobsActivity extends AppCompatActivity implements View.OnCli
 
         navViewHeader = navigationView.getHeaderView(0);
         TextView nav_email = navViewHeader.findViewById(R.id.nav_email);
+        TextView nav_username = navViewHeader.findViewById(R.id.nav_username);
         nav_email.setText(firebaseAuth.getCurrentUser().getEmail());
+        nav_username.setText(username);
 
         updateUserJobs();
-        Toast.makeText(currentJobsActivity.this, userJobs.toString(), Toast.LENGTH_SHORT).show();
+
+        final JobsList adapter = new JobsList(currentJobsActivity.this, userJobs);
+        listViewCurrentJobs.setAdapter(adapter);
+
+        listViewCurrentJobs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                AddJobHandler item = adapter.getItem(i);
+                Toast.makeText(currentJobsActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

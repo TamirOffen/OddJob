@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
 
             <!-- never used -->
         </activity>
@@ -59,9 +60,12 @@
         <activity
             android:name=".Add_Job.DateActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Messaging.ChattingActivity" />
-        <activity android:name=".Add_Job.BottomSheetActivity" />
-        <activity android:name=".User_Registration.LoginActivity">
+        <activity android:name=".Messaging.ChattingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Add_Job.BottomSheetActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".User_Registration.LoginActivity"
+            android:screenOrientation="portrait">
              <intent-filter>
              <action android:name="android.intent.action.MAIN" />
 
@@ -69,11 +73,16 @@
              <category android:name="android.intent.category.LAUNCHER" />
              </intent-filter>
         </activity>
-        <activity android:name=".User_Registration.SignUpActivity" />
-        <activity android:name=".Navigation_Drawer.currentJobsActivity" />
-        <activity android:name=".Navigation_Drawer.profileActivity" />
-        <activity android:name=".Navigation_Drawer.settingsActivity"/>
-        <activity android:name=".Messaging.ChatSelectionActivity"/>
+        <activity android:name=".User_Registration.SignUpActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Navigation_Drawer.currentJobsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Navigation_Drawer.profileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Navigation_Drawer.settingsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Messaging.ChatSelectionActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
