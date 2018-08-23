@@ -10,10 +10,10 @@
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="305dp"
-        android:layout_height="36dp"
+        android:layout_height="37dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="364dp"
         android:background="@drawable/whitesimline"
         android:ems="10"
         android:hint="Email Address"
@@ -22,9 +22,8 @@
         android:textColor="@color/black"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -32,6 +31,7 @@
         android:layout_height="36dp"
         android:layout_alignEnd="@+id/btnSignin"
         android:layout_below="@+id/imageView"
+        android:layout_marginBottom="204dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/whitesimline"
         android:ems="10"
@@ -41,10 +41,9 @@
         android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintVertical_bias="0.336" />
 <!--
     <com.spark.submitbutton.SubmitButton
         android:id="@+id/login2btn"
@@ -153,13 +152,17 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/white"
+        android:background="@drawable/whiteroundedbutton"
         android:text="SIGN IN"
         android:textColor="@color/pink"
-        android:textSize="20sp"
+        android:textSize="25sp"
+        android:fontFamily="@font/lato_thin"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        app:layout_constraintVertical_bias="0.309" />
 
 </android.support.constraint.ConstraintLayout>

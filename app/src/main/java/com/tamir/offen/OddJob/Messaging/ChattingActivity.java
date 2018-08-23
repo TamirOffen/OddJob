@@ -1,5 +1,6 @@
 package com.tamir.offen.OddJob.Messaging;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ public class ChattingActivity extends AppCompatActivity {
     private String messageSenderId;
     private String messageReceiverId;
     private DatabaseReference rootRef;
+    private Button gotoChatSelect;
     private RecyclerView userMessagesList;
     private final List<Message> messageList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
@@ -58,6 +61,7 @@ public class ChattingActivity extends AppCompatActivity {
         sendMessage = (ImageButton) findViewById(R.id.sendMessage);
         rootRef = FirebaseDatabase.getInstance().getReference();
         inputMessage = (EditText) findViewById(R.id.inputMessage);
+        gotoChatSelect = (Button) findViewById(R.id.gotochatselect);
         mAuth = FirebaseAuth.getInstance();
         messageSenderId = mAuth.getCurrentUser().getUid();
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
@@ -74,6 +78,15 @@ public class ChattingActivity extends AppCompatActivity {
         userMessagesList.setLayoutManager(linearLayoutManager);
 
         userMessagesList.setAdapter(messageAdapter);
+
+        gotoChatSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent backtoselect = new Intent(ChattingActivity.this, ChatSelectionActivity.class);
+                startActivity(backtoselect);
+                finish();
+            }
+        });
 
         FetchMessages();
 
@@ -153,6 +166,7 @@ public class ChattingActivity extends AppCompatActivity {
             messageTextBody.put("seen", false);
             messageTextBody.put("type", "text");
             messageTextBody.put("time", ServerValue.TIMESTAMP);
+            messageTextBody.put("from", messageSenderId);
 
 
             Map messageBodyDetails = new HashMap();
