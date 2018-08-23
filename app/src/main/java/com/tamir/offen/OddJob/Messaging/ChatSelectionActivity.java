@@ -106,6 +106,7 @@ public class ChatSelectionActivity extends AppCompatActivity {
                         Intent chatIntent = new Intent(ChatSelectionActivity.this, com.tamir.offen.OddJob.Messaging.ChattingActivity.class);
                         chatIntent.putExtra("chat_id",user);
                         startActivity(chatIntent);
+                        finish();
 
                     }
                 });
