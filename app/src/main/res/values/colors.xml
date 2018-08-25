@@ -20,5 +20,12 @@
     <color name="pink">#feb993</color>
     <color name="intensepink">#FF8375</color>
     <color name="classicgrey">#2a2a2a</color>
+    <color name="royalPurple">#6f3662</color>
+    <color name="hotPink">#FF7182</color>
+    <color name="Orange">#FFAE5D</color>
+    <color name="lightCream">#F8F8F2</color>
+    <color name="biege">#F8DEBD</color>
+    <color name="darkMaroon">#9f6164</color>
+    <color name="pinkish">#f2dad7</color>
 
 </resources>

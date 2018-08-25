@@ -6,44 +6,61 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradorangetored"
     tools:context="com.tamir.offen.OddJob.User_Registration.LoginActivity">
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="305dp"
-        android:layout_height="37dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="364dp"
-        android:background="@drawable/whitesimline"
-        android:ems="10"
-        android:hint="Email Address"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="55dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/white"
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:id="@+id/emailLayout"
+        android:layout_marginTop="364dp"
+        app:hintTextAppearance="@color/white">
+        <AutoCompleteTextView
+            android:id="@+id/editTextEmail"
+            android:layout_width="305dp"
+            android:layout_height="37dp"
+            android:background="@drawable/whitesimline"
+            android:ems="10"
+            android:hint="Email Address"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="55dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
 
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="305dp"
-        android:layout_height="36dp"
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailLayout"
+        app:layout_constraintVertical_bias="0.336"
         android:layout_alignEnd="@+id/btnSignin"
         android:layout_below="@+id/imageView"
         android:layout_marginBottom="204dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/whitesimline"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingLeft="55dp"
-        android:textColorHint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-        app:layout_constraintVertical_bias="0.336" />
+        android:id="@+id/passwordLayout"
+        app:hintTextAppearance="@color/white">
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="305dp"
+            android:layout_height="36dp"
+            android:background="@drawable/whitesimline"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingLeft="55dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+
+
 <!--
     <com.spark.submitbutton.SubmitButton
         android:id="@+id/login2btn"
@@ -74,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="194dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editTextEmail"
+        android:layout_below="@+id/emailLayout"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -126,20 +143,24 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/editTextEmail"
-        app:layout_constraintTop_toTopOf="@+id/editTextEmail"
+        app:layout_constraintBottom_toBottomOf="@+id/emailLayout"
+        app:layout_constraintStart_toStartOf="@+id/emailLayout"
+        app:layout_constraintTop_toTopOf="@+id/emailLayout"
         app:srcCompat="@drawable/ic_mail_outline_white_24dp" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/editTextPassword"
-        app:layout_constraintTop_toTopOf="@+id/editTextPassword"
+        app:layout_constraintBottom_toBottomOf="@+id/passwordLayout"
+        app:layout_constraintStart_toStartOf="@+id/passwordLayout"
+        app:layout_constraintTop_toTopOf="@+id/passwordLayout"
         app:srcCompat="@drawable/ic_lock_outline_white_24dp" />
 
     <Button
@@ -157,12 +178,13 @@
         android:textColor="@color/pink"
         android:textSize="25sp"
         android:fontFamily="@font/lato_thin"
+        android:textStyle="bold"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLayout"
         app:layout_constraintVertical_bias="0.309" />
 
 </android.support.constraint.ConstraintLayout>

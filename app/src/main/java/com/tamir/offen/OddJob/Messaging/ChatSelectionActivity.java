@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +31,8 @@ import java.util.List;
 public class ChatSelectionActivity extends AppCompatActivity {
 
     ListView listViewUsers;
+    FirebaseAuth firebaseAuth;
+
     DatabaseReference databaseUsers;
     List<User> userList;
     private BottomNavigationView bottomNavigationView;
@@ -41,6 +44,7 @@ public class ChatSelectionActivity extends AppCompatActivity {
         listViewUsers = findViewById(R.id.listViewUsers);
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
         userList = new ArrayList<>();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
@@ -91,9 +95,13 @@ public class ChatSelectionActivity extends AppCompatActivity {
                 for(DataSnapshot userSnapshot: dataSnapshot.getChildren()){
                     String parentId = userSnapshot.getKey();
                     User user = userSnapshot.getValue(User.class);
-                    user.setParentId(parentId);
-                    userList.add(user);
-                    String chat_id = userSnapshot.getKey();
+                    if(user.getId().equals(firebaseAuth.getCurrentUser().getUid())){
+
+                    }else{
+                        user.setParentId(parentId);
+                        userList.add(user);
+                        String chat_id = userSnapshot.getKey();
+                    }
                 }
                 final UserList adapter = new UserList(ChatSelectionActivity.this, userList);
                 listViewUsers.setAdapter(adapter);
