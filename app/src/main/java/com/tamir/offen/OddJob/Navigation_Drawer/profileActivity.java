@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tamir.offen.OddJob.Add_Job.AddActivity;
 import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.ChatSelectionActivity;
 import com.tamir.offen.OddJob.Messaging.messages;
 import com.tamir.offen.OddJob.R;
 
@@ -76,7 +77,7 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_messages:
-                Intent intent01 = new Intent(profileActivity.this, messages.class);
+                Intent intent01 = new Intent(profileActivity.this, ChatSelectionActivity.class);
                 startActivity(intent01);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;

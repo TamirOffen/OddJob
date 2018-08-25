@@ -13,14 +13,17 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.tamir.offen.OddJob.Add_Job.AddActivity;
 import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.ChatSelectionActivity;
 import com.tamir.offen.OddJob.Messaging.messages;
 import com.tamir.offen.OddJob.R;
+import com.tamir.offen.OddJob.User_Registration.LoginActivity;
 
 public class settingsActivity extends AppCompatActivity implements View.OnClickListener,
         BottomNavigationView.OnNavigationItemSelectedListener,
@@ -35,6 +38,7 @@ public class settingsActivity extends AppCompatActivity implements View.OnClickL
     private FirebaseAuth firebaseAuth;
     private map mMap = new map();
     private String username = mMap.currentUserName;
+    private Button btnSignOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class settingsActivity extends AppCompatActivity implements View.OnClickL
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
+        btnSignOut = findViewById(R.id.btnSignout);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -63,6 +68,7 @@ public class settingsActivity extends AppCompatActivity implements View.OnClickL
         setSupportActionBar(toolbar);
 
         btnHamburger.setOnClickListener(this);
+        btnSignOut.setOnClickListener(this);
 
         navViewHeader = navigationView.getHeaderView(0);
         TextView nav_email = navViewHeader.findViewById(R.id.nav_email);
@@ -76,7 +82,7 @@ public class settingsActivity extends AppCompatActivity implements View.OnClickL
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_messages:
-                Intent intent01 = new Intent(settingsActivity.this, messages.class);
+                Intent intent01 = new Intent(settingsActivity.this, ChatSelectionActivity.class);
                 startActivity(intent01);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;
@@ -111,6 +117,13 @@ public class settingsActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         if (view == btnHamburger) {
             drawerLayout.openDrawer(Gravity.LEFT);
+        }
+        if (view == btnSignOut) {
+            firebaseAuth.signOut();
+            finish();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
         }
     }
 

@@ -57,17 +57,20 @@ public class ChattingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
         user = (User) getIntent().getSerializableExtra("chat_id");
-        receiver_name = (TextView) findViewById(R.id.receiver_name);
-        sendMessage = (ImageButton) findViewById(R.id.sendMessage);
+        receiver_name = findViewById(R.id.receiver_name);
+        sendMessage = findViewById(R.id.sendMessage);
         rootRef = FirebaseDatabase.getInstance().getReference();
-        inputMessage = (EditText) findViewById(R.id.inputMessage);
-        gotoChatSelect = (Button) findViewById(R.id.gotochatselect);
+        inputMessage = findViewById(R.id.inputMessage);
+        gotoChatSelect = findViewById(R.id.gotochatselect);
         mAuth = FirebaseAuth.getInstance();
         messageSenderId = mAuth.getCurrentUser().getUid();
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
         String parentId = user.getParentId();
         messageReceiverId = user.getId();
         messageAdapter = new MessageAdapter(messageList);
+
+
+        Toast.makeText(this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
 
         userMessagesList = (RecyclerView) findViewById(R.id.messages_list_of_users);
 

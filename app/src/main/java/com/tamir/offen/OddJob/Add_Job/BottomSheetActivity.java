@@ -1,23 +1,37 @@
 package com.tamir.offen.OddJob.Add_Job;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.tamir.offen.OddJob.Add_Job.AddJobHandler;
 import com.tamir.offen.OddJob.Map.map;
 import com.tamir.offen.OddJob.R;
+
+import java.util.List;
 
 public class BottomSheetActivity extends AppCompatActivity implements View.OnClickListener{
 
     private TextView textViewTitle, textViewPrice, textViewStartDate, textViewEndDate, textViewStartTime, textViewEndTime, textViewDesc;
     private ImageView imageViewIcon;
-    private Button btnAcceptJob, btnMessage, btnBackToMap;
+    private Button btnAcceptJob, btnMessage, btnBackToMap, btnDelete;
     map mMap = new map();
     AddJobHandler curJob = mMap.curJob;
+    private String sender = curJob.getSender();
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseJobs = mMap.databaseReference;
+    private String databaseID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +48,7 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
         btnAcceptJob = findViewById(R.id.btnAcceptJob);
         btnMessage = findViewById(R.id.btnMessage);
         btnBackToMap = findViewById(R.id.btnBackToMap);
+        btnDelete = findViewById(R.id.btnDelete);
         imageViewIcon = findViewById(R.id.imageViewIcon);
 
         textViewTitle.setText(curJob.getTitle());
@@ -46,13 +61,18 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
 
         updateTagIcon();
 
-        btnBackToMap.setOnClickListener(this);
+        firebaseAuth = FirebaseAuth.getInstance();
 
+        if(userIsOwnerOfJob()) btnDelete.setVisibility(View.VISIBLE);
+
+        btnBackToMap.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if(view == btnBackToMap) onBackPressed();
+        if(view == btnDelete) deleteJob();
     }
 
     private void updateTagIcon() {
@@ -63,5 +83,33 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
         if(tag.equals("Child / Pet Care")) imageViewIcon.setImageResource(R.drawable.rcare);
         if(tag.equals("Education")) imageViewIcon.setImageResource(R.drawable.redu);
         if(tag.equals("Other")) imageViewIcon.setImageResource(R.drawable.rother);
+    }
+
+    private boolean userIsOwnerOfJob() {
+        if(firebaseAuth.getCurrentUser().getEmail().equals(sender)) return true;
+        return false;
+    }
+
+    private void deleteJob() {
+        databaseJobs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
+                    AddJobHandler newJob = jobSnapshot.getValue(AddJobHandler.class);
+                    if(newJob.getID().equals(curJob.getID())) {
+                        databaseID = jobSnapshot.getKey();
+                        DatabaseReference databaseReferenceJobs = FirebaseDatabase.getInstance().getReference("Jobs").child(databaseID);
+                        databaseReferenceJobs.removeValue();
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }

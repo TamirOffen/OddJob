@@ -95,12 +95,11 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private static LatLng currPosLatLng;
     private String jobPrice;
     private AddJobHandler addJobHandler;
-    private Button btnSignOut;
 
     // Database:
     DatabaseReference databaseJobs;
     public static List<AddJobHandler> jobs;
-    List<String> jobIDs;
+    public static List<String> jobIDs;
     private List<User> users;
     public static String currentUserName;
     private TextView textViewUsername;
@@ -139,9 +138,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         zoomText.setText(new Float(DEFAULT_ZOOM).toString());
         currZoomValue = DEFAULT_ZOOM;
 
-        btnSignOut = findViewById(R.id.btnSignOut);
-        btnSignOut.setOnClickListener(this);
-
         if(currPosLatLng != null) {
             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
         }
@@ -177,6 +173,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                         intent = new Intent(map.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        finish();
                         break;
                     case R.id.nav_map:
                         break;
@@ -184,6 +181,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                         intent = new Intent(map.this, AddActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        finish();
                         break;
                 }
                 return false;
@@ -308,6 +306,12 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                             currPosLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                             cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                            
+                            if(getBundleStringInfo("Current Job").equals("currJob")) {
+                                double newLat = getBundleDoubleInfo("lat");
+                                double newLng = getBundleDoubleInfo("lng");
+                                moveCamera(new LatLng(newLat, newLng), DEFAULT_ZOOM);
+                            }
 
                             // add job marker
                             addJobTitle = addJobHandler.getTitle(); addJobDesc = addJobHandler.getDesc();
@@ -532,14 +536,6 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
     @Override
     public void onClick(View view) {
-        if(view == btnSignOut) {
-            firebaseAuth.signOut();
-            finish();
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);
-        }
-
         if(view == btnHamburger) {
             drawerLayout.openDrawer(Gravity.LEFT);
         }

@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.tamir.offen.OddJob.BitmapOptimizer;
 import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.ChatSelectionActivity;
 import com.tamir.offen.OddJob.Messaging.messages;
 import com.tamir.offen.OddJob.R;
 
@@ -230,7 +231,7 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
 
                 switch(item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(DateActivity.this, messages.class);
+                        intent = new Intent(DateActivity.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;

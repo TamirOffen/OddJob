@@ -217,4 +217,15 @@
         app:layout_constraintBottom_toBottomOf="@id/textViewPrice"
         app:layout_constraintEnd_toStartOf="@id/textViewPrice" />
 
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:text="Delete "
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/imageViewIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIcon" />
+
 </android.support.constraint.ConstraintLayout>

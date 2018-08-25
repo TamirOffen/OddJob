@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.tamir.offen.OddJob.BitmapOptimizer;
 import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.ChatSelectionActivity;
 import com.tamir.offen.OddJob.Messaging.messages;
 import com.tamir.offen.OddJob.R;
 
@@ -174,7 +175,7 @@ public class LocationPickerActivity extends AppCompatActivity implements Compone
                 Intent intent;
                 switch (item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(LocationPickerActivity.this, messages.class);
+                        intent = new Intent(LocationPickerActivity.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                         break;

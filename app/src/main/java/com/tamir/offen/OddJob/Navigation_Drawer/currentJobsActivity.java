@@ -95,7 +95,12 @@ public class currentJobsActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 AddJobHandler item = adapter.getItem(i);
-                Toast.makeText(currentJobsActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(currentJobsActivity.this, map.class);
+                intent.putExtra("Current Job", "currJob");
+                intent.putExtra("lat", item.getLocation().getLatitude());
+                intent.putExtra("lng", item.getLocation().getLongitude());
+                startActivity(intent);
+                finish();
             }
         });
 

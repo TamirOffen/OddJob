@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.tamir.offen.OddJob.BitmapOptimizer;
 import com.tamir.offen.OddJob.Map.map;
-import com.tamir.offen.OddJob.Messaging.messages;
+import com.tamir.offen.OddJob.Messaging.*;
 import com.tamir.offen.OddJob.R;
 
 public class AddActivity extends AppCompatActivity {
@@ -67,6 +67,7 @@ public class AddActivity extends AppCompatActivity {
 
                 startActivity(goToTagIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
             }
         });
 
@@ -82,15 +83,17 @@ public class AddActivity extends AppCompatActivity {
 
                 switch(item.getItemId()) {
                     case R.id.nav_messages:
-                        intent = new Intent(AddActivity.this, messages.class);
+                        intent = new Intent(AddActivity.this, ChatSelectionActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        finish();
                         break;
 
                     case R.id.nav_map:
                         intent = new Intent(AddActivity.this, map.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        finish();
                         break;
 
                     case R.id.nav_add_work:
