@@ -28,8 +28,8 @@ import java.util.List;
 
 
 public class ChatSelectionActivity extends AppCompatActivity {
-    ListView listViewUsers;
 
+    ListView listViewUsers;
     DatabaseReference databaseUsers;
     List<User> userList;
     private BottomNavigationView bottomNavigationView;
@@ -38,7 +38,7 @@ public class ChatSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_selection);
 
-        listViewUsers = (ListView) findViewById(R.id.listViewUsers);
+        listViewUsers = findViewById(R.id.listViewUsers);
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
         userList = new ArrayList<>();
 

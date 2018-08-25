@@ -72,7 +72,7 @@ public class ChattingActivity extends AppCompatActivity {
 
         Toast.makeText(this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
 
-        userMessagesList = (RecyclerView) findViewById(R.id.messages_list_of_users);
+        userMessagesList = findViewById(R.id.messages_list_of_users);
 
         linearLayoutManager = new LinearLayoutManager(this);
 
@@ -85,9 +85,7 @@ public class ChattingActivity extends AppCompatActivity {
         gotoChatSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent backtoselect = new Intent(ChattingActivity.this, ChatSelectionActivity.class);
-                startActivity(backtoselect);
-                finish();
+                onBackPressed();
             }
         });
 
@@ -188,5 +186,13 @@ public class ChattingActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ChattingActivity.this, ChatSelectionActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
 }

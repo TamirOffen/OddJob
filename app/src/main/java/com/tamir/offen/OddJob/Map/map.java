@@ -1,10 +1,14 @@
 package com.tamir.offen.OddJob.Map;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -116,6 +120,9 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
     private NavigationView navigationView;
     private android.support.v7.widget.Toolbar toolbar;
 
+    // Alert Dialog for internet connection
+    AlertDialog.Builder alertDialog;
+
 
     public map() {
 
@@ -213,6 +220,10 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         MenuItem navMenuItem = navMenu.getItem(0);
         navMenuItem.setChecked(true);
 
+        alertDialog = new AlertDialog.Builder(this);
+        setUpAlertDialog();
+        if (!haveNetworkConnection()) alertDialog.show();
+
         initJobs();
     }
 
@@ -287,6 +298,21 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                 }
             }
         }
+    }
+
+    // Sets up an Internet Connection Alert Dialog
+    private void setUpAlertDialog() {
+        alertDialog.setTitle("No Internet Connection!");
+        alertDialog.setIcon(R.drawable.ic_signal_wifi_off);
+        alertDialog.setMessage("Connect your device to the internet and try again");
+        alertDialog.setCancelable(false);
+        
+        alertDialog.setNegativeButton("Try Again", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onStart();
+            }
+        });
     }
 
     // gets the device's current location and moves there
@@ -364,6 +390,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         }
 
 
+        /*
         // adding markers
         addMarker(new LatLng(38.646122, -121.131029), "Test", "Other");
         addMarker(new LatLng(38.646663, -121.131319), "Test 2", "Transportation");
@@ -395,7 +422,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
             }
         });
-
+        */
 
 
     }
@@ -631,7 +658,23 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
             }
         });
     }
-
+    
+    // returns if there is a wifi connection
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(map.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
 
 
 

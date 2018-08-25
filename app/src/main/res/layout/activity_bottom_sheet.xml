@@ -219,13 +219,11 @@
 
     <Button
         android:id="@+id/btnDelete"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:text="Delete "
+        android:text="Delete OddJob"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/imageViewIcon"
-        app:layout_constraintTop_toTopOf="@+id/imageViewIcon" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="148dp" />
 
 </android.support.constraint.ConstraintLayout>
