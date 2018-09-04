@@ -50,12 +50,11 @@ public class ChattingActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
+
         user = (User) getIntent().getSerializableExtra("chat_id");
         receiver_name = findViewById(R.id.receiver_name);
         sendMessage = findViewById(R.id.sendMessage);
@@ -69,8 +68,6 @@ public class ChattingActivity extends AppCompatActivity {
         messageReceiverId = user.getId();
         messageAdapter = new MessageAdapter(messageList);
 
-
-        Toast.makeText(this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
 
         userMessagesList = findViewById(R.id.messages_list_of_users);
 
@@ -111,9 +108,6 @@ public class ChattingActivity extends AppCompatActivity {
             }
         });
 
-
-        //receiver_name.setText(chat_id);
-        //Toast.makeText(ChattingActivity.this, chat_id, Toast.LENGTH_SHORT).show();
     }
 
     private void FetchMessages() {
