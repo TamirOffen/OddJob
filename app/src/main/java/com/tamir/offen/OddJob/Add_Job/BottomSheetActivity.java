@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,11 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tamir.offen.OddJob.Add_Job.AddJobHandler;
-import com.tamir.offen.OddJob.ChattingActivity;
 import com.tamir.offen.OddJob.Map.map;
 import com.tamir.offen.OddJob.R;
-import com.tamir.offen.OddJob.User_Registration.*;
 
+import java.util.HashMap;
+import java.util.List;
 
 public class BottomSheetActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -36,11 +38,10 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
     private String sender = curJob.getSender();
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseJobs = mMap.databaseReference;
-    private DatabaseReference databaseUsers;
-    private static User curUser;
     private String databaseID;
     private ProgressDialog progressDialog;
     private AlertDialog.Builder alertDialogBuilder, acceptJobDialog;
+    private DatabaseReference NotificationsReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +60,13 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
         btnBackToMap = findViewById(R.id.btnBackToMap);
         btnDelete = findViewById(R.id.btnDelete);
         imageViewIcon = findViewById(R.id.imageViewIcon);
+        NotificationsReference = FirebaseDatabase.getInstance().getReference().child("Notification");
+        NotificationsReference.keepSynced(true);
 
         alertDialogBuilder = new AlertDialog.Builder(this);
         setUpAlertDialog();
         acceptJobDialog = new AlertDialog.Builder(this);
         setUpAcceptJobDialog();
-
-        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
-        updateUsersFromDatabase();
-
 
         textViewTitle.setText(curJob.getTitle());
         textViewPrice.setText(curJob.getPrice());
@@ -113,28 +112,6 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
         if(tag.equals("Child / Pet Care")) imageViewIcon.setImageResource(R.drawable.rcare);
         if(tag.equals("Education")) imageViewIcon.setImageResource(R.drawable.redu);
         if(tag.equals("Other")) imageViewIcon.setImageResource(R.drawable.rother);
-    }
-
-    private void updateUsersFromDatabase() {
-        databaseUsers.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    User newUser = userSnapshot.getValue(User.class);
-                    if(newUser.getEmail().equals(curJob.getSender())) {
-                        curUser = newUser;
-                        curUser.setParentId(userSnapshot.getKey());
-                        return;
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private boolean userIsOwnerOfJob() {
@@ -183,7 +160,7 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
                 deleteJob();
             }
         });
-        
+
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -211,9 +188,18 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void acceptOddJob() {
-        Intent intent = new Intent(BottomSheetActivity.this, com.tamir.offen.OddJob.Messaging.ChattingActivity.class);
-        intent.putExtra("chat_id", curUser);
-        startActivity(intent);
-        finish();
+        HashMap<String, String> notificationsData = new HashMap<String, String>();
+        notificationsData.put("from", firebaseAuth.getCurrentUser().getUid());
+        notificationsData.put("type", "request");
+
+        NotificationsReference.child(curJob.getOjID()).push().setValue(notificationsData)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        
+                    }
+                });
+
+        Toast.makeText(BottomSheetActivity.this, "Accept", Toast.LENGTH_SHORT).show();
     }
 }

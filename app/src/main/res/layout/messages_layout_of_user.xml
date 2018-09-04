@@ -5,10 +5,40 @@
 
 
     <TextView
-        android:id="@+id/message_text"
-        android:layout_width="match_parent"
+        android:id="@+id/message_text_sender"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="55dp"
+        android:background="@drawable/message_text_background_two"
+        android:padding="10dp"
+        android:fontFamily="@font/lato"
+        android:textColor="@color/black"
+        android:text="TextView"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textViewMessageSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_alignStart="@+id/message_text_sender"
+        android:layout_marginStart="6dp"
+        android:fontFamily="@font/lato"
+        android:textColor="@color/classicgrey"
+        android:layout_marginTop="35dp"
+        android:text="TextView" />
+
+
+
+    <TextView
+        android:id="@+id/message_text_receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -17,19 +47,20 @@
         android:padding="10dp"
         android:fontFamily="@font/lato"
         android:text="TextView"
+        android:textColor="@color/white"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textViewMessageSender"
-        android:layout_width="match_parent"
+        android:id="@+id/textViewMessageReceiver"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="16dp"
-        android:layout_alignStart="@+id/message_text"
-        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_alignEnd="@+id/message_text_receiver"
         android:fontFamily="@font/lato"
         android:textColor="@color/classicgrey"
         android:layout_marginTop="35dp"
         android:text="TextView" />
+
 
 </RelativeLayout>

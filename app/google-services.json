@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "109670777021-6voo5v7kj6bo0pi9j15nn6acchre9vle.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tamir.offen.OddJob",
+            "certificate_hash": "aba57643983a9f0f6666002b9104fabd459c3fb1"
+          }
+        },
+        {
           "client_id": "109670777021-2onkl4kot8mcfhjninq12e57jcv7vbcu.apps.googleusercontent.com",
           "client_type": 3
         }

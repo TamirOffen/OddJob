@@ -17,7 +17,7 @@ import java.util.List;
  * Created by paen3 on 8/15/2018.
  */
 
-public class UserList extends ArrayAdapter<User> {
+public class  UserList extends ArrayAdapter<User> {
     private Activity context;
     private List<User> userList;
 

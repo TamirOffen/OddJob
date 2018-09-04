@@ -2,6 +2,7 @@ package com.tamir.offen.OddJob.Messaging;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +49,7 @@ public class ChattingActivity extends AppCompatActivity {
     private final List<Message> messageList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private MessageAdapter messageAdapter;
+    private DatabaseReference NotificationReference;
 
 
     @Override
@@ -64,6 +66,8 @@ public class ChattingActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         messageSenderId = mAuth.getCurrentUser().getUid();
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
+        NotificationReference = FirebaseDatabase.getInstance().getReference().child("Notification");
+        NotificationReference.keepSynced(true);
         String parentId = user.getParentId();
         messageReceiverId = user.getId();
         messageAdapter = new MessageAdapter(messageList);
@@ -178,6 +182,7 @@ public class ChattingActivity extends AppCompatActivity {
                     inputMessage.setText("");
                 }
             });
+
 
         }
     }

@@ -23,6 +23,7 @@ import com.tamir.offen.OddJob.ChattingActivity;
 import com.tamir.offen.OddJob.Map.map;
 import com.tamir.offen.OddJob.R;
 import com.tamir.offen.OddJob.User_Registration.User;
+import com.tamir.offen.OddJob.Messaging.Message;
 import com.tamir.offen.OddJob.User_Registration.UserList;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class ChatSelectionActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
 
     DatabaseReference databaseUsers;
+    DatabaseReference databaseMessaging;
     List<User> userList;
     private BottomNavigationView bottomNavigationView;
     @Override
@@ -43,7 +45,8 @@ public class ChatSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_selection);
 
         listViewUsers = findViewById(R.id.listViewUsers);
-        databaseUsers = FirebaseDatabase.getInstance().getReference("users");
+        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
+        databaseMessaging = FirebaseDatabase.getInstance().getReference().child("Messages");
         userList = new ArrayList<>();
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -76,19 +79,63 @@ public class ChatSelectionActivity extends AppCompatActivity {
                 }
 
                 return false;
+
             }
         });
 
 
     }
-    public void getChatterId(DataSnapshot dataSnapshot){
-        String ref = dataSnapshot.getKey().toString();
-
-    }
-
     @Override
     public void onStart() {
         super.onStart();
+        final String currentUid = firebaseAuth.getCurrentUser().getUid();
+        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
+        databaseMessaging = FirebaseDatabase.getInstance().getReference().child("Messages");
+
+        databaseMessaging.child(currentUid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                userList.clear();
+
+                for(DataSnapshot messageSnapshot: dataSnapshot.getChildren()){
+                    String parentId = messageSnapshot.getKey();
+                    databaseUsers.child(parentId).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot userSnapshot) {
+                            User user = userSnapshot.getValue(User.class);
+                            String id = userSnapshot.getKey();
+                            user.setParentId(id);
+                            Toast.makeText(ChatSelectionActivity.this, user.getName(), Toast.LENGTH_SHORT).show();
+                            userList.add(user );
+                            String chat_id = userSnapshot.getKey();
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+                final UserList adapter = new UserList(ChatSelectionActivity.this, userList);
+                listViewUsers.setAdapter(adapter);
+                listViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        User user = userList.get(position);
+                        Intent chatIntent = new Intent(ChatSelectionActivity.this, com.tamir.offen.OddJob.Messaging.ChattingActivity.class);
+                        chatIntent.putExtra("chat_id",user);
+                        startActivity(chatIntent);
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });/*
         databaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
@@ -128,7 +175,7 @@ public class ChatSelectionActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
 
     }

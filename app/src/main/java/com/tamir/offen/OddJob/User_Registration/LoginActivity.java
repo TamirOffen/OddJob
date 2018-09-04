@@ -12,9 +12,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.tamir.offen.OddJob.Map.map;
 import com.tamir.offen.OddJob.R;
 import com.tamir.offen.OddJob.User_Registration.*;
@@ -25,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText editTextEmail, editTextPassword;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference usersReference;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextPassword = findViewById(R.id.editTextPassword);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        usersReference = FirebaseDatabase.getInstance().getReference().child("users");
         progressDialog = new ProgressDialog(this);
 
         if(firebaseAuth.getCurrentUser() != null) {
@@ -85,10 +91,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         progressDialog.dismiss();
                         
                         if(task.isSuccessful()) {
-                            finish();
-                            Intent intent = new Intent(getApplicationContext(), map.class);
-                            startActivity(intent);
-                            finish();
+                            String online_user_id = firebaseAuth.getCurrentUser().getUid();
+                            String DeviceToken = FirebaseInstanceId.getInstance().getToken();
+
+                            usersReference.child(online_user_id).child("device_token").setValue(DeviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Intent intent = new Intent(getApplicationContext(), map.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+
                         } else {
                             Toast.makeText(LoginActivity.this, "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                         }

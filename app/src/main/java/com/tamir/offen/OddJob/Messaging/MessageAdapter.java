@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,6 +58,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         mAuth = FirebaseAuth.getInstance();
 
         return new MessageViewHolder(v);
+
     }
 
     @Override
@@ -71,15 +73,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
 
 
+
         if(fromUserId.equalsIgnoreCase(message_sender_id)){
             databaseUsers.child(fromUserId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String from = dataSnapshot.child("name").getValue().toString();
+                    String from = dataSnapshot.child("name").getValue() .toString();
                     String fromFirstName[] = from.split(" ",2);
-                    holder.messageSender.setText(fromFirstName[0]);
-                    holder.messageSender.setGravity(Gravity.END);
-
+                    holder.messageReceiver.setText(fromFirstName[0]);
                 }
 
                 @Override
@@ -87,8 +88,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
                 }
             });
-            holder.messageText.setTextColor(Color.WHITE);
-            holder.messageText.setGravity(Gravity.END);
+            holder.messageTextSender.setVisibility(View.GONE);
+            holder.messageSender.setVisibility(View.GONE);
+            holder.messageTextReceiver.setTextColor(Color.WHITE);
+            holder.messageTextReceiver.setText(message.getMessage());
         }
         else{
             databaseUsers.child(fromUserId).addValueEventListener(new ValueEventListener() {
@@ -97,7 +100,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                     String to = dataSnapshot.child("name").getValue().toString();
                     String toFirstName[] = to.split(" ",2);
                     holder.messageSender.setText(toFirstName[0]);
-                    holder.messageSender.setGravity(Gravity.START);
                 }
 
                 @Override
@@ -105,14 +107,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
                 }
             });
-            holder.messageText.setBackgroundResource(R.drawable.message_text_background_two);
-
-            holder.messageText.setTextColor(Color.BLACK);
-            holder.messageText.setGravity(Gravity.START);
+            holder.messageTextReceiver.setVisibility(View.GONE);
+            holder.messageReceiver.setVisibility(View.GONE);
+            holder.messageTextSender.setBackgroundResource(R.drawable.message_text_background_two);
+            holder.messageTextSender.setTextColor(Color.BLACK);
+            holder.messageTextSender.setText(message.getMessage());
 
         }
 
-        holder.messageText.setText(message.getMessage());
+
 
 
     }
@@ -124,11 +127,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 
     public class MessageViewHolder extends RecyclerView.ViewHolder{
-        public TextView messageText;
+        public TextView messageTextSender;
         public TextView messageSender;
+        private TextView messageTextReceiver;
+        private TextView messageReceiver;
         public MessageViewHolder(View view){
             super(view);
-            messageText = (TextView) view.findViewById(R.id.message_text);
+            messageTextReceiver =(TextView) view.findViewById(R.id.message_text_receiver);
+            messageTextSender = (TextView) view.findViewById(R.id.message_text_sender);
+            messageReceiver = (TextView) view.findViewById(R.id.textViewMessageReceiver);
             messageSender = view.findViewById(R.id.textViewMessageSender);
 
         }

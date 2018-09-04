@@ -17,6 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.tamir.offen.OddJob.R;
 import com.tamir.offen.OddJob.User_Registration.*;
 
@@ -87,7 +88,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         progressDialog.setMessage("Registering User...");
         progressDialog.show();
 
-
+ 
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -96,6 +97,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         if(task.isSuccessful()) {
                             Toast.makeText(SignUpActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                             String id = firebaseAuth.getUid();
+                            String DeviceToken = FirebaseInstanceId.getInstance().getToken();
+                            databaseUsers.child(id).child("device_token").setValue(DeviceToken);
                             User user = new User(id,name,email);
                             databaseUsers.child(id).setValue(user);
                         } else {

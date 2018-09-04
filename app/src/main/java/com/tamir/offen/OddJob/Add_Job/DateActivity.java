@@ -205,6 +205,7 @@ public class DateActivity extends AppCompatActivity implements TimePickerDialog.
                 newJob.setDate(mDisplayDate.getText().toString(), mDisplayDate1.getText().toString());
                 newJob.setTime(mTimePicker.getText().toString(), mTimePicker1.getText().toString());
                 newJob.setID(generateID(3,2));
+                newJob.setOjID(firebaseAuth.getCurrentUser().getUid());
                 if(firebaseAuth.getCurrentUser() != null) newJob.setSender(firebaseAuth.getCurrentUser().getEmail());
                 else {
                     Toast.makeText(DateActivity.this, "User not found", Toast.LENGTH_SHORT).show();
