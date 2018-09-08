@@ -72,7 +72,6 @@ public class ChattingActivity extends AppCompatActivity {
         messageReceiverId = user.getId();
         messageAdapter = new MessageAdapter(messageList);
 
-
         userMessagesList = findViewById(R.id.messages_list_of_users);
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -92,7 +91,7 @@ public class ChattingActivity extends AppCompatActivity {
 
         FetchMessages();
 
-        databaseUsers.child(parentId).addValueEventListener(new ValueEventListener() {
+        databaseUsers.child(user.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("name").getValue().toString();

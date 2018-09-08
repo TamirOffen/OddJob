@@ -21,10 +21,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tamir.offen.OddJob.AddJob;
 import com.tamir.offen.OddJob.Add_Job.AddJobHandler;
 import com.tamir.offen.OddJob.Map.map;
+import com.tamir.offen.OddJob.Messaging.ChatSelectionActivity;
+import com.tamir.offen.OddJob.Messaging.ChattingActivity;
 import com.tamir.offen.OddJob.R;
+import com.tamir.offen.OddJob.User_Registration.User;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,6 +43,7 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
     private String sender = curJob.getSender();
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseJobs = mMap.databaseReference;
+    private DatabaseReference databaseUsers;
     private String databaseID;
     private ProgressDialog progressDialog;
     private AlertDialog.Builder alertDialogBuilder, acceptJobDialog;
@@ -61,6 +67,7 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
         btnDelete = findViewById(R.id.btnDelete);
         imageViewIcon = findViewById(R.id.imageViewIcon);
         NotificationsReference = FirebaseDatabase.getInstance().getReference().child("Notification");
+        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
         NotificationsReference.keepSynced(true);
 
         alertDialogBuilder = new AlertDialog.Builder(this);
@@ -188,18 +195,34 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void acceptOddJob() {
-        HashMap<String, String> notificationsData = new HashMap<String, String>();
-        notificationsData.put("from", firebaseAuth.getCurrentUser().getUid());
-        notificationsData.put("type", "request");
 
-        NotificationsReference.child(curJob.getOjID()).push().setValue(notificationsData)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        
+        curJob.setAccepterID(firebaseAuth.getCurrentUser().getUid());
+        databaseUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot userSnapshot: dataSnapshot.getChildren()){
+                    User user = userSnapshot.getValue(User.class);
+                    String chat_id = userSnapshot.getKey();
+                    if(user.getId ().equals(curJob.getOjID())){
+                        Toast.makeText(BottomSheetActivity.this, user.getName(), Toast.LENGTH_SHORT).show();
+                        Intent chatIntent = new Intent(BottomSheetActivity.this, ChattingActivity.class);
+                        chatIntent.putExtra("chat_id",user);
+                        chatIntent.putExtra("oddjob_id",curJob.getAccepterID());
+                        startActivity(chatIntent);
+                        break;
+                    }else{
+
                     }
-                });
+                }
 
-        Toast.makeText(BottomSheetActivity.this, "Accept", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 }
