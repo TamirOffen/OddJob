@@ -15,15 +15,15 @@ import com.tamir.offen.OddJob.R;
 
 import java.util.List;
 
-public class JobsList extends ArrayAdapter<AddJobHandler> {
+public class JobsListUser extends ArrayAdapter<AddJobHandler> {
 
     public Activity context;
-    private List<AddJobHandler> jobsList;
+    private List<AddJobHandler> jobsListUser;
 
-    public JobsList(Activity context, List<AddJobHandler> jobsList) {
-        super(context, R.layout.jobs_list_layout, jobsList);
+    public JobsListUser(Activity context, List<AddJobHandler> jobsListUser) {
+        super(context, R.layout.jobs_list_layout, jobsListUser);
         this.context = context;
-        this.jobsList = jobsList;
+        this.jobsListUser = jobsListUser;
     }
 
     @NonNull
@@ -36,16 +36,10 @@ public class JobsList extends ArrayAdapter<AddJobHandler> {
         TextView textViewTitle = listViewItem.findViewById(R.id.textViewTitle);
         TextView textViewDesc = listViewItem.findViewById(R.id.textViewDesc);
 
-        AddJobHandler job = jobsList.get(position);
+        AddJobHandler job = jobsListUser.get(position);
 
         textViewTitle.setText(job.getTitle());
-        if(job.getAccepterID().equals(null)){
-            textViewDesc.setText("ONGOING");
-            textViewDesc.setTextColor(Color.YELLOW);
-        }else{
-            textViewDesc.setText("ACCEPTED");
-            textViewDesc.setTextColor(Color.GREEN);
-        }
+        textViewDesc.setText(job.getDesc());
 
         return listViewItem;
     }

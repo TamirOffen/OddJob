@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,7 +39,7 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
 
     private TextView textViewTitle, textViewPrice, textViewStartDate, textViewEndDate, textViewStartTime, textViewEndTime, textViewDesc;
     private ImageView imageViewIcon;
-    private Button btnAcceptJob, btnMessage, btnBackToMap, btnDelete;
+    private Button btnAcceptJob, btnMessage, btnBackToMap, btnDelete, btnMessageOnly;
     private map mMap = new map();
     private AddJobHandler curJob = mMap.curJob;
     private String sender = curJob.getSender();
@@ -63,6 +65,7 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
         textViewDesc = findViewById(R.id.textViewDesc);
         btnAcceptJob = findViewById(R.id.btnAcceptJob);
         btnMessage = findViewById(R.id.btnMessage);
+        btnMessageOnly = findViewById(R.id.btnMessageOnly);
         btnBackToMap = findViewById(R.id.btnBackToMap);
         btnDelete = findViewById(R.id.btnDelete);
         imageViewIcon = findViewById(R.id.imageViewIcon);
@@ -93,6 +96,17 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
             btnDelete.setVisibility(View.VISIBLE);
             btnAcceptJob.setVisibility(View.INVISIBLE);
             btnMessage.setVisibility(View.INVISIBLE);
+            btnMessageOnly.setVisibility(View.INVISIBLE);
+        }else if(curJob.getAccepterID().equals(firebaseAuth.getCurrentUser().getUid())){
+            btnMessageOnly.setVisibility(View.VISIBLE);
+            btnDelete.setVisibility(View.INVISIBLE);
+            btnAcceptJob.setVisibility(View.INVISIBLE);
+            btnMessage.setVisibility(View.INVISIBLE);
+        }else{
+            btnMessageOnly.setVisibility(View.INVISIBLE);
+            btnDelete.setVisibility(View.INVISIBLE);
+            btnAcceptJob.setVisibility(View.VISIBLE);
+            btnMessage.setVisibility(View.VISIBLE);
         }
 
         btnBackToMap.setOnClickListener(this);
@@ -208,6 +222,7 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
                         Intent chatIntent = new Intent(BottomSheetActivity.this, ChattingActivity.class);
                         chatIntent.putExtra("chat_id",user);
                         chatIntent.putExtra("oddjob_id",curJob.getAccepterID());
+                        chatIntent.putExtra("oddjob",curJob.getID());
                         startActivity(chatIntent);
                         break;
                     }else{
@@ -224,5 +239,24 @@ public class BottomSheetActivity extends AppCompatActivity implements View.OnCli
         });
 
 
+    }
+    public String oddjobIDd(final String string){
+        final String[] id = {};
+        databaseJobs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot jobsnapshot: dataSnapshot.getChildren()){
+                    if(jobsnapshot.child("id").equals(string)){
+                        id[0] = jobsnapshot.toString();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return id[0];
     }
 }

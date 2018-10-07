@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tamir.offen.OddJob.Add_Job.BottomSheetActivity">
+    tools:context="com.tamir.offen.OddJob.Add_Job.ShowJobActivity">
+
 
     <Button
         android:id="@+id/btnBackToMap"
@@ -141,26 +142,11 @@
         android:fontFamily="@font/lato_thin"
         android:text="Message"
         android:textColor="@color/white"
-        android:textStyle="bold"
         android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAcceptJob"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnAcceptJob"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
-        android:background="#ffb593"
-        android:fontFamily="@font/lato_thin"
-        android:textStyle="bold"
-        android:text="Accept OddJob"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <ScrollView
         android:layout_width="300dp"
@@ -232,25 +218,9 @@
         android:textColor="@color/white"
         android:fontFamily="@font/lato_thin"
         android:textStyle="bold"
-        android:textSize="20sp"
         android:text="Delete OddJob"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="148dp" />
-
-    <Button
-        android:id="@+id/btnMessageOnly"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gradgreen"
-        android:textColor="@color/white"
-        android:fontFamily="@font/lato_thin"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:text="Meesage"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="148dp" />
-
 
 </android.support.constraint.ConstraintLayout>

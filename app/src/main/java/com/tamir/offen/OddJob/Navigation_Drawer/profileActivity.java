@@ -13,15 +13,21 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.tamir.offen.OddJob.Add_Job.AddActivity;
+import com.tamir.offen.OddJob.Add_Job.AddJobHandler;
 import com.tamir.offen.OddJob.Map.map;
 import com.tamir.offen.OddJob.Messaging.ChatSelectionActivity;
 import com.tamir.offen.OddJob.Messaging.messages;
 import com.tamir.offen.OddJob.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class profileActivity extends AppCompatActivity implements View.OnClickListener,
         BottomNavigationView.OnNavigationItemSelectedListener,
@@ -36,6 +42,9 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
     private FirebaseAuth firebaseAuth;
     private map mMap = new map();
     private String username = mMap.currentUserName;
+    private List<AddJobHandler> jobs = mMap.jobs;
+    private List<AddJobHandler> userJobs;
+    private ListView listViewCurrentJobs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +56,18 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
+        listViewCurrentJobs = findViewById(R.id.listViewCurrentJobs);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        userJobs = new ArrayList<>();
 
         Menu menuBottomNavBar = bottomNavigationView.getMenu();
         MenuItem menuItemBottomNavBar = menuBottomNavBar.getItem(1);
         menuItemBottomNavBar.setChecked(true);
 
         Menu menuNavDrawer = navigationView.getMenu();
-        MenuItem menuItemNavDrawer = menuNavDrawer.getItem(2);
+        MenuItem menuItemNavDrawer = menuNavDrawer.getItem(1);
         menuItemNavDrawer.setChecked(true);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
@@ -70,6 +82,24 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
         TextView nav_username = navViewHeader.findViewById(R.id.nav_username);
         nav_email.setText(firebaseAuth.getCurrentUser().getEmail());
         nav_username.setText(username);
+
+        updateUserJobs();
+
+        final JobsListUser adapter = new JobsListUser(profileActivity.this, userJobs);
+        listViewCurrentJobs.setAdapter(adapter);
+
+        listViewCurrentJobs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                AddJobHandler item = adapter.getItem(i);
+                Intent intent = new Intent(profileActivity.this, map.class);
+                intent.putExtra("Current Job", "currJob");
+                intent.putExtra("lat", item.getLocation().getLatitude());
+                intent.putExtra("lng", item.getLocation().getLongitude());
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -121,6 +151,14 @@ public class profileActivity extends AppCompatActivity implements View.OnClickLi
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+    private void updateUserJobs() {
+        for(int i = 0; i < jobs.size(); i++) {
+            String jobSender = jobs.get(i).getAccepterID();
+            if(jobSender.equals(firebaseAuth.getCurrentUser().getUid())) {
+                userJobs.add(jobs.get(i));
+            }
         }
     }
 }

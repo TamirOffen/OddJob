@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.tamir.offen.OddJob.AddJob;
+import com.tamir.offen.OddJob.Add_Job.AddJobHandler;
 import com.tamir.offen.OddJob.User_Registration.*;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,13 +38,13 @@ import java.util.Map;
 
 public class ChattingActivity extends AppCompatActivity {
 
-    private TextView receiver_name;
-    private DatabaseReference databaseUsers;
+    private TextView receiver_name, chatStatus;
+    private DatabaseReference databaseUsers, databaseJobs;
     private User user;
     private ImageButton sendMessage;
     private EditText inputMessage;
     private FirebaseAuth mAuth;
-    private String messageSenderId;
+    private String messageSenderId, curjobId;
     private String messageReceiverId;
     private DatabaseReference rootRef;
     private Button gotoChatSelect;
@@ -56,7 +59,7 @@ public class ChattingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
-
+        curjobId = (String) getIntent().getSerializableExtra("oddjob");
         user = (User) getIntent().getSerializableExtra("chat_id");
         receiver_name = findViewById(R.id.receiver_name);
         sendMessage = findViewById(R.id.sendMessage);
@@ -64,12 +67,14 @@ public class ChattingActivity extends AppCompatActivity {
         inputMessage = findViewById(R.id.inputMessage);
         gotoChatSelect = findViewById(R.id.gotochatselect);
         mAuth = FirebaseAuth.getInstance();
+
         messageSenderId = mAuth.getCurrentUser().getUid();
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
         NotificationReference = FirebaseDatabase.getInstance().getReference().child("Notification");
         NotificationReference.keepSynced(true);
         String parentId = user.getParentId();
         messageReceiverId = user.getId();
+        chatStatus = (TextView) findViewById(R.id.chat_status);
         messageAdapter = new MessageAdapter(messageList);
 
         userMessagesList = findViewById(R.id.messages_list_of_users);
@@ -90,6 +95,12 @@ public class ChattingActivity extends AppCompatActivity {
         });
 
         FetchMessages();
+
+        if(mAuth.getCurrentUser().getUid().equals(oddjobIDd(curjobId))){
+            chatStatus.setText("You have accepted this OddJob!");
+        }else{
+            chatStatus.setVisibility(View.GONE);
+        }
 
         databaseUsers.child(user.getId()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -192,5 +203,26 @@ public class ChattingActivity extends AppCompatActivity {
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
+    }
+    public String oddjobIDd(final String string){
+        databaseJobs = FirebaseDatabase.getInstance().getReference("Jobs");
+        final String[] id = {};
+        databaseJobs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot jobsnapshot: dataSnapshot.getChildren()){
+                    if(jobsnapshot.getKey().equals(string)){
+                        AddJobHandler oddjob = jobsnapshot.getValue(AddJobHandler.class);
+                        id[0] = oddjob.getAccepterID();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return id[0];
     }
 }
