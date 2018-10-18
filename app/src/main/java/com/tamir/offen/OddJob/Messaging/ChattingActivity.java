@@ -96,11 +96,13 @@ public class ChattingActivity extends AppCompatActivity {
 
         FetchMessages();
 
-        if(mAuth.getCurrentUser().getUid().equals(oddjobIDd(curjobId))){
+        /*if(mAuth.getCurrentUser().getUid().equals(oddjobIDd(curjobId))){
             chatStatus.setText("You have accepted this OddJob!");
         }else{
             chatStatus.setVisibility(View.GONE);
-        }
+        }*/
+        chatStatus.setVisibility(View.GONE);
+
 
         databaseUsers.child(user.getId()).addValueEventListener(new ValueEventListener() {
             @Override

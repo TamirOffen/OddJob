@@ -151,6 +151,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
 
         if (savedInstanceState != null) {
+            Toast.makeText(this, "saved instance state", Toast.LENGTH_SHORT).show();
             zoomText.setText(savedInstanceState.getString("Zoom"));
             float zoom = savedInstanceState.getFloat("zoom");
             //Toast.makeText(this, new Float(zoom).toString(), Toast.LENGTH_SHORT).show();
@@ -324,7 +325,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful() && task.getResult() != null) {
 
                             // current location marker
                             Location currentLocation = (Location)task.getResult();
@@ -528,6 +529,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
         currentMarker = marker;
         //Toast.makeText(this, marker.getTitle(), Toast.LENGTH_SHORT).show();
         curJob = getCurJob();
+        Toast.makeText(this, curJob.gettime().toString(), Toast.LENGTH_SHORT).show();
         WorkBottomSheetDialog workBottomSheetDialog = new WorkBottomSheetDialog();
         workBottomSheetDialog.show(getSupportFragmentManager(), "workBottomSheetDialog");
         return false;
