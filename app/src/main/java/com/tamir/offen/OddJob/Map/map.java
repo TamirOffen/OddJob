@@ -141,8 +141,7 @@ public class map extends AppCompatActivity implements OnMapReadyCallback,
 
         getLocationPermission();
 
-        zoomText = findViewById(R.id.zoomText);
-        zoomText.setText(new Float(DEFAULT_ZOOM).toString());
+
         currZoomValue = DEFAULT_ZOOM;
 
         if(currPosLatLng != null) {
