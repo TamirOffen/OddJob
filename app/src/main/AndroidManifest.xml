@@ -13,7 +13,7 @@
         android:icon="@drawable/ojfinalicon"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ojfinalicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
