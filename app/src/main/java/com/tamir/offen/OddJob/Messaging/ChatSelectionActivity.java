@@ -34,29 +34,47 @@ import java.util.List;
 
 public class ChatSelectionActivity extends AppCompatActivity {
 
-    ListView listViewUsers;
-    FirebaseAuth firebaseAuth;
-
-    DatabaseReference databaseUsers;
-    DatabaseReference databaseMessaging;
-    List<User> userList;
+    /*Initialize List of Recent Chats Listview, DatabaseReferences,
+    a list for those recent chat users, and Bottom Navigation Element a*/
+    private ListView listViewUsers;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseUsers;
+    private DatabaseReference databaseMessaging;
+    public static List<User> userList;
     private BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_selection);
 
         listViewUsers = findViewById(R.id.listViewUsers);
+
+        //Call the Firebase Databsase References
         databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
         databaseMessaging = FirebaseDatabase.getInstance().getReference().child("Messages");
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        /*Creating an ArrayList to hold the names and emails of users
+        I should show to the current user*/
         userList = new ArrayList<>();
+
+        /*Creating a list to hold all the keys of the users
+        the current User has chatted with*/
         final List<String> messagingUsers = new ArrayList<>();
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseMessaging.child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+
+        /*The way I setup the database of messages is that the user's UID
+        key is the parent of all the UID keys that it has chat history with
+        This way, it is easy to make a list of recent chats*/
+        databaseMessaging.child(firebaseAuth.getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot usersnapshot: dataSnapshot.getChildren()){
+
+                    /*Iterate through the childs of the current Users UID key
+                    and add those user keys to a list*/
                     messagingUsers.add(usersnapshot.getKey());
                  }
             }
@@ -66,21 +84,23 @@ public class ChatSelectionActivity extends AppCompatActivity {
 
             }
         });
+
+        //Refer to this very important function at the bottom of this code
         fetchUserList(messagingUsers);
 
 
+        //This code is just for the
         bottomNavigationView = findViewById(R.id.bottomNavView_Bar);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent intent;
                 switch(item.getItemId()) {
                     case R.id.nav_messages:
-                        //intent = new Intent(messages.this, messages.class);
-                        //startActivity(intent);
                         break;
 
                     case R.id.nav_map:
@@ -104,80 +124,49 @@ public class ChatSelectionActivity extends AppCompatActivity {
 
 
     }
-    @Override
-    public void onStart() {
-        super.onStart();
 
 
-
-    }
-    public void fetchMessageList(){
-        final String currentUid = firebaseAuth.getCurrentUser().getUid();
-        databaseUsers = FirebaseDatabase.getInstance().getReference().child("users");
-        databaseMessaging = FirebaseDatabase.getInstance().getReference().child("Messages");
-        databaseMessaging.child(currentUid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                 userList.clear();
-                 for(DataSnapshot messageSnapshot: dataSnapshot.getChildren()){
-                    fetchUser(messageSnapshot);
-
-                }
-                UserList adapter = new UserList(ChatSelectionActivity.this, userList);
-                listViewUsers.setAdapter(adapter);
-                listViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        User user = userList.get(position);
-                        Intent chatIntent = new Intent(ChatSelectionActivity.this, com.tamir.offen.OddJob.Messaging.ChattingActivity.class);
-                        chatIntent.putExtra("chat_id",user);
-                        startActivity(chatIntent);
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    public void fetchUser(DataSnapshot dataSnapshot){
-        databaseUsers.child(dataSnapshot.getKey()).addValueEventListener(new ValueEventListener() {
-            public void onDataChange(@NonNull DataSnapshot userSnapshot) {
-                User user = userSnapshot.getValue(User.class);
-                Toast.makeText(ChatSelectionActivity.this, user.getName(), Toast.LENGTH_SHORT).show();
-                userList.add(user);
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+    //!!IMPORTANT FUNCTION!!
 
     public void fetchUserList(final List<String> list){
+
+        //This function is very important in that it takes in a list of user UID keys
+        //that the current user has talked to and, from this, inflates the ListView setup
+        //on the activity with their corresponding names and email addresses
+
         databaseUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 userList.clear();
+
+
+                //This loop iterates through all the users in the User database and if
+                //the their key is the messagingUsers list that I passed in,
+                //it will add that UID to a final list of user
+
                 for(DataSnapshot userSnapshot: dataSnapshot.getChildren()){
+
                     String parentId = userSnapshot.getKey();
                     User user = userSnapshot.getValue(User.class);
+
+
                     if(list.contains(user.getId())){
+
                         user.setParentId(parentId);
                         userList.add(user);
                         String chat_id = userSnapshot.getKey();
 
-                    }else{
                     }
                 }
+
+                //this other adapter class I created allows me to inflate the listview with the write information
                 final UserList adapter = new UserList(ChatSelectionActivity.this, userList);
+
+                //inflates the listview
                 listViewUsers.setAdapter(adapter);
+
+                //this part makes sure when the user clicks on it, they are transferred to an
+                //activity that brings up the chat history of that user
                 listViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
